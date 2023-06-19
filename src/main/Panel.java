@@ -12,6 +12,11 @@ public class Panel extends JPanel {
     private InputsMouse mouse;
     private InputsTeclado teclado;
     private int xDelta = 100, yDelta = 100;
+    private int xDir = 1, yDir = 1;
+
+    // Contador de FPS
+    private int frames = 0;
+    private long lastCheck = System.currentTimeMillis();
 
     public Panel() {
         mouse = new InputsMouse(this);
@@ -31,28 +36,38 @@ public class Panel extends JPanel {
         // Limpia la pantalla para luego dibujar lo que le pidamos
         super.paintComponent(g);
 
+        moverRectangulo();
         // Dibujamos un rectangulo rojo
         g.setColor(Color.RED);
 
         g.fillRect(xDelta,yDelta,100,100);
+
+
+    }
+
+    private void moverRectangulo() {
+        xDelta += xDir;
+        // Si xDelta se sale de la ventana entonces se cambia la direccion del rectangulo
+        if (xDelta > 800 || xDelta < 0)
+            xDir *= -1;
+
+        yDelta += yDir;
+        // Si yDelta se sale de la ventana entonces se cambia la direccion del rectangulo
+        if (yDelta > 800 || yDelta < 0)
+            yDir *= -1;
     }
 
     public void setxDelta(int value) {
         this.xDelta += value;
-        // Llama a paintComponent cada vez que se mueve el rectangulo
-        repaint();
+
     }
 
     public void setyDelta(int value) {
         this.yDelta += value;
-        // Llama a paintComponent cada vez que se mueve el rectangulo
-        repaint();
     }
 
     public void setRectPosition(int x, int y) {
         this.xDelta = x;
         this.yDelta = y;
-        // Llama a paintComponent cada vez que se mueve el rectangulo
-        repaint();
     }
 }

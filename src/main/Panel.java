@@ -10,10 +10,14 @@ import java.awt.*;
 public class Panel extends JPanel {
 
     private InputsMouse mouse;
-    public Panel() {
-        mouse = new InputsMouse();
+    private InputsTeclado teclado;
+    private int xDelta = 100, yDelta = 100;
 
-        addKeyListener(new InputsTeclado());
+    public Panel() {
+        mouse = new InputsMouse(this);
+        teclado = new InputsTeclado(this);
+
+        addKeyListener(teclado);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
     }
@@ -30,6 +34,25 @@ public class Panel extends JPanel {
         // Dibujamos un rectangulo rojo
         g.setColor(Color.RED);
 
-        g.fillRect(0,0,100,100);
+        g.fillRect(xDelta,yDelta,100,100);
+    }
+
+    public void setxDelta(int value) {
+        this.xDelta += value;
+        // Llama a paintComponent cada vez que se mueve el rectangulo
+        repaint();
+    }
+
+    public void setyDelta(int value) {
+        this.yDelta += value;
+        // Llama a paintComponent cada vez que se mueve el rectangulo
+        repaint();
+    }
+
+    public void setRectPosition(int x, int y) {
+        this.xDelta = x;
+        this.yDelta = y;
+        // Llama a paintComponent cada vez que se mueve el rectangulo
+        repaint();
     }
 }

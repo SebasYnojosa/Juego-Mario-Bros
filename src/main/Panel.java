@@ -2,9 +2,14 @@ package main;
 
 import inputs.InputsMouse;
 import inputs.InputsTeclado;
+import sprites.spritesURL;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 // Clase que se encarga de dibujar los graficos del juego en la ventana
 public class Panel extends JPanel {
@@ -14,6 +19,15 @@ public class Panel extends JPanel {
     private int xDelta = 100, yDelta = 100;
     private int xDir = 1, yDir = 1;
 
+    // Imagen que se dibujara en el panel
+    private BufferedImage marioIdle;
+    private BufferedImage[] marioWalk;
+
+    // Animaciones
+    private int aniTick, aniIndice, velCambio = 30; // 30 para 4 animaciones por segundo
+
+    public static final int UNIDAD = 32;
+
     // Contador de FPS
     private int frames = 0;
     private long lastCheck = System.currentTimeMillis();
@@ -22,9 +36,43 @@ public class Panel extends JPanel {
         mouse = new InputsMouse(this);
         teclado = new InputsTeclado(this);
 
+        importarImagen();
+
+        setTamanioPanel();
+
         addKeyListener(teclado);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
+    }
+
+    public void importarImagen() {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_IDLE.getSpriteURL());
+
+        try {
+            marioIdle = ImageIO.read(is);
+
+            marioWalk = new BufferedImage[2];
+
+            marioWalk[0] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_WALK_1.getSpriteURL()));
+            marioWalk[1] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_WALK_2.getSpriteURL()));
+
+        } catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+            finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    // Método que se encarga de darle un tamaño al panel
+    public void setTamanioPanel(){
+        Dimension tamanio = new Dimension(1280, 800);
+        setPreferredSize(tamanio);
     }
 
     /**
@@ -36,38 +84,31 @@ public class Panel extends JPanel {
         // Limpia la pantalla para luego dibujar lo que le pidamos
         super.paintComponent(g);
 
-        moverRectangulo();
-        // Dibujamos un rectangulo rojo
-        g.setColor(Color.RED);
-
-        g.fillRect(xDelta,yDelta,100,100);
-
+        updateAnimationTick();
+        
+        g.drawImage(marioWalk[aniIndice], xDelta, yDelta, UNIDAD, UNIDAD*2 - UNIDAD/4, null);
 
     }
 
-    private void moverRectangulo() {
-        xDelta += xDir;
-        // Si xDelta se sale de la ventana entonces se cambia la direccion del rectangulo
-        if (xDelta > 800 || xDelta < 0)
-            xDir *= -1;
+    private void updateAnimationTick() {
+        aniTick++;
 
-        yDelta += yDir;
-        // Si yDelta se sale de la ventana entonces se cambia la direccion del rectangulo
-        if (yDelta > 800 || yDelta < 0)
-            yDir *= -1;
+        if(aniTick >= velCambio) {
+            aniTick = 0;
+            aniIndice++;
+            if (aniIndice >= marioWalk.length)
+                aniIndice = 0;
+        }
     }
 
-    public void setxDelta(int value) {
-        this.xDelta += value;
+
+    public void setxDelta(int xDelta) {
+        this.xDelta = xDelta;
 
     }
 
-    public void setyDelta(int value) {
-        this.yDelta += value;
+    public void setyDelta(int yDelta) {
+        this.yDelta = yDelta;
     }
 
-    public void setRectPosition(int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
-    }
 }

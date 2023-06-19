@@ -6,7 +6,6 @@ import javax.swing.*;
 public class Ventana extends JFrame {
     public Ventana(Panel panel) {
         setTitle("Juego");
-        setSize(800, 800);
 
         // Esta funcion indica que la ventana aparecera en el medio de la pantalla
         setLocationRelativeTo(null);
@@ -16,6 +15,12 @@ public class Ventana extends JFrame {
 
         // Esta funcion combina inserta el panel en la ventana para que esta muestre su contenido
         add(panel);
+
+        // Esta funcion hace que la ventana no se pueda cambiar de tamaño
+        setResizable(false);
+
+        // Esta funcion se encarga de que el tamaño de la ventana se ajuste al tamaño del panel
+        pack();
 
         setVisible(true);
     }

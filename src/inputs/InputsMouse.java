@@ -40,6 +40,7 @@ public class InputsMouse implements MouseListener, MouseMotionListener {
     // Se activa cuando se mueve el mouse
     @Override
     public void mouseMoved(MouseEvent e) {
-        panel.setRectPosition(e.getX(), e.getY());
+        panel.setxDelta(e.getX());
+        panel.setyDelta(e.getY());
     }
 }

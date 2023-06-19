@@ -7,5 +7,8 @@ public class Juego {
     public Juego() {
         panel = new Panel();
         ventana = new Ventana(panel);
+
+        // Funcion que hace que el panel reciba los inputs del teclado o el mouse
+        panel.requestFocus();
     }
 }

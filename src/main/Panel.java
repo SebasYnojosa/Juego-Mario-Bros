@@ -45,27 +45,21 @@ public class Panel extends JPanel {
         addMouseMotionListener(mouse);
     }
 
-    public void importarImagen() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_IDLE.getSpriteURL());
+    public BufferedImage cargarImagen(String URL) throws IOException {
+        return ImageIO.read(getClass().getClassLoader().getResourceAsStream(URL));
+    }
 
+    public void importarImagen() {
         try {
-            marioIdle = ImageIO.read(is);
+            marioIdle = cargarImagen(spritesURL.MARIO_IDLE.getSpriteURL());
 
             marioWalk = new BufferedImage[2];
 
-            marioWalk[0] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_WALK_1.getSpriteURL()));
-            marioWalk[1] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO_WALK_2.getSpriteURL()));
+            marioWalk[0] = cargarImagen(spritesURL.MARIO_WALK_1.getSpriteURL());
+            marioWalk[1] = cargarImagen(spritesURL.MARIO_WALK_2.getSpriteURL());
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
-        }
-            finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
         }
     }
 
@@ -109,6 +103,14 @@ public class Panel extends JPanel {
 
     public void setyDelta(int yDelta) {
         this.yDelta = yDelta;
+    }
+
+    public void cambiarxDelta(int valor) {
+        this.xDelta += valor;
+    }
+
+    public void cambiaryDelta(int valor) {
+        this.yDelta += valor;
     }
 
 }

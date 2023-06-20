@@ -25,19 +25,19 @@ public class InputsTeclado implements KeyListener {
         switch (e.getKeyCode()){
             // Arriba
             case KeyEvent.VK_W:
-                panel.setyDelta(-10);
+                panel.cambiaryDelta(-10);
                 break;
             // Abajo
             case KeyEvent.VK_S:
-                panel.setyDelta(10);
+                panel.cambiaryDelta(10);
                 break;
             // Izquierda
             case KeyEvent.VK_A:
-                panel.setxDelta(-10);
+                panel.cambiarxDelta(-10);
                 break;
             // Derecha
             case KeyEvent.VK_D:
-                panel.setxDelta(10);
+                panel.cambiarxDelta(10);
                 break;
         }
     }

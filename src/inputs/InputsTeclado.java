@@ -1,7 +1,6 @@
 package inputs;
 
 import main.Panel;
-import utilidades.Direcciones;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,19 +25,19 @@ public class InputsTeclado implements KeyListener {
         switch (e.getKeyCode()){
             // Arriba
             case KeyEvent.VK_W:
-                panel.setDireccion(Direcciones.ARRIBA);
+                panel.getJuego().getJugador().setArriba(true);
                 break;
             // Abajo
             case KeyEvent.VK_S:
-                panel.setDireccion(Direcciones.ABAJO);
+                panel.getJuego().getJugador().setAbajo(true);
                 break;
             // Izquierda
             case KeyEvent.VK_A:
-                panel.setDireccion(Direcciones.IZQUIERDA);
+                panel.getJuego().getJugador().setIzquierda(true);
                 break;
             // Derecha
             case KeyEvent.VK_D:
-                panel.setDireccion(Direcciones.DERECHA);
+                panel.getJuego().getJugador().setDerecha(true);
                 break;
         }
     }
@@ -48,11 +47,16 @@ public class InputsTeclado implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
+                panel.getJuego().getJugador().setArriba(false);
+                break;
             case KeyEvent.VK_S:
+                panel.getJuego().getJugador().setAbajo(false);
+                break;
             case KeyEvent.VK_A:
+                panel.getJuego().getJugador().setIzquierda(false);
+                break;
             case KeyEvent.VK_D:
-                panel.setMoviendose(false);
-                panel.setDireccion(Direcciones.QUIETO);
+                panel.getJuego().getJugador().setDerecha(false);
                 break;
         }
     }

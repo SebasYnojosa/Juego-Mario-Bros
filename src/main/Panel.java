@@ -2,7 +2,6 @@ package main;
 
 import inputs.InputsMouse;
 import inputs.InputsTeclado;
-import utilidades.Direcciones;
 import utilidades.spritesURL;
 
 import javax.imageio.ImageIO;
@@ -17,13 +16,8 @@ public class Panel extends JPanel {
 
     private InputsMouse mouse;
     private InputsTeclado teclado;
-    private int xDelta = 100, yDelta = 100;
-    private int xDir = 1, yDir = 1;
 
-    // Imagen que se dibujara en el panel
-    private BufferedImage mario;
-    private Direcciones jugadorDireccion = Direcciones.QUIETO;
-    private boolean moviendose = false;
+    private BufferedImage fondo;
 
     public static final int UNIDAD = 32;
 
@@ -31,12 +25,15 @@ public class Panel extends JPanel {
     private int frames = 0;
     private long lastCheck = System.currentTimeMillis();
 
-    public Panel() {
+    private Juego juego;
+
+    public Panel(Juego juego) {
         mouse = new InputsMouse(this);
         teclado = new InputsTeclado(this);
 
-        importarImagen();
+        this.juego = juego;
 
+        cargarImagenes();
         setTamanioPanel();
 
         addKeyListener(teclado);
@@ -44,10 +41,10 @@ public class Panel extends JPanel {
         addMouseMotionListener(mouse);
     }
 
-    public void importarImagen() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO.getSpriteURL());
+    private void cargarImagenes() {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.FONDO.getSpriteURL());
         try {
-            mario = ImageIO.read(is);
+            fondo = ImageIO.read(is);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -65,38 +62,12 @@ public class Panel extends JPanel {
         setPreferredSize(tamanio);
     }
 
-    // Funcion que se encarga de actualizar la direccion del jugador
-    public void setDireccion(Direcciones direccion) {
-        this.jugadorDireccion = direccion;
-        moviendose = true;
-    }
-
-    // Funcion que se encarga de actualizar si el jugador se esta moviendo o no
-    public void setMoviendose(boolean moviendose) {
-        this.moviendose = moviendose;
-    }
-
-    private void setPosicion() {
-        if (moviendose) {
-            switch (jugadorDireccion) {
-                case ARRIBA:
-                    yDelta -= 5;
-                    break;
-                case DERECHA:
-                    xDelta += 5;
-                    break;
-                case ABAJO:
-                    yDelta += 5;
-                    break;
-                case IZQUIERDA:
-                    xDelta -= 5;
-                    break;
-            }
-        }
+    public void dibujarFondo(Graphics g) {
+        g.drawImage(fondo, 0, 0, 1280, 800, null);
     }
 
     public void updateJuego() {
-        setPosicion();
+
     }
 
     /**
@@ -108,25 +79,11 @@ public class Panel extends JPanel {
         // Limpia la pantalla para luego dibujar lo que le pidamos
         super.paintComponent(g);
 
-        g.drawImage(mario, (int)xDelta, (int)yDelta, UNIDAD, UNIDAD + UNIDAD/2, null);
+        juego.render(g);
     }
 
-
-    public void setxDelta(int xDelta) {
-        this.xDelta = xDelta;
-
-    }
-
-    public void setyDelta(int yDelta) {
-        this.yDelta = yDelta;
-    }
-
-    public void cambiarxDelta(int valor) {
-        this.xDelta += valor;
-    }
-
-    public void cambiaryDelta(int valor) {
-        this.yDelta += valor;
+    public Juego getJuego() {
+        return juego;
     }
 
 }

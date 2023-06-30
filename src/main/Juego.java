@@ -1,5 +1,9 @@
 package main;
 
+import entidades.Jugador;
+
+import java.awt.*;
+
 // Clase principal del juego
 public class Juego implements Runnable {
     private Ventana ventana;
@@ -11,14 +15,21 @@ public class Juego implements Runnable {
     // Updates por segundo: Cuantas veces se va a actualizar la logica del juego por segundo
     private final int UPS = 120;
 
+    private Jugador jugador;
+
     public Juego() {
-        panel = new Panel();
+        inicializarClases();
+        panel = new Panel(this);
         ventana = new Ventana(panel);
 
         // Funcion que hace que el panel reciba los inputs del teclado o el mouse
         panel.requestFocus();
 
         iniciarCiclo();
+    }
+
+    private void inicializarClases() {
+        jugador = new Jugador(200, 200);
     }
 
     private void iniciarCiclo() {
@@ -29,7 +40,12 @@ public class Juego implements Runnable {
 
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
-        panel.updateJuego();
+        jugador.update();
+    }
+
+    public void render(Graphics g) {
+        panel.dibujarFondo(g);
+        jugador.render(g);
     }
 
     // Codigo que queremos que se ejecute en un hilo diferente al principal para tener un rendimiento mas consistente
@@ -78,5 +94,13 @@ public class Juego implements Runnable {
                 ultimoChequeoFrames = System.currentTimeMillis();
             }
         }
+    }
+
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public void jugadorSeSalioDeVentana() {
+        jugador.resetDirecciones();
     }
 }

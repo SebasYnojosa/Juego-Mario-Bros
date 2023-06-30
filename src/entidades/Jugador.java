@@ -1,6 +1,6 @@
 package entidades;
 
-import main.Juego;
+import utilidades.Animaciones;
 import utilidades.SpritesURL;
 
 import static main.Juego.UNIDAD;
@@ -12,24 +12,38 @@ import java.awt.image.BufferedImage;
 public class Jugador extends Entidad {
 
     private BufferedImage imagenes;
+    private BufferedImage[][] animaciones;
+    private int tick, indice, framesEntreAnimaciones = 12; // 120 FPS y 10 animaciones por segundo
+    private Animaciones.Jugador accionAnterior = Animaciones.Jugador.QUIETO;
+    private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
     private boolean moviendose = false;
+    private boolean corriendo = false;
     private boolean arriba, abajo, izquierda, derecha;
-    private float velocidad = 3.5f;
+    private float velocidad;
+
+
     public Jugador(float x, float y) {
         super(x, y);
+        cargarAnimaciones();
     }
 
     public void update() {
         setPosicion();
-        cargarAnimaciones();
+        cambiarAccion();
+        actualizarAnimacion();
     }
 
     public void render(Graphics g) {
-        g.drawImage(imagenes, (int)x, (int)y, UNIDAD, UNIDAD + UNIDAD/2, null);
+        g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, UNIDAD, UNIDAD + UNIDAD/2, null);
     }
 
     private void setPosicion() {
         moviendose = false;
+
+        if (corriendo)
+            velocidad = 5.0f;
+        else
+            velocidad = 3.5f;
 
         // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
         if (izquierda && !derecha) {
@@ -53,7 +67,58 @@ public class Jugador extends Entidad {
     }
 
     private void cargarAnimaciones() {
-        imagenes = cargarSprites(SpritesURL.MARIO);
+        imagenes = cargarSprites(SpritesURL.MARIO_SPRITESHEET);
+
+        // Son 14 animaciones en total y la que tiene mas frames tiene 4
+        animaciones = new BufferedImage[14][4];
+
+        for (int j = 0; j < 14; j++) {
+            for (int i = 0; i < 4; i++) {
+                animaciones[j][i] = imagenes.getSubimage(i * 20, j * 30, 20, 30);
+            }
+        }
+    }
+
+    private void cambiarAccion() {
+        if (moviendose && corriendo) {
+            accionActual = Animaciones.Jugador.CORRIENDO;
+        }
+        else if (moviendose && !corriendo) {
+            accionActual = Animaciones.Jugador.CAMINANDO;
+        }
+        else {
+            accionActual = Animaciones.Jugador.QUIETO;
+        }
+    }
+
+    public void actualizarAnimacion() {
+
+        // Si la accion actual es diferente a la accion anterior, se reinicia el indice
+        // Esto para evitar parpadeos en el cambio de animaciones
+        if (accionActual != accionAnterior) {
+            indice = 0;
+            accionAnterior = accionActual;
+        }
+
+        tick++;
+
+        if (tick >= framesEntreAnimaciones) {
+            tick = 0;
+            indice++;
+            if (indice >= accionActual.getCantidadDeFrames()) {
+                indice = 0;
+            }
+        }
+    }
+
+    // Se activa en el caso de que el juego se detenga para evitar errores
+    public void resetDirecciones() {
+        izquierda = arriba = abajo = derecha = false;
+        corriendo = false;
+    }
+
+    public void setCorriendo(boolean corriendo) {
+        this.corriendo = corriendo;
     }
 
     public boolean isArriba() {
@@ -88,7 +153,5 @@ public class Jugador extends Entidad {
         this.derecha = derecha;
     }
 
-    public void resetDirecciones() {
-        izquierda = arriba = abajo = derecha = false;
-    }
+
  }

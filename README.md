@@ -6,9 +6,9 @@ Repositorio para nuestro proyecto final de la materia Programación III sobre un
 1. Game Loop (Completado)
 2. Inputs (Completado)
 3. Images (Completado)
-4. Animations
-5. Game Loop 2.0
-6. Player Class
+4. Animations (Completado)
+5. Game Loop 2.0 (Completado)
+6. Player Class (Completado)
 7. Level Creation
 8. Collision Detection
 9. Gravity

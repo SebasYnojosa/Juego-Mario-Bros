@@ -40,6 +40,11 @@ public class InputsTeclado implements KeyListener {
                 panel.getJuego().getJugador().setDerecha(true);
                 break;
         }
+
+        // Pondra a correr al jugador
+        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+            panel.getJuego().getJugador().setCorriendo(true);
+        }
     }
 
     // Se activa cuando se suelta una tecla
@@ -58,6 +63,11 @@ public class InputsTeclado implements KeyListener {
             case KeyEvent.VK_D:
                 panel.getJuego().getJugador().setDerecha(false);
                 break;
+        }
+
+        // El jugador dejara de correr
+        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+            panel.getJuego().getJugador().setCorriendo(false);
         }
     }
 }

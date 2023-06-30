@@ -1,13 +1,13 @@
 package utilidades;
 
 // Enum que contiene las direcciones de las imagenes
-public enum spritesURL {
+public enum SpritesURL {
     MARIO("graficos/players/mario/marioIdle.png"),
     FONDO("graficos/fondo/fondo.png");
 
     final String spriteURL;
 
-    spritesURL(String spriteURL){
+    SpritesURL(String spriteURL){
         this.spriteURL = spriteURL;
     }
 

@@ -17,8 +17,14 @@ public class Juego implements Runnable {
 
     private Jugador jugador;
 
+    public static final int UNIDAD = 32;
+    public static final int UNIDADES_ANCHO = 32;
+    public static final int UNIDADES_ALTURA = 20;
+    public static final int ANCHO_VENTANA = UNIDADES_ANCHO * UNIDAD;
+    public static final int ALTO_VENTANA = UNIDADES_ALTURA * UNIDAD;
+
     public Juego() {
-        inicializarClases();
+        jugador = new Jugador(200, 200);
         panel = new Panel(this);
         ventana = new Ventana(panel);
 
@@ -26,10 +32,6 @@ public class Juego implements Runnable {
         panel.requestFocus();
 
         iniciarCiclo();
-    }
-
-    private void inicializarClases() {
-        jugador = new Jugador(200, 200);
     }
 
     private void iniciarCiclo() {

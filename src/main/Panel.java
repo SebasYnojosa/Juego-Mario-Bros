@@ -2,7 +2,7 @@ package main;
 
 import inputs.InputsMouse;
 import inputs.InputsTeclado;
-import utilidades.spritesURL;
+import utilidades.SpritesURL;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static main.Juego.*;
+import static utilidades.Archivos.cargarSprites;
 
 // Clase que se encarga de dibujar los graficos del juego en la ventana
 public class Panel extends JPanel {
@@ -19,7 +22,7 @@ public class Panel extends JPanel {
 
     private BufferedImage fondo;
 
-    public static final int UNIDAD = 32;
+
 
     // Contador de FPS
     private int frames = 0;
@@ -42,28 +45,18 @@ public class Panel extends JPanel {
     }
 
     private void cargarImagenes() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.FONDO.getSpriteURL());
-        try {
-            fondo = ImageIO.read(is);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        fondo = cargarSprites(SpritesURL.FONDO);
     }
 
     // Método que se encarga de darle un tamaño al panel
     private void setTamanioPanel(){
-        Dimension tamanio = new Dimension(1280, 800);
+        Dimension tamanio = new Dimension(ANCHO_VENTANA, ALTO_VENTANA);
         setPreferredSize(tamanio);
+        System.out.println("Tamaño del panel: " + tamanio);
     }
 
     public void dibujarFondo(Graphics g) {
-        g.drawImage(fondo, 0, 0, 1280, 800, null);
+        g.drawImage(fondo, 0, 0, ANCHO_VENTANA, ALTO_VENTANA, null);
     }
 
     public void updateJuego() {

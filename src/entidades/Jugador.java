@@ -1,18 +1,17 @@
 package entidades;
 
-import utilidades.spritesURL;
+import main.Juego;
+import utilidades.SpritesURL;
 
-import static main.Panel.UNIDAD;
+import static main.Juego.UNIDAD;
+import static utilidades.Archivos.*;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Jugador extends Entidad {
 
-    private BufferedImage mario;
+    private BufferedImage imagenes;
     private boolean moviendose = false;
     private boolean arriba, abajo, izquierda, derecha;
     private float velocidad = 3.5f;
@@ -26,7 +25,7 @@ public class Jugador extends Entidad {
     }
 
     public void render(Graphics g) {
-        g.drawImage(mario, (int)x, (int)y, UNIDAD, UNIDAD + UNIDAD/2, null);
+        g.drawImage(imagenes, (int)x, (int)y, UNIDAD, UNIDAD + UNIDAD/2, null);
     }
 
     private void setPosicion() {
@@ -54,20 +53,7 @@ public class Jugador extends Entidad {
     }
 
     private void cargarAnimaciones() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO.getSpriteURL());
-        try {
-            mario = ImageIO.read(is);
-
-            // Codigo para cargar animaciones
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        imagenes = cargarSprites(SpritesURL.MARIO);
     }
 
     public boolean isArriba() {

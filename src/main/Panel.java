@@ -2,7 +2,8 @@ package main;
 
 import inputs.InputsMouse;
 import inputs.InputsTeclado;
-import sprites.spritesURL;
+import utilidades.Direcciones;
+import utilidades.spritesURL;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,11 +21,9 @@ public class Panel extends JPanel {
     private int xDir = 1, yDir = 1;
 
     // Imagen que se dibujara en el panel
-    private BufferedImage marioIdle;
-    private BufferedImage[] marioWalk;
-
-    // Animaciones
-    private int aniTick, aniIndice, velCambio = 30; // 30 para 4 animaciones por segundo
+    private BufferedImage mario;
+    private Direcciones jugadorDireccion = Direcciones.QUIETO;
+    private boolean moviendose = false;
 
     public static final int UNIDAD = 32;
 
@@ -45,28 +44,59 @@ public class Panel extends JPanel {
         addMouseMotionListener(mouse);
     }
 
-    public BufferedImage cargarImagen(String URL) throws IOException {
-        return ImageIO.read(getClass().getClassLoader().getResourceAsStream(URL));
-    }
-
     public void importarImagen() {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(spritesURL.MARIO.getSpriteURL());
         try {
-            marioIdle = cargarImagen(spritesURL.MARIO_IDLE.getSpriteURL());
-
-            marioWalk = new BufferedImage[2];
-
-            marioWalk[0] = cargarImagen(spritesURL.MARIO_WALK_1.getSpriteURL());
-            marioWalk[1] = cargarImagen(spritesURL.MARIO_WALK_2.getSpriteURL());
-
+            mario = ImageIO.read(is);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
     // Método que se encarga de darle un tamaño al panel
-    public void setTamanioPanel(){
+    private void setTamanioPanel(){
         Dimension tamanio = new Dimension(1280, 800);
         setPreferredSize(tamanio);
+    }
+
+    // Funcion que se encarga de actualizar la direccion del jugador
+    public void setDireccion(Direcciones direccion) {
+        this.jugadorDireccion = direccion;
+        moviendose = true;
+    }
+
+    // Funcion que se encarga de actualizar si el jugador se esta moviendo o no
+    public void setMoviendose(boolean moviendose) {
+        this.moviendose = moviendose;
+    }
+
+    private void setPosicion() {
+        if (moviendose) {
+            switch (jugadorDireccion) {
+                case ARRIBA:
+                    yDelta -= 5;
+                    break;
+                case DERECHA:
+                    xDelta += 5;
+                    break;
+                case ABAJO:
+                    yDelta += 5;
+                    break;
+                case IZQUIERDA:
+                    xDelta -= 5;
+                    break;
+            }
+        }
+    }
+
+    public void updateJuego() {
+        setPosicion();
     }
 
     /**
@@ -78,21 +108,7 @@ public class Panel extends JPanel {
         // Limpia la pantalla para luego dibujar lo que le pidamos
         super.paintComponent(g);
 
-        updateAnimationTick();
-        
-        g.drawImage(marioWalk[aniIndice], xDelta, yDelta, UNIDAD, UNIDAD*2 - UNIDAD/4, null);
-
-    }
-
-    private void updateAnimationTick() {
-        aniTick++;
-
-        if(aniTick >= velCambio) {
-            aniTick = 0;
-            aniIndice++;
-            if (aniIndice >= marioWalk.length)
-                aniIndice = 0;
-        }
+        g.drawImage(mario, (int)xDelta, (int)yDelta, UNIDAD, UNIDAD + UNIDAD/2, null);
     }
 
 

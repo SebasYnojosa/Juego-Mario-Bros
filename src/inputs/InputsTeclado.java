@@ -1,6 +1,7 @@
 package inputs;
 
 import main.Panel;
+import utilidades.Direcciones;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,23 +22,23 @@ public class InputsTeclado implements KeyListener {
     // Se activa mientras una tecla se mantiene presionada
     @Override
     public void keyPressed(KeyEvent e) {
-        // Movera el rectangulo segun la tecla que se presione
+        // Movera el personaje segun la tecla presionada
         switch (e.getKeyCode()){
             // Arriba
             case KeyEvent.VK_W:
-                panel.cambiaryDelta(-10);
+                panel.setDireccion(Direcciones.ARRIBA);
                 break;
             // Abajo
             case KeyEvent.VK_S:
-                panel.cambiaryDelta(10);
+                panel.setDireccion(Direcciones.ABAJO);
                 break;
             // Izquierda
             case KeyEvent.VK_A:
-                panel.cambiarxDelta(-10);
+                panel.setDireccion(Direcciones.IZQUIERDA);
                 break;
             // Derecha
             case KeyEvent.VK_D:
-                panel.cambiarxDelta(10);
+                panel.setDireccion(Direcciones.DERECHA);
                 break;
         }
     }
@@ -45,5 +46,14 @@ public class InputsTeclado implements KeyListener {
     // Se activa cuando se suelta una tecla
     @Override
     public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_S:
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_D:
+                panel.setMoviendose(false);
+                panel.setDireccion(Direcciones.QUIETO);
+                break;
+        }
     }
 }

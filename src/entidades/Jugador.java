@@ -20,6 +20,8 @@ public class Jugador extends Entidad {
     private boolean corriendo = false;
     private boolean arriba, abajo, izquierda, derecha;
     private float velocidad;
+    private static final int ALTURA = 2 * UNIDAD;
+    private static final int ANCHURA = UNIDAD + UNIDAD/4;
 
 
     public Jugador(float x, float y) {
@@ -34,7 +36,7 @@ public class Jugador extends Entidad {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, UNIDAD, UNIDAD + UNIDAD/2, null);
+        g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, ANCHURA, ALTURA, null);
     }
 
     private void setPosicion() {

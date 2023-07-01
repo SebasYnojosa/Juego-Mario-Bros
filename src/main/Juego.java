@@ -1,6 +1,7 @@
 package main;
 
 import entidades.Jugador;
+import niveles.Niveles;
 
 import java.awt.*;
 
@@ -16,6 +17,7 @@ public class Juego implements Runnable {
     private final int UPS = 120;
 
     private Jugador jugador;
+    private Niveles manejaNiveles;
 
     public static final int UNIDAD = 32;
     public static final int UNIDADES_ANCHO = 32;
@@ -25,6 +27,7 @@ public class Juego implements Runnable {
 
     public Juego() {
         jugador = new Jugador(200, 200);
+        manejaNiveles = new Niveles(this);
         panel = new Panel(this);
         ventana = new Ventana(panel);
 
@@ -43,10 +46,12 @@ public class Juego implements Runnable {
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
         jugador.update();
+        manejaNiveles.update();
     }
 
     public void render(Graphics g) {
         panel.dibujarFondo(g);
+        manejaNiveles.render(g);
         jugador.render(g);
     }
 

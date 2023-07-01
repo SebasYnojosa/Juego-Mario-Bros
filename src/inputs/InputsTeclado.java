@@ -21,23 +21,23 @@ public class InputsTeclado implements KeyListener {
     // Se activa mientras una tecla se mantiene presionada
     @Override
     public void keyPressed(KeyEvent e) {
-        // Movera el rectangulo segun la tecla que se presione
+        // Movera el personaje segun la tecla presionada
         switch (e.getKeyCode()){
             // Arriba
             case KeyEvent.VK_W:
-                panel.cambiaryDelta(-10);
+                panel.getJuego().getJugador().setArriba(true);
                 break;
             // Abajo
             case KeyEvent.VK_S:
-                panel.cambiaryDelta(10);
+                panel.getJuego().getJugador().setAbajo(true);
                 break;
             // Izquierda
             case KeyEvent.VK_A:
-                panel.cambiarxDelta(-10);
+                panel.getJuego().getJugador().setIzquierda(true);
                 break;
             // Derecha
             case KeyEvent.VK_D:
-                panel.cambiarxDelta(10);
+                panel.getJuego().getJugador().setDerecha(true);
                 break;
         }
     }
@@ -45,5 +45,19 @@ public class InputsTeclado implements KeyListener {
     // Se activa cuando se suelta una tecla
     @Override
     public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_W:
+                panel.getJuego().getJugador().setArriba(false);
+                break;
+            case KeyEvent.VK_S:
+                panel.getJuego().getJugador().setAbajo(false);
+                break;
+            case KeyEvent.VK_A:
+                panel.getJuego().getJugador().setIzquierda(false);
+                break;
+            case KeyEvent.VK_D:
+                panel.getJuego().getJugador().setDerecha(false);
+                break;
+        }
     }
 }

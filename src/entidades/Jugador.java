@@ -3,7 +3,7 @@ package entidades;
 import utilidades.Animaciones;
 import utilidades.SpritesURL;
 
-import static main.Juego.UNIDAD;
+import static main.Juego.*;
 import static utilidades.Archivos.*;
 
 import java.awt.*;
@@ -18,6 +18,9 @@ public class Jugador extends Entidad {
     private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
     private boolean moviendose = false;
     private boolean corriendo = false;
+    private boolean agachado = false;
+    private boolean mirarIzquierda = false;
+    private boolean mirarDerecha = true;
     private boolean arriba, abajo, izquierda, derecha;
     private float velocidad;
     private static final int ALTURA = 2 * UNIDAD;
@@ -36,7 +39,12 @@ public class Jugador extends Entidad {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, ANCHURA, ALTURA, null);
+        if (mirarIzquierda)
+            // -ANCHURA hace que se voltee el sprite
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, -ANCHURA, ALTURA, null);
+        else
+            // ANCHURA hace que se dibuje el sprite de forma normal y el x-ANCHURA sirve para que el sprite no
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x-ANCHURA, (int)y, ANCHURA, ALTURA, null);
     }
 
     private void setPosicion() {
@@ -47,25 +55,42 @@ public class Jugador extends Entidad {
         else
             velocidad = 3.5f;
 
-        // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
-        if (izquierda && !derecha) {
-            x -= velocidad;
-            moviendose = true;
-        }
-        else if (derecha && !izquierda) {
-            x += velocidad;
-            moviendose = true;
+        if (!agachado) {
+            // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
+            if (izquierda && !derecha) {
+                x -= velocidad;
+                moviendose = true;
+                mirarIzquierda = true;
+                mirarDerecha = false;
+            }
+            else if (derecha && !izquierda) {
+                x += velocidad;
+                moviendose = true;
+                mirarDerecha = true;
+                mirarIzquierda = false;
+            }
+
+
+            // Esto es para que el jugador no se pueda mover si presiona arriba y abajo a la vez
+            if (arriba && !abajo) {
+                y -= velocidad;
+                moviendose = true;
+            }
+            else if (abajo && !arriba) {
+                y += velocidad;
+                moviendose = true;
+            }
         }
 
-        // Esto es para que el jugador no se pueda mover si presiona arriba y abajo a la vez
-        if (arriba && !abajo) {
-            y -= velocidad;
-            moviendose = true;
-        }
-        else if (abajo && !arriba) {
-            y += velocidad;
-            moviendose = true;
-        }
+        // Si el jugador llega a uno de los bordes de la pantalla, lo manda a otro borde
+        if (x < 0)
+            x = ANCHO_VENTANA+ANCHURA;
+        if (x > ANCHO_VENTANA+ANCHURA)
+            x = 0;
+        if (y < 0-ALTURA)
+            y = ALTO_VENTANA;
+        if (y > ALTO_VENTANA)
+            y = 0-ALTURA;
     }
 
     private void cargarAnimaciones() {
@@ -82,11 +107,14 @@ public class Jugador extends Entidad {
     }
 
     private void cambiarAccion() {
-        if (moviendose && corriendo) {
+        if (moviendose && corriendo && !agachado) {
             accionActual = Animaciones.Jugador.CORRIENDO;
         }
-        else if (moviendose && !corriendo) {
+        else if (moviendose && !corriendo && !agachado) {
             accionActual = Animaciones.Jugador.CAMINANDO;
+        }
+        else if (agachado) {
+            accionActual = Animaciones.Jugador.AGACHADO;
         }
         else {
             accionActual = Animaciones.Jugador.QUIETO;
@@ -117,6 +145,7 @@ public class Jugador extends Entidad {
     public void resetDirecciones() {
         izquierda = arriba = abajo = derecha = false;
         corriendo = false;
+        agachado = false;
     }
 
     public void setCorriendo(boolean corriendo) {
@@ -155,5 +184,7 @@ public class Jugador extends Entidad {
         this.derecha = derecha;
     }
 
-
+    public void setAgachado(boolean agachado) {
+        this.agachado = agachado;
+    }
  }

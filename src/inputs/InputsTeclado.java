@@ -45,6 +45,11 @@ public class InputsTeclado implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             panel.getJuego().getJugador().setCorriendo(true);
         }
+
+        // El jugador se agachara
+        if (e.getKeyCode() == KeyEvent.VK_C) {
+            panel.getJuego().getJugador().setAgachado(true);
+        }
     }
 
     // Se activa cuando se suelta una tecla
@@ -68,6 +73,11 @@ public class InputsTeclado implements KeyListener {
         // El jugador dejara de correr
         if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             panel.getJuego().getJugador().setCorriendo(false);
+        }
+
+        // El jugador dejara de agacharse
+        if (e.getKeyCode() == KeyEvent.VK_C) {
+            panel.getJuego().getJugador().setAgachado(false);
         }
     }
 }

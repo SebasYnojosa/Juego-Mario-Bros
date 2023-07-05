@@ -1,7 +1,7 @@
 package main;
 
 import entidades.Jugador;
-import niveles.Niveles;
+import niveles.ManejaNiveles;
 
 import java.awt.*;
 
@@ -17,17 +17,23 @@ public class Juego implements Runnable {
     private final int UPS = 120;
 
     private Jugador jugador;
-    private Niveles manejaNiveles;
+    private ManejaNiveles manejaNiveles;
 
     public static final int UNIDAD = 32;
-    public static final int UNIDADES_ANCHO = 32;
-    public static final int UNIDADES_ALTURA = 20;
+    public static final int UNIDADES_ANCHO = 26;
+    public static final int UNIDADES_ALTURA = 14;
     public static final int ANCHO_VENTANA = UNIDADES_ANCHO * UNIDAD;
     public static final int ALTO_VENTANA = UNIDADES_ALTURA * UNIDAD;
 
+
+    public static final int ALTURA_JUGADOR = 2 * UNIDAD;
+    public static final int ANCHURA_JUGADOR = UNIDAD + UNIDAD/4;
+
     public Juego() {
-        jugador = new Jugador(200, 200);
-        manejaNiveles = new Niveles(this);
+        manejaNiveles = new ManejaNiveles(this);
+        jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR);
+        jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
+
         panel = new Panel(this);
         ventana = new Ventana(panel);
 
@@ -51,8 +57,8 @@ public class Juego implements Runnable {
 
     public void render(Graphics g) {
         panel.dibujarFondo(g);
-        manejaNiveles.render(g);
         jugador.render(g);
+        manejaNiveles.render(g);
     }
 
     // Codigo que queremos que se ejecute en un hilo diferente al principal para tener un rendimiento mas consistente

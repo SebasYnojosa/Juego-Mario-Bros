@@ -2,27 +2,25 @@ package utilidades;
 
 public class Animaciones {
     public enum Jugador {
-        QUIETO(1,0),
-        AGACHADO(1,1),
-        CAMINANDO(2,2),
-        CORRIENDO(3,3),
-        FRENANDO(1,4),
-        NADANDO(4,5),
-        SALTANDO(1,6),
-        SALTANDO_CORRIENDO(1,7),
-        AGARRANDO_CAMINANDO(2,8),
-        TUBERIA(1,9),
-        RESBALANDO(1,10),
-        AGARRANDO_QUIETO(1,11),
-        TREPANDO(1,12),
-        TIRANDO(1,13);
+        QUIETO(1),
+        AGACHADO(1),
+        CAMINANDO(2),
+        CORRIENDO(3),
+        FRENANDO(1),
+        NADANDO(4),
+        SALTANDO(1),
+        SALTANDO_CORRIENDO(1),
+        AGARRANDO_CAMINANDO(2),
+        TUBERIA(1),
+        RESBALANDO(1),
+        AGARRANDO_QUIETO(1),
+        TREPANDO(1),
+        TIRANDO(1);
 
         final int cantidadDeFrames;
-        final int posicion;
 
-        Jugador(int cantidadDeFrames, int posicion) {
+        Jugador(int cantidadDeFrames) {
             this.cantidadDeFrames = cantidadDeFrames;
-            this.posicion = posicion;
         }
 
         public int getCantidadDeFrames() {
@@ -30,7 +28,7 @@ public class Animaciones {
         }
 
         public int getPosicion() {
-            return posicion;
+            return ordinal();
         }
     }
 }

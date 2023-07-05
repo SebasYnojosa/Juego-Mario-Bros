@@ -2,17 +2,14 @@ package main;
 
 import inputs.InputsMouse;
 import inputs.InputsTeclado;
-import utilidades.SpritesURL;
+import utilidades.ImagenURL;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static main.Juego.*;
-import static utilidades.Archivos.cargarSprites;
+import static utilidades.Archivos.cargarImagen;
 
 // Clase que se encarga de dibujar los graficos del juego en la ventana
 public class Panel extends JPanel {
@@ -45,7 +42,7 @@ public class Panel extends JPanel {
     }
 
     private void cargarImagenes() {
-        fondo = cargarSprites(SpritesURL.FONDO);
+        fondo = cargarImagen(ImagenURL.FONDO);
     }
 
     // Método que se encarga de darle un tamaño al panel

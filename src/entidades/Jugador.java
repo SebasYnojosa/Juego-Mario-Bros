@@ -1,10 +1,10 @@
 package entidades;
 
 import utilidades.Animaciones;
-import utilidades.SpritesURL;
+import utilidades.ImagenURL;
 
-import static main.Juego.*;
 import static utilidades.Archivos.*;
+import static utilidades.Ayuda.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,13 +23,22 @@ public class Jugador extends Entidad {
     private boolean mirarDerecha = true;
     private boolean arriba, abajo, izquierda, derecha;
     private float velocidad;
-    private static final int ALTURA = 2 * UNIDAD;
-    private static final int ANCHURA = UNIDAD + UNIDAD/4;
+
+    // Atributo que le pasa la informacion del nivel al jugador para que pueda moverse por el con la hitbox
+    private int[][] infoNivel;
+
+    private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
+    private float alturaHitbox = 55, anchuraHitbox = 25;
 
 
-    public Jugador(float x, float y) {
-        super(x, y);
+    public Jugador(float x, float y, int anchura, int altura) {
+        super(x, y, anchura, altura);
         cargarAnimaciones();
+        inicializarHitbox(x, y, anchuraHitbox, alturaHitbox);
+    }
+
+    public void cargarInfoNivel(int[][] infoNivel) {
+        this.infoNivel = infoNivel;
     }
 
     public void update() {
@@ -39,16 +48,27 @@ public class Jugador extends Entidad {
     }
 
     public void render(Graphics g) {
+        mostrarHitbox(g);
+//        if (mirarIzquierda)
+//            // -ANCHURA hace que se voltee el sprite
+//            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(hitbox.x+anchura - diferenciaHitboxX), (int)(hitbox.y - diferenciaHitboxY), -anchura, altura, null);
+//        else
+//            // ANCHURA hace que se dibuje el sprite de forma normal y el x-ANCHURA sirve para que el sprite no
+//            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(hitbox.x - diferenciaHitboxX), (int)(hitbox.y - diferenciaHitboxY), anchura, altura, null);
+        float x = hitbox.x - diferenciaHitboxX;
+        float y = hitbox.y - diferenciaHitboxY;
         if (mirarIzquierda)
-            // -ANCHURA hace que se voltee el sprite
-            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, -ANCHURA, ALTURA, null);
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura), (int)y, -anchura, altura, null);
         else
-            // ANCHURA hace que se dibuje el sprite de forma normal y el x-ANCHURA sirve para que el sprite no
-            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x-ANCHURA, (int)y, ANCHURA, ALTURA, null);
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, anchura, altura, null);
     }
 
     private void setPosicion() {
         moviendose = false;
+        if (!izquierda && !derecha && !arriba && !abajo)
+            return;
+
+        float xVelocidad = 0, yVelocidad = 0;
 
         if (corriendo)
             velocidad = 5.0f;
@@ -58,43 +78,33 @@ public class Jugador extends Entidad {
         if (!agachado) {
             // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
             if (izquierda && !derecha) {
-                x -= velocidad;
-                moviendose = true;
+                xVelocidad = -velocidad;
                 mirarIzquierda = true;
                 mirarDerecha = false;
             }
             else if (derecha && !izquierda) {
-                x += velocidad;
-                moviendose = true;
+                xVelocidad = velocidad;
                 mirarDerecha = true;
                 mirarIzquierda = false;
             }
 
 
             // Esto es para que el jugador no se pueda mover si presiona arriba y abajo a la vez
-            if (arriba && !abajo) {
-                y -= velocidad;
-                moviendose = true;
-            }
-            else if (abajo && !arriba) {
-                y += velocidad;
+            if (arriba && !abajo)
+                yVelocidad = -velocidad;
+            else if (abajo && !arriba)
+                yVelocidad = velocidad;
+
+            if(sePuedeMover(hitbox.x + xVelocidad, hitbox.y + yVelocidad, hitbox.width, hitbox.height, infoNivel)) {
+                hitbox.x += xVelocidad;
+                hitbox.y += yVelocidad;
                 moviendose = true;
             }
         }
-
-        // Si el jugador llega a uno de los bordes de la pantalla, lo manda a otro borde
-        if (x < 0)
-            x = ANCHO_VENTANA+ANCHURA;
-        if (x > ANCHO_VENTANA+ANCHURA)
-            x = 0;
-        if (y < 0-ALTURA)
-            y = ALTO_VENTANA;
-        if (y > ALTO_VENTANA)
-            y = 0-ALTURA;
     }
 
     private void cargarAnimaciones() {
-        imagenes = cargarSprites(SpritesURL.MARIO_SPRITESHEET);
+        imagenes = cargarImagen(ImagenURL.MARIO_SPRITESHEET);
 
         // Son 14 animaciones en total y la que tiene mas frames tiene 4
         animaciones = new BufferedImage[14][4];

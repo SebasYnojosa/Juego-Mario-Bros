@@ -43,6 +43,7 @@ public class Jugador extends Entidad {
 
     public void update() {
         setPosicion();
+        updateHitbox();
         cambiarAccion();
         actualizarAnimacion();
     }
@@ -57,10 +58,25 @@ public class Jugador extends Entidad {
 //            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(hitbox.x - diferenciaHitboxX), (int)(hitbox.y - diferenciaHitboxY), anchura, altura, null);
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
+
+        if (agachado)
+            y = hitbox.y + alturaHitbox / 2 - altura;
+
         if (mirarIzquierda)
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura), (int)y, -anchura, altura, null);
         else
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, anchura, altura, null);
+    }
+
+    private void updateHitbox() {
+        if (agachado) {
+            hitbox.height = alturaHitbox / 2;
+            hitbox.y = y + alturaHitbox / 2;
+        }
+        else {
+            hitbox.height = alturaHitbox;
+            hitbox.y = y;
+        }
     }
 
     private void setPosicion() {
@@ -98,6 +114,7 @@ public class Jugador extends Entidad {
             if(sePuedeMover(hitbox.x + xVelocidad, hitbox.y + yVelocidad, hitbox.width, hitbox.height, infoNivel)) {
                 hitbox.x += xVelocidad;
                 hitbox.y += yVelocidad;
+                y += yVelocidad;
                 moviendose = true;
             }
         }

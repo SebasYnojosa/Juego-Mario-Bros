@@ -18,14 +18,20 @@ public class Jugador extends Entidad {
     private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
     private boolean moviendose = false;
     private boolean corriendo = false;
-    private boolean agachado = false;
     private boolean mirarIzquierda = false;
     private boolean mirarDerecha = true;
-    private boolean arriba, abajo, izquierda, derecha;
+    private boolean izquierda, derecha;
     private float velocidad;
 
     // Atributo que le pasa la informacion del nivel al jugador para que pueda moverse por el con la hitbox
     private int[][] infoNivel;
+
+    // Variables para el salto y movimiento aereo
+    private float velocidadAire = 0f;
+    private float gravedad = 0.1f;
+    private float velocidadSalto = -5.5f;
+    private float velocidadCaida = 0.5f;
+    private boolean enAire = false ,saltando = false;
 
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
@@ -43,24 +49,14 @@ public class Jugador extends Entidad {
 
     public void update() {
         setPosicion();
-        updateHitbox();
         cambiarAccion();
         actualizarAnimacion();
     }
 
     public void render(Graphics g) {
         mostrarHitbox(g);
-//        if (mirarIzquierda)
-//            // -ANCHURA hace que se voltee el sprite
-//            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(hitbox.x+anchura - diferenciaHitboxX), (int)(hitbox.y - diferenciaHitboxY), -anchura, altura, null);
-//        else
-//            // ANCHURA hace que se dibuje el sprite de forma normal y el x-ANCHURA sirve para que el sprite no
-//            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(hitbox.x - diferenciaHitboxX), (int)(hitbox.y - diferenciaHitboxY), anchura, altura, null);
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
-
-        if (agachado)
-            y = hitbox.y + alturaHitbox / 2 - altura;
 
         if (mirarIzquierda)
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura), (int)y, -anchura, altura, null);
@@ -68,57 +64,74 @@ public class Jugador extends Entidad {
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, anchura, altura, null);
     }
 
-    private void updateHitbox() {
-        if (agachado) {
-            hitbox.height = alturaHitbox / 2;
-            hitbox.y = y + alturaHitbox / 2;
-        }
-        else {
-            hitbox.height = alturaHitbox;
-            hitbox.y = y;
-        }
-    }
-
     private void setPosicion() {
         moviendose = false;
-        if (!izquierda && !derecha && !arriba && !abajo)
+
+        if (saltando)
+            saltar();
+        if (!izquierda && !derecha && !enAire)
             return;
 
-        float xVelocidad = 0, yVelocidad = 0;
+        float xVelocidad = 0;
 
         if (corriendo)
             velocidad = 5.0f;
         else
             velocidad = 3.5f;
 
-        if (!agachado) {
-            // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
-            if (izquierda && !derecha) {
-                xVelocidad = -velocidad;
-                mirarIzquierda = true;
-                mirarDerecha = false;
-            }
-            else if (derecha && !izquierda) {
-                xVelocidad = velocidad;
-                mirarDerecha = true;
-                mirarIzquierda = false;
-            }
+        // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
+        if (izquierda) {
+            xVelocidad -= velocidad;
+            mirarIzquierda = true;
+            mirarDerecha = false;
+        }
+        else if (derecha) {
+            xVelocidad += velocidad;
+            mirarDerecha = true;
+            mirarIzquierda = false;
+        }
 
+        if (!enAire) {
+            if (!enSuelo(hitbox, infoNivel))
+                enAire = true;
+        }
 
-            // Esto es para que el jugador no se pueda mover si presiona arriba y abajo a la vez
-            if (arriba && !abajo)
-                yVelocidad = -velocidad;
-            else if (abajo && !arriba)
-                yVelocidad = velocidad;
-
-            if(sePuedeMover(hitbox.x + xVelocidad, hitbox.y + yVelocidad, hitbox.width, hitbox.height, infoNivel)) {
-                hitbox.x += xVelocidad;
-                hitbox.y += yVelocidad;
-                y += yVelocidad;
-                moviendose = true;
+        if (enAire) {
+            if (sePuedeMover(hitbox.x, hitbox.y + velocidadAire, hitbox.width, hitbox.height, infoNivel)){
+                hitbox.y += velocidadAire;
+                velocidadAire += gravedad;
+                actualizarPosicionX(xVelocidad);
+            } else {
+                if (velocidadAire > 0)
+                    detenerEnAire();
+                else
+                    velocidadAire = velocidadCaida;
+                actualizarPosicionX(xVelocidad);
             }
+        } else
+            actualizarPosicionX(xVelocidad);
+
+        moviendose = true;
+    }
+
+    private void saltar() {
+        if (enAire)
+            return;
+        enAire = true;
+        velocidadAire = velocidadSalto;
+    }
+
+    private void detenerEnAire() {
+        enAire = false;
+        velocidadAire = 0;
+    }
+
+    private void actualizarPosicionX(float xVelocidad) {
+        if (sePuedeMover(hitbox.x + xVelocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel)) {
+            hitbox.x += xVelocidad;
         }
     }
+
 
     private void cargarAnimaciones() {
         imagenes = cargarImagen(ImagenURL.MARIO_SPRITESHEET);
@@ -134,18 +147,17 @@ public class Jugador extends Entidad {
     }
 
     private void cambiarAccion() {
-        if (moviendose && corriendo && !agachado) {
+        if (moviendose && corriendo && !enAire)
             accionActual = Animaciones.Jugador.CORRIENDO;
-        }
-        else if (moviendose && !corriendo && !agachado) {
+        else if (moviendose && !corriendo && !enAire)
             accionActual = Animaciones.Jugador.CAMINANDO;
-        }
-        else if (agachado) {
-            accionActual = Animaciones.Jugador.AGACHADO;
-        }
-        else {
+        else
             accionActual = Animaciones.Jugador.QUIETO;
-        }
+
+        if (enAire && !corriendo)
+            accionActual = Animaciones.Jugador.SALTANDO;
+        else if (enAire && corriendo)
+            accionActual = Animaciones.Jugador.SALTANDO_CORRIENDO;
     }
 
     public void actualizarAnimacion() {
@@ -170,29 +182,12 @@ public class Jugador extends Entidad {
 
     // Se activa en el caso de que el juego se detenga para evitar errores
     public void resetDirecciones() {
-        izquierda = arriba = abajo = derecha = false;
+        izquierda = derecha = false;
         corriendo = false;
-        agachado = false;
     }
 
     public void setCorriendo(boolean corriendo) {
         this.corriendo = corriendo;
-    }
-
-    public boolean isArriba() {
-        return arriba;
-    }
-
-    public void setArriba(boolean arriba) {
-        this.arriba = arriba;
-    }
-
-    public boolean isAbajo() {
-        return abajo;
-    }
-
-    public void setAbajo(boolean abajo) {
-        this.abajo = abajo;
     }
 
     public boolean isIzquierda() {
@@ -211,7 +206,11 @@ public class Jugador extends Entidad {
         this.derecha = derecha;
     }
 
-    public void setAgachado(boolean agachado) {
-        this.agachado = agachado;
+    public void setSaltando(boolean saltando){
+        this.saltando = saltando;
+    }
+
+    public boolean isEnAire() {
+        return enAire;
     }
  }

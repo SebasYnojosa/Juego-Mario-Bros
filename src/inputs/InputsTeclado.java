@@ -16,6 +16,7 @@ public class InputsTeclado implements KeyListener {
     // Se activa cuando se toca una tecla
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     // Se activa mientras una tecla se mantiene presionada
@@ -23,14 +24,6 @@ public class InputsTeclado implements KeyListener {
     public void keyPressed(KeyEvent e) {
         // Movera el personaje segun la tecla presionada
         switch (e.getKeyCode()){
-            // Arriba
-            case KeyEvent.VK_W:
-                panel.getJuego().getJugador().setArriba(true);
-                break;
-            // Abajo
-            case KeyEvent.VK_S:
-                panel.getJuego().getJugador().setAbajo(true);
-                break;
             // Izquierda
             case KeyEvent.VK_A:
                 panel.getJuego().getJugador().setIzquierda(true);
@@ -39,16 +32,18 @@ public class InputsTeclado implements KeyListener {
             case KeyEvent.VK_D:
                 panel.getJuego().getJugador().setDerecha(true);
                 break;
+            // Pondra a correr al jugador
+            case KeyEvent.VK_SHIFT:
+                panel.getJuego().getJugador().setCorriendo(true);
+                break;
+            // El jugador empezara a saltar
+            case KeyEvent.VK_SPACE:
+                panel.getJuego().getJugador().setSaltando(true);
+                break;
         }
 
-        // Pondra a correr al jugador
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            panel.getJuego().getJugador().setCorriendo(true);
-        }
-
-        // El jugador se agachara
-        if (e.getKeyCode() == KeyEvent.VK_C) {
-            panel.getJuego().getJugador().setAgachado(true);
+        if (e.getKeyCode() == KeyEvent.VK_O) {
+            panel.getJuego().setCuadriculaActivada(!panel.getJuego().isCuadriculaActivada());
         }
     }
 
@@ -56,28 +51,21 @@ public class InputsTeclado implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                panel.getJuego().getJugador().setArriba(false);
-                break;
-            case KeyEvent.VK_S:
-                panel.getJuego().getJugador().setAbajo(false);
-                break;
             case KeyEvent.VK_A:
                 panel.getJuego().getJugador().setIzquierda(false);
                 break;
             case KeyEvent.VK_D:
                 panel.getJuego().getJugador().setDerecha(false);
                 break;
+            // El jugador dejara de correr
+            case KeyEvent.VK_SHIFT:
+                panel.getJuego().getJugador().setCorriendo(false);
+                break;
+            // El jugador dejara de saltar
+            case KeyEvent.VK_SPACE:
+                panel.getJuego().getJugador().setSaltando(false);
+                break;
         }
 
-        // El jugador dejara de correr
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            panel.getJuego().getJugador().setCorriendo(false);
-        }
-
-        // El jugador dejara de agacharse
-        if (e.getKeyCode() == KeyEvent.VK_C) {
-            panel.getJuego().getJugador().setAgachado(false);
-        }
     }
 }

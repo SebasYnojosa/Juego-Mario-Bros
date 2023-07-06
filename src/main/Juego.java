@@ -19,13 +19,13 @@ public class Juego implements Runnable {
     private Jugador jugador;
     private ManejaNiveles manejaNiveles;
 
+    private boolean cuadriculaActivada = false;
+
     public static final int UNIDAD = 32;
     public static final int UNIDADES_ANCHO = 26;
     public static final int UNIDADES_ALTURA = 14;
     public static final int ANCHO_VENTANA = UNIDADES_ANCHO * UNIDAD;
     public static final int ALTO_VENTANA = UNIDADES_ALTURA * UNIDAD;
-
-
     public static final int ALTURA_JUGADOR = 2 * UNIDAD;
     public static final int ANCHURA_JUGADOR = UNIDAD + UNIDAD/4;
 
@@ -59,6 +59,18 @@ public class Juego implements Runnable {
         panel.dibujarFondo(g);
         jugador.render(g);
         manejaNiveles.render(g);
+        if (cuadriculaActivada)
+            mostrarCuadricula(g);
+    }
+
+    // Debug cuadricula del juego
+    public void mostrarCuadricula(Graphics g) {
+        g.setColor(Color.BLUE);
+        for (int j = 0; j < UNIDADES_ALTURA; ++j){
+            for (int i = 0; i < UNIDADES_ANCHO; ++i) {
+                g.drawRect(i*UNIDAD, j*UNIDAD, UNIDAD, UNIDAD);
+            }
+        }
     }
 
     // Codigo que queremos que se ejecute en un hilo diferente al principal para tener un rendimiento mas consistente
@@ -115,5 +127,13 @@ public class Juego implements Runnable {
 
     public void jugadorSeSalioDeVentana() {
         jugador.resetDirecciones();
+    }
+
+    public void setCuadriculaActivada(boolean cuadriculaActivada) {
+        this.cuadriculaActivada = cuadriculaActivada;
+    }
+
+    public boolean isCuadriculaActivada() {
+        return cuadriculaActivada;
     }
 }

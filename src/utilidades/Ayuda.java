@@ -2,7 +2,11 @@ package utilidades;
 
 import main.Juego;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.security.cert.TrustAnchor;
+
+import static main.Juego.UNIDAD;
 
 public class Ayuda {
 
@@ -18,8 +22,8 @@ public class Ayuda {
         if (x < 0 || y < 0 || x >= Juego.ANCHO_VENTANA || y >= Juego.ALTO_VENTANA)
             return true;
 
-        float xIndice = x / Juego.UNIDAD;
-        float yIndice = y / Juego.UNIDAD;
+        float xIndice = x / UNIDAD;
+        float yIndice = y / UNIDAD;
 
         int valor = infoNivel[(int)yIndice][(int)xIndice];
 
@@ -28,5 +32,12 @@ public class Ayuda {
             return true;
         else
             return false;
+    }
+
+    public static boolean enSuelo(Rectangle2D.Float hitbox, int[][] infoNivel) {
+        if (!esSolido(hitbox.x, hitbox.y+ hitbox.height+1, infoNivel))
+            if (!esSolido(hitbox.x + hitbox.width, hitbox.y + hitbox.height+1, infoNivel))
+                return false;
+        return true;
     }
 }

@@ -3,10 +3,13 @@ package main;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import menus.Frame1;
 
 // Ventana principal en la cual se mostraran los graficos del juego
 public class Ventana extends JFrame {
-    public Ventana(Panel panel) {
+    Frame1 frame;
+
+    public Ventana(Panel panel, Frame1 frame) {
         setTitle("Juego");
 
         // Esta funcion indica que la ventana aparecera en el medio de la pantalla

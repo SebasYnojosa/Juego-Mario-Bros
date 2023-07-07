@@ -3,27 +3,29 @@ package menus;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import main.*;
 
 public class Frame1 extends JFrame {
     //Atributos
-    static int MENUP = 0, MENUINIC = 1, MENUREG = 2, MENUIP = 3, SELECPJ = 4, STATS = 5, RANKING = 6, AYUDA = 7;
+    public static int MENUP = 0, MENUINIC = 1, MENUREG = 2, MENUIP = 3, SELECPJ = 4, STATS = 5, RANKING = 6, AYUDA = 7;
     static int LV1 = 0, LV2 = 1, LV3 = 2, LV4 = 4;
     private JPanel[] menus;
-    private JPanel nivelAct;
+    //private JPanel nivelAct;
     private Usuario usuario;
+    private Juego juego;
 
     public Frame1() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         menus = new JPanel[8];
-        nivelAct = null;
+        //nivelAct = null;
 
         //Localizar paneles de menus
         menus[MENUP] = new MenuP(this);
         menus[MENUINIC] = new MenuIic(this);
         menus[MENUREG] = new MenuReg(this);
         menus[MENUIP] = new MenuIP(this);
-        //menus[SELECPJ] = new SelecPJ(this);
+        menus[SELECPJ] = new SelecPJ(this);
         menus[STATS] = new Stats(this);
         //menus[RANKING] = new Ranking(this);
         menus[AYUDA] = new Ayuda(this);
@@ -45,8 +47,8 @@ public class Frame1 extends JFrame {
     }
     
     public void cambiarNiveles(int sig){
-        nivelAct.setVisible(false);
-        this.remove(nivelAct);
+        //nivelAct.setVisible(false);
+        //this.remove(nivelAct);
 
         switch (sig){
             case 1:
@@ -62,49 +64,34 @@ public class Frame1 extends JFrame {
                 //nivelAct = new lvl4();
                 break;
         }
-        this.add(nivelAct,BorderLayout.CENTER);
-        nivelAct.setVisible(true);
+        //this.add(nivelAct,BorderLayout.CENTER);
+        //nivelAct.setVisible(true);
     }
     
-    public void cambiarMenuNivel(int act, int sig){
+    public void cambiarMenuNivel(int act){
         menus[act].setVisible(false);
-        this.remove(menus[act]);
-        switch (sig){
-            case 1:
-                //nivelAct = new lvl1();
-                break;
-            case 2:
-                //nivelAct = new lvl2();
-                break;
-            case 3:
-                //nivelAct = new lvl3();
-                break;
-            case 4:
-                //nivelAct = new lvl4();
-                break;
-        }
-        this.add(nivelAct,BorderLayout.CENTER);
-        nivelAct.setVisible(true);
+        //this.remove(menus[act]);
+        this.setVisible(false);
+
+        juego = new Juego(((SelecPJ)(menus[act])).getLocalPJ(), this);
+
+        //this.add(nivelAct,BorderLayout.CENTER);
+        //nivelAct.setVisible(true);
     }
     
     //Sets y Gets
-
     public JPanel[] getMenus() {
-
         return menus;
     }
     public void setMenus(JPanel[] menus) {
         this.menus = menus;
     }
-
     public Usuario getUsuario() {
         return usuario;
     }
-
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

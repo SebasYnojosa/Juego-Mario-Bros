@@ -1,6 +1,8 @@
 package main;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 // Ventana principal en la cual se mostraran los graficos del juego
 public class Ventana extends JFrame {
@@ -23,5 +25,19 @@ public class Ventana extends JFrame {
         pack();
 
         setVisible(true);
+
+        // Esto verifica si el usuario esta en la ventana o no
+        addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                System.out.println("Soy yo, Mario!");
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                System.out.println("Por qué te fuiste? :(");
+                panel.getJuego().jugadorSeSalioDeVentana();
+            }
+        });
     }
 }

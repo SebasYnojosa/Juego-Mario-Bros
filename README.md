@@ -11,7 +11,7 @@ Repositorio para nuestro proyecto final de la materia Programación III sobre un
 6. Player Class (Completado)
 7. Level Creation (Completado)
 8. Collision Detection (Completado)
-9. Gravity
+9. Gravity (Completado)
 10. Game States
 11. Menu Creation
 12. Pause Screen
@@ -32,3 +32,23 @@ Repositorio para nuestro proyecto final de la materia Programación III sobre un
 27. Final Episode
 28. Multiplayer
 29. Play to find bugs
+
+## Tareas Individuales:
+
+### Angel:
+- Cambiar orden de los sprites (Personajes Jugables)
+- Agregar sprites de powerups.
+- Empezar a agregar niveles (Caverna, Superficie)
+
+### Luis:
+
+- Menus
+- Gamestates
+- Pausa
+- Puntuaciones
+- PJ Select screen
+
+### Sebastian:
+
+- Seguir el tutorial
+- Agregar enemigos

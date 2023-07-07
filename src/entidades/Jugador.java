@@ -37,9 +37,9 @@ public class Jugador extends Entidad {
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
 
-    public Jugador(float x, float y, int anchura, int altura) {
+    public Jugador(float x, float y, int anchura, int altura, ImagenURL imagenURL) {
         super(x, y, anchura, altura);
-        cargarAnimaciones();
+        cargarAnimaciones(imagenURL);
         inicializarHitbox(x, y, anchuraHitbox, alturaHitbox);
     }
 
@@ -133,8 +133,8 @@ public class Jugador extends Entidad {
     }
 
 
-    private void cargarAnimaciones() {
-        imagenes = cargarImagen(ImagenURL.MARIO_SPRITESHEET);
+    private void cargarAnimaciones(ImagenURL imagenURL) {
+        imagenes = cargarImagen(imagenURL);
 
         // Son 14 animaciones en total y la que tiene mas frames tiene 4
         animaciones = new BufferedImage[14][4];

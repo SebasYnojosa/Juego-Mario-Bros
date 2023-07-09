@@ -1,6 +1,7 @@
 package menus;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class ArchivoUsuario {
     private ObjectOutputStream salida; //Envia datos a un archivo
@@ -16,18 +17,6 @@ public class ArchivoUsuario {
             System.err.println("Error al abrir el archivo");
             System.exit(1);
         }
-    }
-    
-    public ObjectOutputStream abrirArchivoEscritura(String nombre) {
-        ObjectOutputStream salidaArch;
-        try {
-            salidaArch = new ObjectOutputStream(new FileOutputStream(nombre));
-            return salidaArch;
-        } catch (IOException exception) {
-            System.err.println("Error al abrir el archivo");
-            System.exit(1);
-        }
-        return null;
     }
     
     public void agregarRegistros(Usuario registro){
@@ -56,20 +45,22 @@ public class ArchivoUsuario {
             System.exit(1);
         }
     }
-    
-     
-    
-     public void abrirArchivoLectura() {
+
+
+
+    public void abrirArchivoLectura() {
+        cerrarArchivo();
         try {
-            entrada = new ObjectInputStream(new FileInputStream("../Usuarios.txt"));
+            entrada = new ObjectInputStream(new FileInputStream("../Users"));
         } catch (IOException ex) {
-            System.err.println("Error al abrir archivo");
+            abrirArchivoEscritura();
+            cerrarArchivo();
+            System.err.println("Error al abrir archivo lectura");
+            abrirArchivoLectura();
         }
-        
-       
-       
     }
       public Usuario buscarRegistro(String user){
+          abrirArchivoLectura();
           Usuario registro;
           try{
               while(true){
@@ -92,33 +83,49 @@ public class ArchivoUsuario {
             }
           return null;
       }
-      
+      public void appendRegitros(Usuario registro){
+        ArrayList<Usuario> lista = new ArrayList();
+        abrirArchivoLectura();
+        lista = leerArchivo(lista);
+        abrirArchivoEscritura();
+        for(Usuario user: lista){
+            agregarRegistros(user);
+        }
+        agregarRegistros(registro);
+        cerrarArchivo();
+    }
+
       public void modificarRegistro(Usuario user){
           abrirArchivoLectura();
-          Usuario registro;
-          ObjectOutputStream archAux = abrirArchivoEscritura("Aux.txt");
-          
-          File arch = new File("Usuarios.txt");
-          File arch2 = new File("Aux.txt");
-          try{
-              while(true){
-                    registro=(Usuario) entrada.readObject();
-                    if(registro.getUsuario().equals(user.getUsuario())){
-                        agregarRegistros(user,archAux);
-                    }else{
-                        agregarRegistros(registro,archAux);
-                    }
-                }
-            
-          }catch (EOFException endOfFileException) {
-                arch2.renameTo(arch);
-                return ;//Se llego al fin de archivo
-            } catch (ClassNotFoundException ex) {
-                System.err.println("No se pudo crear el objeto");
-            }
-          catch(IOException ioException){
-              System.err.println("Error al leer archivo");
-              
+          ArrayList<Usuario> lista = new ArrayList();
+          lista = leerArchivo(lista);
+          abrirArchivoEscritura();
+          for(Usuario u : lista){
+              if(!user.getUsuario().equals(u.getUsuario())){
+                  agregarRegistros(u);
+              }else{
+                  agregarRegistros(user);
+              }
           }
+          cerrarArchivo();
       }
+
+    public ArrayList leerArchivo(ArrayList<Usuario> lista){
+        abrirArchivoLectura();
+        Usuario registro;
+        try{
+            while(true){
+                registro=(Usuario) entrada.readObject();
+                lista.add(registro);
+            }
+        }catch (EOFException endOfFileException) {
+            return lista;//Se llego al fin de archivo
+        } catch (ClassNotFoundException ex) {
+            System.err.println("No se pudo crear el objeto");
+        }catch(IOException ioException){
+            System.err.println("Error al leer archivo xd");
+            //ioException.printStackTrace();
+        }
+        return lista;
+    }
 }

@@ -209,10 +209,8 @@ public class MenuReg extends javax.swing.JPanel {
                 errRelleno.setVisible(false);
                 return;
             }
-            arch.cerrarArchivo();
-            arch.abrirArchivoEscritura();
-            arch.agregarRegistros(user);
-            arch.cerrarArchivo();
+
+            arch.appendRegitros(user);
             
             txtNomb.setText("");
             txtUser.setText("");

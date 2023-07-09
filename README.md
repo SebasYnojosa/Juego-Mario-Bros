@@ -37,7 +37,6 @@ Repositorio para nuestro proyecto final de la materia Programación III sobre un
 
 ### Angel:
 - Cambiar orden de los sprites (Personajes Jugables)
-- Agregar sprites de powerups.
 - Empezar a agregar niveles (Caverna, Superficie)
 
 ### Luis:

@@ -68,7 +68,7 @@ public class Juego implements Runnable {
     public void update() {
         jugador.update();
         manejaNiveles.update();
-        controladorEnemigos.update();
+        controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
     }
 
     public void render(Graphics g) {

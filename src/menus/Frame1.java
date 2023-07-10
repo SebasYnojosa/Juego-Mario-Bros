@@ -16,7 +16,6 @@ public class Frame1 extends JFrame {
 
     public Frame1() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         menus = new JPanel[8];
         //nivelAct = null;
 
@@ -35,6 +34,7 @@ public class Frame1 extends JFrame {
         this.add(menus[MENUP],BorderLayout.CENTER);
         menus[MENUP].setVisible(true);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
     

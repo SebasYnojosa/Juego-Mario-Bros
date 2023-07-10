@@ -40,4 +40,10 @@ public class Ayuda {
                 return false;
         return true;
     }
+
+    public static boolean eneSueloInteligente(Rectangle2D.Float hitbox, float vel, boolean izq, int[][] infoNivel){
+        if(izq)
+            return esSolido(hitbox.x + vel, hitbox.y + hitbox.height + 2, infoNivel);
+        return esSolido(hitbox.x + vel + Juego.UNIDAD, hitbox.y + hitbox.height + 2, infoNivel);
+    }
 }

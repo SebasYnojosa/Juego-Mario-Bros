@@ -22,9 +22,9 @@ public class ControladorEnemigos {
     }
 
     //Actaliza el estado de los enemigos
-    public void update(){
+    public void update(int[][] infoLvl){
         for(Goomba g: listaGoombas)
-            g.update();
+            g.update(infoLvl);
     }
 
     public void cargarEnemigos(){
@@ -38,7 +38,7 @@ public class ControladorEnemigos {
     //Dibuja los goombas
     public void dGoombas(Graphics g){
         for(Goomba o: listaGoombas){
-            g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x, (int)o.getHitbox().y, Juego.UNIDAD,Juego.UNIDAD,null);
+            g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
             o.mostrarHitbox(g);
         }
     }

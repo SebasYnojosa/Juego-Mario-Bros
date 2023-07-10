@@ -12,9 +12,6 @@ public class Ventana extends JFrame {
     public Ventana(Panel panel, Frame1 frame) {
         setTitle("Juego");
 
-        // Esta funcion indica que la ventana aparecera en el medio de la pantalla
-        setLocationRelativeTo(null);
-
         // Esta funcion indica que cuando se cierre la ventana el programa terminara
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -26,6 +23,9 @@ public class Ventana extends JFrame {
 
         // Esta funcion se encarga de que el tamaño de la ventana se ajuste al tamaño del panel
         pack();
+
+        // Esta funcion indica que la ventana aparecera en el medio de la pantalla
+        setLocationRelativeTo(null);
 
         setVisible(true);
 

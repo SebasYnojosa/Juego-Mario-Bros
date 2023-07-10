@@ -31,4 +31,26 @@ public class Animaciones {
             return ordinal();
         }
     }
+
+    public enum Enemigo {
+        QUIETO(1),
+        CAMINANDO(2),
+        SALTANDO(3),
+        MURIENDO(1);
+        final int cantidadDeFrames;
+
+        Enemigo(int cantidadDeFrames) {
+            this.cantidadDeFrames = cantidadDeFrames;
+        }
+
+        public int getCantidadDeFrames() {
+            return cantidadDeFrames;
+        }
+
+
+
+        public int getPosicion() {
+            return ordinal();
+        }
+    }
 }

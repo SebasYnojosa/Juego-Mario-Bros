@@ -1,13 +1,18 @@
 package main;
 
+import entidades.ControladorEnemigos;
+import entidades.Goomba;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
 import utilidades.ImagenURL;
+import menus.Frame1;
 
 import java.awt.*;
 
 // Clase principal del juego
 public class Juego implements Runnable {
+    Frame1 frame;
+
     private Ventana ventana;
     private Panel panel;
 
@@ -19,6 +24,7 @@ public class Juego implements Runnable {
 
     private Jugador jugador;
     private ManejaNiveles manejaNiveles;
+    private ControladorEnemigos controladorEnemigos;
 
     private boolean cuadriculaActivada = false;
 
@@ -30,13 +36,22 @@ public class Juego implements Runnable {
     public static final int ALTURA_JUGADOR = 2 * UNIDAD;
     public static final int ANCHURA_JUGADOR = UNIDAD + UNIDAD/4;
 
-    public Juego() {
+    public Juego(String skin, Frame1 frame) {
+        this.frame = frame;
+
         manejaNiveles = new ManejaNiveles(this);
-        jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
+        controladorEnemigos = new ControladorEnemigos(this);
+        switch (skin){
+            case "Mario" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
+            case "Luigi" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
+            case "Peach" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET);
+            case "Toad"  -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
+            default -> System.out.println("Error");
+         }
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
 
         panel = new Panel(this);
-        ventana = new Ventana(panel);
+        ventana = new Ventana(panel, frame);
 
         // Funcion que hace que el panel reciba los inputs del teclado o el mouse
         panel.requestFocus();
@@ -53,13 +68,18 @@ public class Juego implements Runnable {
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
         jugador.update();
+        for(Goomba g: controladorEnemigos.getGoombas()){
+            jugador.golpeado(g.getHitbox());
+        }
         manejaNiveles.update();
+        controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
     }
 
     public void render(Graphics g) {
         panel.dibujarFondo(g);
         jugador.render(g);
         manejaNiveles.render(g);
+        controladorEnemigos.dibujar(g);
         if (cuadriculaActivada)
             mostrarCuadricula(g);
     }

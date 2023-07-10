@@ -3,14 +3,14 @@ package main;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import menus.Frame1;
 
 // Ventana principal en la cual se mostraran los graficos del juego
 public class Ventana extends JFrame {
-    public Ventana(Panel panel) {
-        setTitle("Juego");
+    Frame1 frame;
 
-        // Esta funcion indica que la ventana aparecera en el medio de la pantalla
-        setLocationRelativeTo(null);
+    public Ventana(Panel panel, Frame1 frame) {
+        setTitle("Juego");
 
         // Esta funcion indica que cuando se cierre la ventana el programa terminara
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,6 +23,9 @@ public class Ventana extends JFrame {
 
         // Esta funcion se encarga de que el tamaño de la ventana se ajuste al tamaño del panel
         pack();
+
+        // Esta funcion indica que la ventana aparecera en el medio de la pantalla
+        setLocationRelativeTo(null);
 
         setVisible(true);
 

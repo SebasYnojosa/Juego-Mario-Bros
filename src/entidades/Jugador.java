@@ -7,6 +7,7 @@ import static utilidades.Archivos.*;
 import static utilidades.Ayuda.*;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad {
@@ -36,11 +37,15 @@ public class Jugador extends Entidad {
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
+    //Variables para muerte y todo eso
+    private int vidas = 3, inicX, inicY;
 
     public Jugador(float x, float y, int anchura, int altura, ImagenURL imagenURL) {
         super(x, y, anchura, altura);
         cargarAnimaciones(imagenURL);
         inicializarHitbox(x, y, anchuraHitbox, alturaHitbox);
+        inicX = (int)x;
+        inicY = (int)y;
     }
 
     public void cargarInfoNivel(int[][] infoNivel) {
@@ -184,6 +189,23 @@ public class Jugador extends Entidad {
     public void resetDirecciones() {
         izquierda = derecha = false;
         corriendo = false;
+    }
+
+    //Cuando choca con un emenigo
+    public void golpeado(Rectangle2D.Float hurtbox){
+        if(hurtbox.intersects(hitbox)){
+            respawn();
+        }
+    }
+
+    //Cuando pegan, vuelves al principio y pierdes vida
+    public void respawn(){
+        vidas--;
+        hitbox.x = inicX;
+        hitbox.y = inicY;
+        if(vidas <= 0){
+            System.out.println("Muelto");
+        }
     }
 
     public void setCorriendo(boolean corriendo) {

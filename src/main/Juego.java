@@ -32,7 +32,7 @@ public class Juego implements Runnable {
 
     public Juego() {
         manejaNiveles = new ManejaNiveles(this);
-        jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
+        jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
 
         panel = new Panel(this);

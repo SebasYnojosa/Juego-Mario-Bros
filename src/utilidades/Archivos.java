@@ -30,7 +30,7 @@ public class Archivos {
     // El valor del color rojo de cada pixel del mapa de bits representa un bloque del nivel
     public static int[][] informacionDelNivel() {
         int[][] infoNivel = new int[Juego.UNIDADES_ALTURA][Juego.UNIDADES_ANCHO];
-        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_UNO);
+        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_CAVERNA);
 
         for (int j = 0; j < img.getHeight(); ++j)
             for (int i = 0; i < img.getWidth(); ++i){

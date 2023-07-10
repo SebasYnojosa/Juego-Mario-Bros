@@ -12,7 +12,7 @@ public class ArchivoUsuario {
     //Permite especificar nombre del archivo
     public void abrirArchivoEscritura() {
         try {
-            salida = new ObjectOutputStream(new FileOutputStream("../Usuarios.txt"));
+            salida = new ObjectOutputStream(new FileOutputStream("../Usuarios"));
         } catch (IOException exception) {
             System.err.println("Error al abrir el archivo");
             System.exit(1);
@@ -22,14 +22,6 @@ public class ArchivoUsuario {
     public void agregarRegistros(Usuario registro){
          try {   
              salida.writeObject(registro);
-        } catch (IOException ex) {
-            System.err.println("Error al escribir en archivo");
-        }
-    }
-    
-    public void agregarRegistros(Usuario registro, ObjectOutputStream sal){
-         try {   
-             sal.writeObject(registro);
         } catch (IOException ex) {
             System.err.println("Error al escribir en archivo");
         }
@@ -51,7 +43,7 @@ public class ArchivoUsuario {
     public void abrirArchivoLectura() {
         cerrarArchivo();
         try {
-            entrada = new ObjectInputStream(new FileInputStream("../Users"));
+            entrada = new ObjectInputStream(new FileInputStream("../Usuarios"));
         } catch (IOException ex) {
             abrirArchivoEscritura();
             cerrarArchivo();

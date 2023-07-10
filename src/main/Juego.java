@@ -1,5 +1,6 @@
 package main;
 
+import entidades.ControladorEnemigos;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
 import utilidades.ImagenURL;
@@ -22,6 +23,7 @@ public class Juego implements Runnable {
 
     private Jugador jugador;
     private ManejaNiveles manejaNiveles;
+    private ControladorEnemigos controladorEnemigos;
 
     private boolean cuadriculaActivada = false;
 
@@ -37,6 +39,7 @@ public class Juego implements Runnable {
         this.frame = frame;
 
         manejaNiveles = new ManejaNiveles(this);
+        controladorEnemigos = new ControladorEnemigos(this);
         switch (skin){
             case "Mario" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
             case "Luigi" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
@@ -65,12 +68,14 @@ public class Juego implements Runnable {
     public void update() {
         jugador.update();
         manejaNiveles.update();
+        controladorEnemigos.update();
     }
 
     public void render(Graphics g) {
         panel.dibujarFondo(g);
         jugador.render(g);
         manejaNiveles.render(g);
+        controladorEnemigos.dibujar(g);
         if (cuadriculaActivada)
             mostrarCuadricula(g);
     }

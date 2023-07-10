@@ -9,7 +9,8 @@ public enum ImagenURL {
     FONDO("graficos/fondo/fondo.png"),
     NIVEL_CAVERNA("graficos/niveles/caverna.png"),
     NIVEL_SUPERFICIE("graficos/niveles/superficie.png"),
-    INFO_NIVEL_UNO("niveles/level_one_data.png");
+    INFO_NIVEL_UNO("niveles/level_one_data.png"),
+    ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png");
 
     final String spriteURL;
 

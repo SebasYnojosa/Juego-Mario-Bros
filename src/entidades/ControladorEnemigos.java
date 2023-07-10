@@ -38,7 +38,10 @@ public class ControladorEnemigos {
     //Dibuja los goombas
     public void dGoombas(Graphics g){
         for(Goomba o: listaGoombas){
-            g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
+            if(o.getIzq())
+                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
+            else
+                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap + Juego.UNIDAD, (int)o.getHitbox().y-Goomba.handicap, -Juego.UNIDAD,Juego.UNIDAD,null);
             o.mostrarHitbox(g);
         }
     }
@@ -57,4 +60,6 @@ public class ControladorEnemigos {
             }
         }
     }
+
+    public ArrayList<Goomba> getGoombas(){return listaGoombas;}
 }

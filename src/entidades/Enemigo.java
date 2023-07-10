@@ -86,5 +86,8 @@ public abstract class Enemigo extends Entidad{
         return estado;
     }
 
+    public boolean getIzq(){
+        return izq;
+    }
 
 }

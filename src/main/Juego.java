@@ -1,6 +1,7 @@
 package main;
 
 import entidades.ControladorEnemigos;
+import entidades.Goomba;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
 import utilidades.ImagenURL;
@@ -67,6 +68,9 @@ public class Juego implements Runnable {
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
         jugador.update();
+        for(Goomba g: controladorEnemigos.getGoombas()){
+            jugador.golpeado(g.getHitbox());
+        }
         manejaNiveles.update();
         controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
     }

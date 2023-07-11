@@ -47,9 +47,10 @@ public class Archivos {
 
     // Funcion que carga la informacion del nivel de un mapa de bits y la devuelve en una matriz para poder dibujarlo en el juego
     // El valor del color rojo de cada pixel del mapa de bits representa un bloque del nivel
+
     public static int[][] informacionDelNivel() {
-        int[][] infoNivel = new int[Juego.UNIDADES_ALTURA][Juego.UNIDADES_ANCHO];
         BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_CAVERNA);
+        int[][] infoNivel = new int[img.getHeight()][img.getWidth()];
 
         for (int j = 0; j < img.getHeight(); ++j)
             for (int i = 0; i < img.getWidth(); ++i){

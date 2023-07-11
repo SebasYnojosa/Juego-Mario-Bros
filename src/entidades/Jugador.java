@@ -58,15 +58,15 @@ public class Jugador extends Entidad {
         actualizarAnimacion();
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, int lvlOffset) {
         mostrarHitbox(g);
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
 
         if (mirarIzquierda)
-            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura), (int)y, -anchura, altura, null);
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura) - lvlOffset, (int)y, -anchura, altura, null);
         else
-            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x, (int)y, anchura, altura, null);
+            g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x - lvlOffset, (int)y, anchura, altura, null);
     }
 
     private void setPosicion() {

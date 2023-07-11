@@ -32,16 +32,16 @@ public class ControladorEnemigos {
     }
 
     //Dibuja a todos los enemigos
-    public void dibujar(Graphics g){
-        dGoombas(g);
+    public void dibujar(Graphics g, int lvlOffset){
+        dGoombas(g, lvlOffset);
     }
     //Dibuja los goombas
-    public void dGoombas(Graphics g){
+    public void dGoombas(Graphics g, int lvlOffset){
         for(Goomba o: listaGoombas){
             if(o.getIzq())
-                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
+                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
             else
-                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap + Juego.UNIDAD, (int)o.getHitbox().y-Goomba.handicap, -Juego.UNIDAD,Juego.UNIDAD,null);
+                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap + Juego.UNIDAD - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, -Juego.UNIDAD,Juego.UNIDAD,null);
             o.mostrarHitbox(g);
         }
     }

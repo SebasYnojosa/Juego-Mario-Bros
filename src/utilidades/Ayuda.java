@@ -19,7 +19,9 @@ public class Ayuda {
     }
 
     public static boolean esSolido(float x, float y, int[][] infoNivel) {
-        if (x < 0 || y < 0 || x >= Juego.ANCHO_VENTANA || y >= Juego.ALTO_VENTANA)
+        int anchuraMaxima = infoNivel[0].length * UNIDAD;
+
+        if (x < 0 || y < 0 || x >= anchuraMaxima || y >= Juego.ALTO_VENTANA)
             return true;
 
         float xIndice = x / UNIDAD;

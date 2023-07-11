@@ -33,11 +33,11 @@ public class ManejaNiveles {
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, int lvlOffset) {
         for (int j = 0; j < Juego.UNIDADES_ALTURA; ++j) {
-            for (int i = 0; i < Juego.UNIDADES_ANCHO; ++i) {
+            for (int i = 0; i < nivel1.getInfoNivel()[0].length; ++i) {
                 int indice = nivel1.getIndice(i, j);
-                g.drawImage(nivelSprites[indice], i * UNIDAD, j * UNIDAD, UNIDAD, UNIDAD, null);
+                g.drawImage(nivelSprites[indice], i * UNIDAD - lvlOffset, j * UNIDAD, UNIDAD, UNIDAD, null);
             }
         }
     }

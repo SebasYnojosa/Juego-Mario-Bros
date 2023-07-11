@@ -4,6 +4,7 @@ import entidades.ControladorEnemigos;
 import entidades.Goomba;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
+import utilidades.Archivos;
 import utilidades.ImagenURL;
 import menus.Frame1;
 
@@ -27,6 +28,15 @@ public class Juego implements Runnable {
     private ControladorEnemigos controladorEnemigos;
 
     private boolean cuadriculaActivada = false;
+
+    // Manejo de niveles mas grandes
+
+    private int xLvlOffset;
+    private int bordeIzquierdo = (int) (0.2 * Juego.ANCHO_VENTANA);
+    private int bordeDerecho = (int) (0.8 * Juego.ANCHO_VENTANA);
+    private int lvlCasillaAncho = Archivos.informacionDelNivel()[0].length;
+    private int maxCasillaOffset = lvlCasillaAncho - Juego.UNIDADES_ANCHO;
+    private int maxLvlOffsetX = maxCasillaOffset * Juego.UNIDAD;
 
     public static final int UNIDAD = 32;
     public static final int UNIDADES_ANCHO = 26;
@@ -73,13 +83,31 @@ public class Juego implements Runnable {
         }
         manejaNiveles.update();
         controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
+        checkCloseToBorder();
+    }
+
+    public void checkCloseToBorder(){
+        int jugadorX = (int) jugador.getHitbox().x;
+        int diff = jugadorX - xLvlOffset;
+
+        if (diff > bordeDerecho){
+            xLvlOffset += diff - bordeDerecho;
+        } else if (diff < bordeIzquierdo){
+            xLvlOffset += diff - bordeIzquierdo;
+        }
+
+        if (xLvlOffset > maxLvlOffsetX){
+            xLvlOffset = maxLvlOffsetX;
+        } else if (xLvlOffset < 0){
+            xLvlOffset = 0;
+        }
     }
 
     public void render(Graphics g) {
         panel.dibujarFondo(g);
-        jugador.render(g);
-        manejaNiveles.render(g);
-        controladorEnemigos.dibujar(g);
+        jugador.render(g, xLvlOffset);
+        manejaNiveles.render(g, xLvlOffset);
+        controladorEnemigos.dibujar(g, xLvlOffset);
         if (cuadriculaActivada)
             mostrarCuadricula(g);
     }

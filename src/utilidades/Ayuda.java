@@ -13,7 +13,8 @@ public class Ayuda {
     // Metodo que se encarga de verificar si la entidad se puede mover a la posicion indicada
     public static boolean sePuedeMover(float x, float y, float anchura, float altura, int[][] infoNivel) {
         if (!esSolido(x,y,infoNivel) && !esSolido(x+anchura,y,infoNivel) &&
-                !esSolido(x,y+altura,infoNivel) && !esSolido(x+anchura,y+altura,infoNivel))
+                !esSolido(x,y+altura,infoNivel) && !esSolido(x+anchura,y+altura,infoNivel) &&
+                !esSolido(x,y+altura/2,infoNivel) && !esSolido(x+anchura, y+altura/2,infoNivel))
             return true;
         else
             return false;

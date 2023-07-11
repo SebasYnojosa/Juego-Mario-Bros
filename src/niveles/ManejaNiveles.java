@@ -23,7 +23,7 @@ public class ManejaNiveles {
     }
 
     public void cargarSpritesNivel() {
-        BufferedImage img = cargarImagen(ImagenURL.NIVEL_CAVERNA);
+        BufferedImage img = cargarImagen(ImagenURL.NIVEL_SUPERFICIE);
         nivelSprites = new BufferedImage[16*11];
         for (int j = 0; j < 11; j++) {
             for (int i = 0; i < 16; i++) {

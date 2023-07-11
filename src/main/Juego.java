@@ -42,10 +42,10 @@ public class Juego implements Runnable {
         manejaNiveles = new ManejaNiveles(this);
         controladorEnemigos = new ControladorEnemigos(this);
         switch (skin){
-            case "Mario" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
-            case "Luigi" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
-            case "Peach" -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET);
-            case "Toad"  -> jugador = new Jugador(100, 100, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
+            case "Mario" -> jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
+            case "Luigi" -> jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
+            case "Peach" -> jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET);
+            case "Toad"  -> jugador = new Jugador(10, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
             default -> System.out.println("Error");
          }
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());

@@ -7,9 +7,11 @@ public enum ImagenURL {
     PEACH_SPRITESHEET("graficos/players/peachSprites.png"),
     TOAD_SPRITESHEET("graficos/players/toadSprites.png"),
     FONDO("graficos/fondo/fondo.png"),
-    NIVEL_CAVERNA("graficos/niveles/caverna.png"),
+    FONDO_CAVERNA("graficos/fondo/fondoCaverna.png"),
+    NIVEL_CAVERNA("graficos/niveles/cavernaGravilla.png"),
     NIVEL_SUPERFICIE("graficos/niveles/superficie.png"),
     INFO_NIVEL_UNO("niveles/level_one_data.png"),
+    INFO_NIVEL_CAVERNA("niveles/level_caverna_data.png"),
     ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png");
 
     final String spriteURL;

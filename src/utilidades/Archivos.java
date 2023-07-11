@@ -33,7 +33,7 @@ public class Archivos {
     //Funcion que devuelve un arrayList con los goombas
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
     public static ArrayList<Goomba> getGoombas(){
-        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_UNO);
+        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_CAVERNA);
         ArrayList<Goomba> lista = new ArrayList();
         for (int j = 0; j < img.getHeight(); ++j)
             for (int i = 0; i < img.getWidth(); ++i){

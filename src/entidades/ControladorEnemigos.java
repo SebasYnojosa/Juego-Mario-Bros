@@ -42,7 +42,7 @@ public class ControladorEnemigos {
                 g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
             else
                 g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap + Juego.UNIDAD - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, -Juego.UNIDAD,Juego.UNIDAD,null);
-            o.mostrarHitbox(g);
+//            o.mostrarHitbox(g);
         }
     }
 

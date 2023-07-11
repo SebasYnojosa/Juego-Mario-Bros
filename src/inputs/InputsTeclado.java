@@ -42,9 +42,9 @@ public class InputsTeclado implements KeyListener {
                 break;
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_O) {
-            panel.getJuego().setCuadriculaActivada(!panel.getJuego().isCuadriculaActivada());
-        }
+//        if (e.getKeyCode() == KeyEvent.VK_O) {
+//            panel.getJuego().setCuadriculaActivada(!panel.getJuego().isCuadriculaActivada());
+//        }
     }
 
     // Se activa cuando se suelta una tecla

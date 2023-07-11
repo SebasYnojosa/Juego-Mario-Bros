@@ -59,7 +59,7 @@ public class Jugador extends Entidad {
     }
 
     public void render(Graphics g, int lvlOffset) {
-        mostrarHitbox(g);
+//        mostrarHitbox(g);
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
 

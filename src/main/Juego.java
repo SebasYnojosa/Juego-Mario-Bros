@@ -108,8 +108,8 @@ public class Juego implements Runnable {
         jugador.render(g, xLvlOffset);
         manejaNiveles.render(g, xLvlOffset);
         controladorEnemigos.dibujar(g, xLvlOffset);
-        if (cuadriculaActivada)
-            mostrarCuadricula(g);
+//        if (cuadriculaActivada)
+//            mostrarCuadricula(g);
     }
 
     // Debug cuadricula del juego

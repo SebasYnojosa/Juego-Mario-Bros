@@ -30,7 +30,7 @@ public class Jugador extends Entidad {
     // Variables para el salto y movimiento aereo
     private float velocidadAire = 0f;
     private float gravedad = 0.1f;
-    private float velocidadSalto = -5.5f;
+    private float velocidadSalto = -4.5f;
     private float velocidadCaida = 0.5f;
     private boolean enAire = false ,saltando = false;
 

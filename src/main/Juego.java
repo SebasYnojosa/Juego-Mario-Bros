@@ -104,9 +104,8 @@ public class Juego implements Runnable {
     }
 
     public void render(Graphics g) {
-        panel.dibujarFondo(g);
-        jugador.render(g, xLvlOffset);
         manejaNiveles.render(g, xLvlOffset);
+        jugador.render(g, xLvlOffset);
         controladorEnemigos.dibujar(g, xLvlOffset);
 //        if (cuadriculaActivada)
 //            mostrarCuadricula(g);

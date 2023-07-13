@@ -33,7 +33,6 @@ public class Panel extends JPanel {
 
         this.juego = juego;
 
-        cargarImagenes();
         setTamanioPanel();
 
         addKeyListener(teclado);
@@ -41,19 +40,11 @@ public class Panel extends JPanel {
         addMouseMotionListener(mouse);
     }
 
-    private void cargarImagenes() {
-        fondo = cargarImagen(ImagenURL.FONDO_CAVERNA);
-    }
-
     // Método que se encarga de darle un tamaño al panel
     private void setTamanioPanel(){
         Dimension tamanio = new Dimension(ANCHO_VENTANA, ALTO_VENTANA);
         setPreferredSize(tamanio);
         System.out.println("Tamaño del panel: " + tamanio);
-    }
-
-    public void dibujarFondo(Graphics g) {
-        g.drawImage(fondo, 0, 0, ANCHO_VENTANA, ALTO_VENTANA, null);
     }
 
     public void updateJuego() {

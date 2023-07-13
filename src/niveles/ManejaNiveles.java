@@ -16,6 +16,8 @@ public class ManejaNiveles {
     private BufferedImage[] nivelSprites;
     private Nivel nivel1;
 
+    private BufferedImage fondo;
+
     public ManejaNiveles(Juego juego) {
         this.juego = juego;
         cargarSpritesNivel();
@@ -31,9 +33,11 @@ public class ManejaNiveles {
                 nivelSprites[indice] = img.getSubimage(i * 16, j * 16, 16, 16);
             }
         }
+        fondo = cargarImagen(ImagenURL.FONDO_CAVERNA);
     }
 
     public void render(Graphics g, int lvlOffset) {
+        g.drawImage(fondo, 0, 0, Juego.ANCHO_VENTANA, Juego.ALTO_VENTANA, null);
         for (int j = 0; j < Juego.UNIDADES_ALTURA; ++j) {
             for (int i = 0; i < nivel1.getInfoNivel()[0].length; ++i) {
                 int indice = nivel1.getIndice(i, j);

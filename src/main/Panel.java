@@ -42,7 +42,7 @@ public class Panel extends JPanel {
     }
 
     private void cargarImagenes() {
-        fondo = cargarImagen(ImagenURL.FONDO);
+        fondo = cargarImagen(ImagenURL.FONDO_CAVERNA);
     }
 
     // Método que se encarga de darle un tamaño al panel

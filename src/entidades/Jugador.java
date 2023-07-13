@@ -80,9 +80,9 @@ public class Jugador extends Entidad {
         float xVelocidad = 0;
 
         if (corriendo)
-            velocidad = 5.0f;
+            velocidad = 3f;
         else
-            velocidad = 3.5f;
+            velocidad = 2f;
 
         // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
         if (izquierda) {

@@ -32,8 +32,8 @@ public class Juego implements Runnable {
     // Manejo de niveles mas grandes
 
     private int xLvlOffset;
-    private int bordeIzquierdo = (int) (0.2 * Juego.ANCHO_VENTANA);
-    private int bordeDerecho = (int) (0.8 * Juego.ANCHO_VENTANA);
+    private int bordeIzquierdo = (int) (0.4 * Juego.ANCHO_VENTANA);
+    private int bordeDerecho = (int) (0.6 * Juego.ANCHO_VENTANA);
     private int lvlCasillaAncho = Archivos.informacionDelNivel()[0].length;
     private int maxCasillaOffset = lvlCasillaAncho - Juego.UNIDADES_ANCHO;
     private int maxLvlOffsetX = maxCasillaOffset * Juego.UNIDAD;

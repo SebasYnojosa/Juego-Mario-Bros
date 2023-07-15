@@ -15,10 +15,10 @@ public abstract class Entidad {
         this.altura = altura;
     }
 
-//    protected void mostrarHitbox(Graphics g) {
-//        g.setColor(Color.RED);
-//        g.drawRect((int)hitbox.x, (int)hitbox.y, (int)hitbox.width, (int)hitbox.height);
-//    }
+    public void mostrarHitbox(Graphics g) {
+        g.setColor(Color.RED);
+        g.drawRect((int)hitbox.x, (int)hitbox.y, (int)hitbox.width, (int)hitbox.height);
+    }
 
     protected void inicializarHitbox(float x, float y, float anchura, float altura) {
         hitbox = new Rectangle2D.Float(x, y, anchura, altura);

@@ -1,7 +1,7 @@
 package utilidades;
 
 import main.Juego;
-import entidades.Goomba;
+import entidades.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Archivos {
-    static int indexGoomba = 5;
 
     public static BufferedImage cargarImagen(ImagenURL imagenURL) {
         BufferedImage img = null;
@@ -32,15 +31,24 @@ public class Archivos {
 
     //Funcion que devuelve un arrayList con los goombas
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
-    public static ArrayList<Goomba> getGoombas(){
+    //Estos son los valores de verde para cada enemigo
+    static final int GOOMBA = 5;
+    //static final int KOOPA_VERDE = 10;
+    //static final int KOOPA_ROJO = 15;
+    //static final int TPINCHO = 20;
+    public static ArrayList<Enemigo> getEnemigos(){
         BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_CAVERNA);
-        ArrayList<Goomba> lista = new ArrayList();
+        ArrayList<Enemigo> lista = new ArrayList();
         for (int j = 0; j < img.getHeight(); ++j)
             for (int i = 0; i < img.getWidth(); ++i){
                 Color color = new Color(img.getRGB(i, j));
                 int valor = color.getGreen();
-                if (valor == indexGoomba)
-                    lista.add(new Goomba(i*Juego.UNIDAD,j*Juego.UNIDAD));
+                switch(valor){
+                    case GOOMBA: lista.add(new Goomba(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    //case KOOPA_VERDE: lista.add(new KoopaVerde(i*Juego.UNIDAD,j*Juego.UNIDAD);break;
+                    //case KOOPA_ROJO: lista.add(new KoopaRojo(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    //case TORTUGA_PINCHO: lista.add(new TPINCHO(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                }
             }
         return lista;
     }

@@ -11,12 +11,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad {
-
+    //Animaciones
     private BufferedImage imagenes;
     private BufferedImage[][] animaciones;
     private int tick, indice, framesEntreAnimaciones = 12; // 120 FPS y 10 animaciones por segundo
     private Animaciones.Jugador accionAnterior = Animaciones.Jugador.QUIETO;
     private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
+    //Comportamiento
     private boolean moviendose = false;
     private boolean corriendo = false;
     private boolean mirarIzquierda = false;
@@ -192,9 +193,18 @@ public class Jugador extends Entidad {
     }
 
     //Cuando choca con un emenigo
-    public void golpeado(Rectangle2D.Float hurtbox){
-        if(hurtbox.intersects(hitbox)){
+    public void golpeado(Enemigo enem){
+        if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR){
             respawn();
+        }
+    }
+    //Cuando pisa con un emenigo
+    public void pisar(Enemigo enem){
+        if(enem.getPisadoBox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR){
+            enAire = false;
+            saltar();
+            enem.setEstado(Enemigo.MORIR);
+            enem.setAccionActual(Animaciones.Enemigo.MURIENDO);
         }
     }
 

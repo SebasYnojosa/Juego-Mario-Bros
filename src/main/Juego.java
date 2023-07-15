@@ -1,7 +1,7 @@
 package main;
 
-import entidades.ControladorEnemigos;
-import entidades.Goomba;
+import niveles.ControladorEnemigos;
+import entidades.Enemigo;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
 import utilidades.Archivos;
@@ -78,8 +78,9 @@ public class Juego implements Runnable {
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
         jugador.update();
-        for(Goomba g: controladorEnemigos.getGoombas()){
-            jugador.golpeado(g.getHitbox());
+        for(Enemigo e: controladorEnemigos.getEnemigos()){
+            jugador.golpeado(e);
+            jugador.pisar(e);
         }
         manejaNiveles.update();
         controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
@@ -107,6 +108,7 @@ public class Juego implements Runnable {
         manejaNiveles.render(g, xLvlOffset);
         jugador.render(g, xLvlOffset);
         controladorEnemigos.dibujar(g, xLvlOffset);
+
 //        if (cuadriculaActivada)
 //            mostrarCuadricula(g);
     }

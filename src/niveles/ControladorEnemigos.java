@@ -1,5 +1,6 @@
-package entidades;
+package niveles;
 
+import entidades.*;
 import main.Juego;
 import utilidades.Archivos;
 import utilidades.ImagenURL;
@@ -13,7 +14,7 @@ import static utilidades.Archivos.cargarImagen;
 public class ControladorEnemigos {
     private Juego juego;
     private BufferedImage[][] goomba;
-    private ArrayList<Goomba> listaGoombas = new ArrayList();
+    private ArrayList<Enemigo> listaEnem = new ArrayList();
 
     public ControladorEnemigos(Juego juego) {
         this.juego = juego;
@@ -23,26 +24,20 @@ public class ControladorEnemigos {
 
     //Actaliza el estado de los enemigos
     public void update(int[][] infoLvl){
-        for(Goomba g: listaGoombas)
-            g.update(infoLvl);
+        for(Enemigo e: listaEnem)
+            e.update(infoLvl);
     }
 
     public void cargarEnemigos(){
-        listaGoombas = Archivos.getGoombas();
+        listaEnem = Archivos.getEnemigos();
     }
 
     //Dibuja a todos los enemigos
     public void dibujar(Graphics g, int lvlOffset){
-        dGoombas(g, lvlOffset);
-    }
-    //Dibuja los goombas
-    public void dGoombas(Graphics g, int lvlOffset){
-        for(Goomba o: listaGoombas){
-            if(o.getIzq())
-                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, Juego.UNIDAD,Juego.UNIDAD,null);
-            else
-                g.drawImage(goomba[o.getEstado()][o.getAniIndex()], (int)o.getHitbox().x-Goomba.handicap + Juego.UNIDAD - lvlOffset, (int)o.getHitbox().y-Goomba.handicap, -Juego.UNIDAD,Juego.UNIDAD,null);
+        for(Enemigo o: listaEnem){
+            o.dibujar(g, lvlOffset);
 //            o.mostrarHitbox(g);
+//            o.mostrarPisadobox(g);
         }
     }
 
@@ -61,5 +56,5 @@ public class ControladorEnemigos {
         }
     }
 
-    public ArrayList<Goomba> getGoombas(){return listaGoombas;}
+    public ArrayList<Enemigo> getEnemigos(){return listaEnem;}
 }

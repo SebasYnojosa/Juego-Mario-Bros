@@ -83,9 +83,6 @@ public class Jugador extends Entidad {
 
         float xVelocidad = 0;
 
-        if (izquierda && derecha)
-            return;
-
         // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
         if (izquierda) {
             if (velocidad > -(corriendo ? velocidadCorriendo : velocidadCaminando))
@@ -95,7 +92,7 @@ public class Jugador extends Entidad {
             xVelocidad = velocidad;
             direccionMirada = false;
         }
-        else if (derecha) {
+        if (derecha) {
             if (velocidad < (corriendo ? velocidadCorriendo : velocidadCaminando))
                 velocidad += aceleracion;
             if (!sePuedeMover(hitbox.x + velocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel))

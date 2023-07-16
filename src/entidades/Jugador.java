@@ -19,11 +19,15 @@ public class Jugador extends Entidad {
     private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
     private boolean moviendose = false;
     private boolean corriendo = false;
-    private boolean mirarIzquierda = false;
-    private boolean mirarDerecha = true;
+
+    // Variable que indica en que direccion mira el personaje
+    // true si ve a la derecha y false si ve a la izquierda
+    private boolean direccionMirada = true;
     private boolean izquierda, derecha;
     private float velocidad;
-
+    private float velocidadCorriendo = 3.5f;
+    private float velocidadCaminando = 2.5f;
+    private float aceleracion = 0.1f;
     // Atributo que le pasa la informacion del nivel al jugador para que pueda moverse por el con la hitbox
     private int[][] infoNivel;
 
@@ -63,7 +67,7 @@ public class Jugador extends Entidad {
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
 
-        if (mirarIzquierda)
+        if (!direccionMirada)
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)(x + anchura) - lvlOffset, (int)y, -anchura, altura, null);
         else
             g.drawImage(animaciones[accionActual.getPosicion()][indice], (int)x - lvlOffset, (int)y, anchura, altura, null);
@@ -79,21 +83,25 @@ public class Jugador extends Entidad {
 
         float xVelocidad = 0;
 
-        if (corriendo)
-            velocidad = 3f;
-        else
-            velocidad = 2f;
+        if (izquierda && derecha)
+            return;
 
         // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
         if (izquierda) {
-            xVelocidad -= velocidad;
-            mirarIzquierda = true;
-            mirarDerecha = false;
+            if (velocidad > -(corriendo ? velocidadCorriendo : velocidadCaminando))
+                velocidad -= aceleracion;
+            if (!sePuedeMover(hitbox.x + velocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel))
+                velocidad = 0;
+            xVelocidad = velocidad;
+            direccionMirada = false;
         }
         else if (derecha) {
-            xVelocidad += velocidad;
-            mirarDerecha = true;
-            mirarIzquierda = false;
+            if (velocidad < (corriendo ? velocidadCorriendo : velocidadCaminando))
+                velocidad += aceleracion;
+            if (!sePuedeMover(hitbox.x + velocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel))
+                velocidad = 0;
+            xVelocidad = velocidad;
+            direccionMirada = true;
         }
 
         if (!enAire) {

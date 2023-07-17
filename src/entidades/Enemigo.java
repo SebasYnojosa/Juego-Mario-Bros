@@ -13,26 +13,31 @@ import static utilidades.Archivos.cargarImagen;
 
 public abstract class Enemigo extends Entidad{
     //Estados para la IA
-    public static final int CAMINAR = 0, SALTAR = 1, MORIR = 2;
+    public static final int CAMINAR = 0, MORIR = 1, CAPARAZON = 2, CAPARAZONGIRO = 3, VOLANDO = 4;
+    //Respawn
+    protected static final int respawnTime = 120 * 3;
+    protected int respawnTick = 0;
+    //Hitbox
+    protected static int handicap = 4;
     //Animaciones
-    private BufferedImage[][] animaciones;
-    private Animaciones.Enemigo accionAnterior = Animaciones.Enemigo.CAMINANDO;
+    protected BufferedImage[][] animaciones;
+    protected Animaciones.Enemigo accionAnterior = Animaciones.Enemigo.CAMINANDO;
     protected Animaciones.Enemigo accionActual = Animaciones.Enemigo.CAMINANDO;
-    private int aniIndex, aniTick, aniSpeed = 12;
+    protected int aniIndex, aniTick, aniSpeed = 12;
 
     //Comportamientos
     protected int estado = CAMINAR;               //Variables de control
-    private boolean start = true, enAire = false, izq = true;         //Para cuando los update se ejecuten por primera vez
+    protected boolean start = true, enAire = false, izq = true;         //Para cuando los update se ejecuten por primera vez
 
     private float velocidadAire, gravedad = 0.1f, velx = 1f; //Variables de velocidad y tal
     protected Rectangle2D.Float pisadoBox;
 
 
-    public Enemigo(float x, float y, int anchura, int altura, ImagenURL imagenURL) {
+    public Enemigo(float x, float y, int anchura, int altura, ImagenURL imagenURL, int spriteX, int spriteY) {
         super(x, y, anchura, altura);
         inicializarHitbox(x, y, anchura, altura);
         inicializarPisadobox(x, y, anchura, altura);
-        cargarAnimaciones(imagenURL);
+        cargarAnimaciones(imagenURL, spriteX, spriteY);
     }
 
     // <editor-fold defaultstate="collapsed" desc="ACTUALIZACIONES DE FRAME">//GEN-BEGIN:initComponents
@@ -111,6 +116,41 @@ public abstract class Enemigo extends Entidad{
         }
     }
 
+    public void caparazon(){
+        respawnTick--;
+        if(respawnTick <= 0){
+
+            accionActual = Animaciones.Enemigo.CAMINANDO;
+            estado = CAMINAR;
+
+            respawnTick = respawnTime;
+        }
+    }
+    public void caparazonGiro(int[][] infoLvl){
+        float velCap = velx*2;
+        float vel = 0; //Variable de la velocidad con direccion
+        if(izq){
+            vel = -velCap;
+        }else{
+            vel = velCap;
+        }
+
+        if(Ayuda.sePuedeMover(hitbox.x, hitbox.y+ velocidadAire, hitbox.width, hitbox.height, infoLvl)){
+            enAire = true;
+        }
+
+        if(Ayuda.sePuedeMover(hitbox.x + vel, hitbox.y, hitbox.width, hitbox.height, infoLvl)){
+            hitbox.x += vel;
+            pisadoBox.x += vel;
+            return;
+        }
+        if(izq){
+            izq = false;
+        }else{
+            izq = true;
+        }
+    }
+
     public abstract void morir();
 
     // </editor-fold>//GEN-END:initComponents
@@ -119,19 +159,19 @@ public abstract class Enemigo extends Entidad{
 
     public void dibujar(Graphics g, int lvlOffset){
         if(izq)
-            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-Goomba.handicap - lvlOffset, (int)getHitbox().y-(Goomba.handicap+(Juego.UNIDAD/2)), Juego.UNIDAD,Juego.UNIDAD,null);
+            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-handicap - lvlOffset, (int)getHitbox().y-(handicap+(Juego.UNIDAD/2)), Juego.UNIDAD,Juego.UNIDAD,null);
         else
-            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-Goomba.handicap + Juego.UNIDAD - lvlOffset, (int)getHitbox().y-(Goomba.handicap+(Juego.UNIDAD/2)), -Juego.UNIDAD,Juego.UNIDAD,null);
+            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-handicap + Juego.UNIDAD - lvlOffset, (int)getHitbox().y-(handicap+(Juego.UNIDAD/2)), -Juego.UNIDAD,Juego.UNIDAD,null);
     }
-    private void cargarAnimaciones(ImagenURL imagenURL) {
+    private void cargarAnimaciones(ImagenURL imagenURL, int x, int y) {
         BufferedImage imagenes = cargarImagen(imagenURL);
 
         // Son 3 animaciones en total y la que tiene mas frames tiene 2
-        animaciones = new BufferedImage[3][2];
+        animaciones = new BufferedImage[5][3];
 
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 2; i++) {
-                animaciones[j][i] = imagenes.getSubimage(i * 16, j * 16, 16, 16);
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 3; i++) {
+                animaciones[j][i] = imagenes.getSubimage(i * x, j * y, x, y);
             }
         }
     }

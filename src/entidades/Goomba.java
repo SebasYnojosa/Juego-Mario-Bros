@@ -7,14 +7,8 @@ import utilidades.ImagenURL;
 import java.awt.image.BufferedImage;
 
 public class Goomba extends Enemigo{
-    //Respawn del goomba
-    public static final int respawnTime = 120 * 3;
-    private int respawnTick = respawnTime;
-
-    //Hitbox
-    public static int handicap = 4;
     public Goomba(float x, float y) {
-        super(x+handicap , y+handicap, Juego.UNIDAD-(handicap*2), (Juego.UNIDAD/2)-handicap, ImagenURL.ENEMY_GOOMBA);
+        super(x+handicap , y+handicap, Juego.UNIDAD-(handicap*2), (Juego.UNIDAD/2)-handicap, ImagenURL.ENEMY_GOOMBA, 16, 16);
     }
 
     @Override
@@ -29,17 +23,9 @@ public class Goomba extends Enemigo{
         }
     }
 
-    //Estados customizados para los goombas
-    //Para que revivan luego de un rato
     @Override
     public void morir(){
-        respawnTick--;
-        if(respawnTick <= 0){
-
-            accionActual = Animaciones.Enemigo.CAMINANDO;
-            estado = CAMINAR;
-
-            respawnTick = respawnTime;
-        }
+        accionActual = Animaciones.Enemigo.MURIENDO;
+        caparazon();
     }
 }

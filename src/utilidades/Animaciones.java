@@ -33,10 +33,11 @@ public class Animaciones {
     }
 
     public enum Enemigo {
-        QUIETO(1),
         CAMINANDO(2),
-        SALTANDO(3),
-        MURIENDO(1);
+        MURIENDO(1),
+        CAPARAZON(1),
+        CAPARAZON_GIRO(3),
+        VOLANDO(2);
         final int cantidadDeFrames;
 
         Enemigo(int cantidadDeFrames) {

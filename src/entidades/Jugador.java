@@ -11,13 +11,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad {
-    //Animaciones
+
     private BufferedImage imagenes;
     private BufferedImage[][] animaciones;
     private int tick, indice, framesEntreAnimaciones = 12; // 120 FPS y 10 animaciones por segundo
     private Animaciones.Jugador accionAnterior = Animaciones.Jugador.QUIETO;
     private Animaciones.Jugador accionActual = Animaciones.Jugador.QUIETO;
-    //Comportamiento
     private boolean moviendose = false;
     private boolean corriendo = false;
 
@@ -79,8 +78,17 @@ public class Jugador extends Entidad {
 
         if (saltando)
             saltar();
-        if (!izquierda && !derecha && !enAire)
+        if (!izquierda && !derecha && !enAire){
+            if(velocidad > 0)
+                velocidad -= aceleracion;
+            else if(velocidad < 0)
+                velocidad += aceleracion;
+
+            if(velocidad > -aceleracion  && velocidad < aceleracion)
+                velocidad = 0;
+            actualizarPosicionX(velocidad);
             return;
+        }
 
         float xVelocidad = 0;
 
@@ -100,6 +108,16 @@ public class Jugador extends Entidad {
                 velocidad = 0;
             xVelocidad = velocidad;
             direccionMirada = true;
+        }
+
+        if(!izquierda && !derecha){
+            if(velocidad > 0)
+                velocidad -= aceleracion;
+            else if(velocidad < 0)
+                velocidad += aceleracion;
+            if(velocidad > -aceleracion  && velocidad < aceleracion)
+                velocidad = 0;
+            xVelocidad = velocidad;
         }
 
         if (!enAire) {
@@ -199,8 +217,10 @@ public class Jugador extends Entidad {
 
     //Cuando choca con un emenigo
     public void golpeado(Enemigo enem){
-        if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR){
+        if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR && enem.getEstado() != Enemigo.CAPARAZON){
             respawn();
+        }else if(enem.getHitbox().intersects(hitbox) && enem.getEstado() == Enemigo.CAPARAZON){
+            enem.setEstado(Enemigo.MORIR);
         }
     }
     //Cuando pisa con un emenigo
@@ -209,7 +229,6 @@ public class Jugador extends Entidad {
             enAire = false;
             saltar();
             enem.setEstado(Enemigo.MORIR);
-            enem.setAccionActual(Animaciones.Enemigo.MURIENDO);
         }
     }
 

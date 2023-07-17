@@ -33,9 +33,9 @@ public class Archivos {
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
     //Estos son los valores de verde para cada enemigo
     static final int GOOMBA = 5;
-    //static final int KOOPA_VERDE = 10;
-    //static final int KOOPA_ROJO = 15;
-    //static final int TPINCHO = 20;
+    static final int KOOPA_VERDE = 10;
+    static final int KOOPA_ROJO = 15;
+    static final int SPINY = 20;
     public static ArrayList<Enemigo> getEnemigos(){
         BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_CAVERNA);
         ArrayList<Enemigo> lista = new ArrayList();
@@ -45,9 +45,9 @@ public class Archivos {
                 int valor = color.getGreen();
                 switch(valor){
                     case GOOMBA: lista.add(new Goomba(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    //case KOOPA_VERDE: lista.add(new KoopaVerde(i*Juego.UNIDAD,j*Juego.UNIDAD);break;
-                    //case KOOPA_ROJO: lista.add(new KoopaRojo(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    //case TORTUGA_PINCHO: lista.add(new TPINCHO(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case KOOPA_VERDE: lista.add(new KoopaVerde(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case KOOPA_ROJO: lista.add(new KoopaRojo(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case SPINY: lista.add(new Spiny(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
                 }
             }
         return lista;

@@ -12,7 +12,10 @@ public enum ImagenURL {
     NIVEL_SUPERFICIE("graficos/niveles/superficie.png"),
     INFO_NIVEL_UNO("niveles/level_one_data.png"),
     INFO_NIVEL_CAVERNA("niveles/level_caverna_data.png"),
-    ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png");
+    ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png"),
+    ENEMY_KOOPAVERDE("graficos/enemigos/koopaVerdeSprites.png"),
+    ENEMY_KOOPAROJO("graficos/enemigos/koopaRojoSprites.png"),
+    ENEMY_SPINY("graficos/enemigos/spinyCavernaSprites.png");
 
     final String spriteURL;
 

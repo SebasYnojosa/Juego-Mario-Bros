@@ -3,6 +3,7 @@ package entidades;
 import utilidades.Animaciones;
 import utilidades.ImagenURL;
 
+import static main.Juego.ALTO_VENTANA;
 import static utilidades.Archivos.*;
 import static utilidades.Ayuda.*;
 
@@ -76,15 +77,20 @@ public class Jugador extends Entidad {
     private void setPosicion() {
         moviendose = false;
 
+        // Hace que el jugador muera cuando se cae del escenario
+        if (hitbox.y > ALTO_VENTANA + altura) {
+            respawn();
+        }
+
         if (saltando)
             saltar();
-        if (!izquierda && !derecha && !enAire){
-            if(velocidad > 0)
+        if (!izquierda && !derecha && !enAire) {
+            if (velocidad > 0)
                 velocidad -= aceleracion;
-            else if(velocidad < 0)
+            else if (velocidad < 0)
                 velocidad += aceleracion;
 
-            if(velocidad > -aceleracion  && velocidad < aceleracion)
+            if (velocidad > -aceleracion && velocidad < aceleracion)
                 velocidad = 0;
             actualizarPosicionX(velocidad);
             return;

@@ -78,6 +78,7 @@ public class Juego implements Runnable {
     // Codigo que queremos que se ejecute en el hilo principal
     public void update() {
         jugador.update();
+//        System.out.println("JugadorPos(" + jugador.getHitbox().x + "," + jugador.getHitbox().y + ")");
         for(Enemigo e: controladorEnemigos.getEnemigos()){
             jugador.golpeado(e);
             jugador.pisar(e);

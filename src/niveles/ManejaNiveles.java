@@ -25,7 +25,7 @@ public class ManejaNiveles {
     }
 
     public void cargarSpritesNivel() {
-        BufferedImage img = cargarImagen(ImagenURL.NIVEL_CAVERNA);
+        BufferedImage img = cargarImagen(ImagenURL.NIVEL_SUPERFICIE);
         nivelSprites = new BufferedImage[16*11];
         for (int j = 0; j < 11; j++) {
             for (int i = 0; i < 16; i++) {
@@ -33,7 +33,7 @@ public class ManejaNiveles {
                 nivelSprites[indice] = img.getSubimage(i * 16, j * 16, 16, 16);
             }
         }
-        fondo = cargarImagen(ImagenURL.FONDO_CAVERNA);
+        fondo = cargarImagen(ImagenURL.FONDO);
     }
 
     public void render(Graphics g, int lvlOffset) {

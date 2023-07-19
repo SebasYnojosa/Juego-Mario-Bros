@@ -22,12 +22,17 @@ public class Ayuda {
 
     public static boolean esSolido(float x, float y, int[][] infoNivel) {
         int anchuraMaxima = infoNivel[0].length * UNIDAD;
+        int alturaMaxima = infoNivel.length * UNIDAD;
 
-        if (x < 0 || y < 0 || x >= anchuraMaxima || y >= Juego.ALTO_VENTANA)
+        if (x < 0 || x >= anchuraMaxima)
             return true;
 
         float xIndice = x / UNIDAD;
         float yIndice = y / UNIDAD;
+
+        // Permite a las entidades caerse en un pozo sin que explote el programa
+        if (y < 0 || y >= alturaMaxima)
+            return false;
 
         int valor = infoNivel[(int)yIndice][(int)xIndice];
 

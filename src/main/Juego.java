@@ -98,7 +98,14 @@ public class Juego implements Runnable {
     }
 
     public void cargarProxNivel(){
+        jugador.respawn();
         manejaNiveles.cargarProxLvl();
+    }
+
+    public void ganar(){
+        if ((int) jugador.getHitbox().x == 9453){
+            setNivelCompletado(true);
+        }
     }
 
     private void iniciarCiclo() {
@@ -118,6 +125,12 @@ public class Juego implements Runnable {
         manejaNiveles.update();
         controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
         checkCloseToBorder();
+        ganar();
+
+        if (nivelCompletado == true){
+            cargarProxNivel();
+            nivelCompletado = false;
+        }
     }
 
     public void checkCloseToBorder(){

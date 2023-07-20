@@ -12,6 +12,7 @@ import utilidades.ImagenURL;
 import menus.Frame1;
 
 import java.awt.*;
+import java.io.IOException;
 
 // Clase principal del juego
 public class Juego implements Runnable {
@@ -53,6 +54,7 @@ public class Juego implements Runnable {
     public static final int ALTO_VENTANA = UNIDADES_ALTURA * UNIDAD;
     public static final int ALTURA_JUGADOR = 2 * UNIDAD;
     public static final int ANCHURA_JUGADOR = UNIDAD + UNIDAD/4;
+    public final int maxTime = 120 * 6000;
 
     public Juego(String skin, Frame1 frame) {
         this.frame = frame;
@@ -102,17 +104,13 @@ public class Juego implements Runnable {
     }
 
     public void cargarProxNivel(){
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
+
         jugador.respawn();
         manejaNiveles.cargarProxLvl();
     }
 
     public void ganar(){
-        if ((int) jugador.getHitbox().x == 9453){
+        if ((int) jugador.getHitbox().x == 198){       // 9453
             setNivelCompletado(true);
         }
     }
@@ -144,10 +142,6 @@ public class Juego implements Runnable {
         checkCloseToBorder();
         ganar();
 
-        if (nivelCompletado == true){
-            cargarProxNivel();
-            nivelCompletado = false;
-        }
     }
 
     public void checkCloseToBorder(){
@@ -174,7 +168,11 @@ public class Juego implements Runnable {
         controladorObj.dibujar(g, xLvlOffset);
         jugador.render(g, xLvlOffset);
 
+        if (nivelCompletado == true){
 
+            cargarProxNivel();
+            nivelCompletado = false;
+        }
 //        if (cuadriculaActivada)
 //            mostrarCuadricula(g);
     }

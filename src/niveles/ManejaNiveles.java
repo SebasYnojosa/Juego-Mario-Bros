@@ -21,14 +21,16 @@ public class ManejaNiveles {
     private int indexNivel = 0;
 
     private BufferedImage fondo;
+    private BufferedImage pantallaCarga;
 
-    private HashMap<Integer, String> intToString = new HashMap<>();
+    private static HashMap<Integer, String> intToString = new HashMap<>();
 
     public ManejaNiveles(Juego juego) {
         this.juego = juego;
         cargarSpritesNivel();
         niveles = new ArrayList<>();
         construirNiveles();
+        pantallaCarga = cargarImagen(ImagenURL.valueOf(getHashValue(indexNivel + 1)));
     }
 
     public void armarHashMap(){
@@ -38,8 +40,20 @@ public class ManejaNiveles {
         intToString.put(4, "CUATRO");
     }
 
+    public void setPantallaCarga(){
+        if (indexNivel >= 4){
+            // Agregar pantalla de fin de juego
+        }
+
+        pantallaCarga = cargarImagen(ImagenURL.valueOf(getHashValue(indexNivel++)));
+    }
+
     public String getHashValue(int key){
         return intToString.get(key);
+    }
+
+    public BufferedImage getPantallaCarga(){
+        return pantallaCarga;
     }
 
     public void construirNiveles(){
@@ -72,6 +86,11 @@ public class ManejaNiveles {
     public void renderFondo(Graphics g, int lvlOffset) {
         g.drawImage(fondo, 0, 0, Juego.ANCHO_VENTANA, Juego.ALTO_VENTANA, null);
     }
+
+    public void renderPantallaCarga(Graphics g, int lvlOffset){
+        g.drawImage(pantallaCarga, 0, 0, Juego.ANCHO_VENTANA, Juego.ALTO_VENTANA, null);
+    }
+
     public void render(Graphics g, int lvlOffset) {
 
         for (int j = 0; j < Juego.UNIDADES_ALTURA; ++j) {
@@ -94,14 +113,12 @@ public class ManejaNiveles {
         return niveles.size();
     }
 
-    public void cargarProxLvl(){    // CLAVE PARA EL CAMBIO DE BACKGROUND Y SPRITES
+    public void cargarProxLvl(){
         indexNivel++;
         if (indexNivel >= niveles.size()){
             // MOSTRAR PANTALLA DE FIN DE JUEGO
         }
 
-        String proxFondo;
-        String proxSpritesheet;
         Nivel nuevoNivel = niveles.get(indexNivel);
         cargarSpritesNivel();
         juego.getControladorEnemigos().cargarEnemigos(nuevoNivel);

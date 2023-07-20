@@ -27,6 +27,7 @@ public enum ImagenURL {
     INFO_NIVEL_CAVERNA("niveles/level_caverna_data.png"),
     INFO_NIVEL_HIELO("niveles/level_hielo_data.png"),
     INFO_NIVEL_CASTILLO("niveles/level_castillo_data.png"),
+    UNO("graficos/niveles/cambioNivel/nivel1.png"),
     OBJ_MISTERIO("graficos/objetos/bloqueObjetos.png"),
     OBJ_ITEMS("graficos/objetos/powerups.png"),
     ENT_FUEGO("graficos/objetos/bolaFuego.png"),

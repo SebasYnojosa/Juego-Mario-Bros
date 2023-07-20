@@ -34,7 +34,7 @@ public class InputsTeclado implements KeyListener {
                 break;
             // Pondra a correr al jugador
             case KeyEvent.VK_SHIFT:
-                panel.getJuego().getJugador().setCorriendo(true);
+                panel.getJuego().getJugador().setCorriendo(2);
                 break;
             // El jugador empezara a saltar
             case KeyEvent.VK_SPACE:
@@ -59,7 +59,7 @@ public class InputsTeclado implements KeyListener {
                 break;
             // El jugador dejara de correr
             case KeyEvent.VK_SHIFT:
-                panel.getJuego().getJugador().setCorriendo(false);
+                panel.getJuego().getJugador().setCorriendo(0);
                 break;
             // El jugador dejara de saltar
             case KeyEvent.VK_SPACE:

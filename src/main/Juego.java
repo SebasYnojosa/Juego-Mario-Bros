@@ -1,9 +1,10 @@
 package main;
 
+import entidades.CajaMisterio;
 import menus.NivelCompletado;
 import niveles.ControladorEnemigos;
-import entidades.Enemigo;
-import entidades.Jugador;
+import entidades.*;
+import niveles.ControladorObj;
 import niveles.ManejaNiveles;
 import utilidades.Archivos;
 import utilidades.Ayuda;
@@ -28,6 +29,7 @@ public class Juego implements Runnable {
     private Jugador jugador;
     private ManejaNiveles manejaNiveles;
     private ControladorEnemigos controladorEnemigos;
+    private ControladorObj controladorObj;
 
     private boolean cuadriculaActivada = false;
 
@@ -57,6 +59,7 @@ public class Juego implements Runnable {
 
         manejaNiveles = new ManejaNiveles(this);
         controladorEnemigos = new ControladorEnemigos(this);
+        controladorObj = new ControladorObj(this);
         switch (skin){
             case "Mario" -> jugador = new Jugador(65, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
             case "Luigi" -> jugador = new Jugador(65, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
@@ -95,6 +98,7 @@ public class Juego implements Runnable {
 
     public void cargarInicioNivel(){
         controladorEnemigos.cargarEnemigos(manejaNiveles.getNivelActual());
+        controladorObj.cargarCajas(manejaNiveles.getNivelActual());
     }
 
     public void cargarProxNivel(){
@@ -126,9 +130,17 @@ public class Juego implements Runnable {
         for(Enemigo e: controladorEnemigos.getEnemigos()){
             jugador.golpeado(e);
             jugador.pisar(e);
+            jugador.quemar(e);
         }
+
+        for(CajaMisterio o: controladorObj.getCajas()){
+            jugador.bloque(o);
+            jugador.powerUp(o.obj);
+        }
+
         manejaNiveles.update();
         controladorEnemigos.update(manejaNiveles.getNivelActual().getInfoNivel());
+        controladorObj.update(manejaNiveles.getNivelActual().getInfoNivel());
         checkCloseToBorder();
         ganar();
 
@@ -159,6 +171,7 @@ public class Juego implements Runnable {
         manejaNiveles.renderFondo(g, xLvlOffset);
         controladorEnemigos.dibujar(g, xLvlOffset);
         manejaNiveles.render(g, xLvlOffset);
+        controladorObj.dibujar(g, xLvlOffset);
         jugador.render(g, xLvlOffset);
 
 

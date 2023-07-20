@@ -2,45 +2,50 @@ package entidades;
 
 import main.Juego;
 import utilidades.Animaciones;
-import utilidades.ImagenURL;
 import utilidades.Ayuda;
+import utilidades.ImagenURL;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static main.Juego.ALTO_VENTANA;
 import static utilidades.Archivos.cargarImagen;
 
-public abstract class Objeto extends Entidad{
-    protected static int dif = 4;
-    protected final static int QUIETO = 0, MOVIENDOSE = 1;
+public class Fuego extends Entidad{
 
     //Animaciones
     protected BufferedImage[][] animaciones;
-    protected Animaciones.OBJ accionAnterior, accionActual;
+    protected Animaciones.OBJ accionActual = Animaciones.OBJ.MOVIENDOSE_2;
 
     protected int aniIndex, aniTick, aniSpeed = 12;
 
     //Comportamiento
-    protected int tipo, estado;
     protected boolean start = true, enAire = false, izq = true;         //Para cuando los update se ejecuten por primera vez
+    private float velocidadAire, gravedad = 0.1f, velx = 2f; //Variables de velocidad y tal
 
-    private float velocidadAire, gravedad = 0.1f, velx = 1f; //Variables de velocidad y tal
+    public boolean activo = false;
 
-    public int altSalir;
-    public Objeto(float x, float y, int tipo) {
-        super(x+dif, y+dif, Juego.UNIDAD-(dif*2), Juego.UNIDAD-(dif*2));
+    public Fuego(float x, float y) {
+        super(x, y, Juego.UNIDAD/2, Juego.UNIDAD/2);
         inicializarHitbox(this.x,this.y, this.anchura, this.altura);
-        cargarAnimaciones(ImagenURL.OBJ_ITEMS, 16, 16);
-        this.tipo = tipo;
+        cargarAnimaciones(ImagenURL.ENT_FUEGO, 8, 8);
     }
 
     // <editor-fold defaultstate="collapsed" desc="ACTUALIZACIONES DE FRAME">//GEN-BEGIN:initComponents
     public void update(int[][] infoLvl){
-        movUpdate(infoLvl);
-        actualizarAnimacion();
+        if(activo){
+            movUpdate(infoLvl);
+            actualizarAnimacion();
+        }
     }
 
     public void movUpdate(int[][] infoLvl){
+        // Hace que el jugador muera cuando se cae del escenario
+        if (hitbox.y > ALTO_VENTANA + altura) {
+            respawn();
+            return;
+        }
+
         if(start){
             if(!Ayuda.enSuelo(hitbox, infoLvl)){
                 enAire = true;
@@ -48,7 +53,7 @@ public abstract class Objeto extends Entidad{
             start = false;
         }
         if(!enAire){
-            comportamiento(infoLvl);
+            caminando(infoLvl);
         }else{
             //Caer
             if(Ayuda.sePuedeMover(hitbox.x, hitbox.y+ velocidadAire, hitbox.width, hitbox.height, infoLvl)){
@@ -63,8 +68,6 @@ public abstract class Objeto extends Entidad{
     // </editor-fold>//GEN-END:initComponents
 
     // <editor-fold defaultstate="collapsed" desc="COMPORTAMIENTOS GENERALES">//GEN-BEGIN:initComponents
-
-    public abstract void comportamiento(int[][] infoLvl);
 
     public void caminando(int[][] infoLvl){
         float vel = 0; //Variable de la velocidad con direccion
@@ -82,21 +85,24 @@ public abstract class Objeto extends Entidad{
             hitbox.x += vel;
             return;
         }
-        if(izq){
-            izq = false;
-        }else{
-            izq = true;
-        }
+        respawn();
+    }
+
+    public void spawn(float x,float y, boolean izq){
+        activo = true;
+        this.hitbox.x = x;
+        this.hitbox.y = y;
+        this.izq = izq;
     }
 
     public void respawn(){
         this.hitbox.x = this.x;
         this.hitbox.y = this.y;
-        estado = Objeto.QUIETO;
         start = true;
         enAire = false;
         izq = true;
         velocidadAire = 0;
+        activo = false;
     }
 
     // </editor-fold>//GEN-END:initComponents
@@ -106,26 +112,20 @@ public abstract class Objeto extends Entidad{
         BufferedImage imagenes = cargarImagen(imagenURL);
 
         // Son 3 animaciones en total y la que tiene mas frames tiene 2
-        animaciones = new BufferedImage[5][4];
+        animaciones = new BufferedImage[1][2];
 
-        for (int j = 0; j < 5; j++) {
-            for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 1; j++) {
+            for (int i = 0; i < 2; i++) {
                 animaciones[j][i] = imagenes.getSubimage(i * x, j * y, x, y);
             }
         }
     }
 
     public void dibujar(Graphics g, int lvlOffset){
-        g.drawImage(animaciones[tipo][aniIndex], (int)hitbox.x - lvlOffset, (int)hitbox.y, this.anchura,this.altura,null);
+        g.drawImage(animaciones[0][aniIndex], (int)hitbox.x - lvlOffset, (int)hitbox.y, this.anchura,this.altura,null);
     }
 
     public void actualizarAnimacion(){
-        // Si la accion actual es diferente a la accion anterior, se reinicia el indice
-        // Esto para evitar parpadeos en el cambio de animaciones
-        if (accionActual != accionAnterior) {
-            aniIndex = 0;
-            accionAnterior = accionActual;
-        }
 
         aniTick++;
         if(aniTick >= aniSpeed){
@@ -136,10 +136,6 @@ public abstract class Objeto extends Entidad{
                 aniIndex = 0;
             }
         }
-    }
-
-    public int getTipo(){
-        return tipo;
     }
     // </editor-fold>//GEN-END:initComponents
 }

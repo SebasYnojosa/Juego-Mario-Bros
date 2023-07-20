@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 import static utilidades.Archivos.cargarImagen;
 
-public abstract class CajaMisterio extends Entidad{
+public class CajaMisterio extends Entidad{
     static final int NOACTIVO = 0, ACTIVO = 1, SACANDO = 2;
     //Animaciones
     protected BufferedImage[][] animaciones;
@@ -20,14 +20,15 @@ public abstract class CajaMisterio extends Entidad{
     //Comportamientos
     protected int estado = ACTIVO, actAnim = ACTIVO;
     protected int regenTime = 120 * 10, currTime = 0;
-    private int profundidad = 30, currProf = 0, profInterval = 10, currInterval; //Prof interval es la cantidad de frames que va a tomar bajar un pixel, para sacar el tiempo que tardara en salir es (profundidad*profInterval)/fps
+    private int profundidad, currProf = 0, profInterval = 10, currInterval; //Prof interval es la cantidad de frames que va a tomar bajar un pixel, para sacar el tiempo que tardara en salir es (profundidad*profInterval)/fps
     public Objeto obj;
 
     public CajaMisterio(float x, float y, Objeto obj) {
         super(x, y , Juego.UNIDAD, Juego.UNIDAD);
-        inicializarHitbox(x, y+ Juego.UNIDAD+1, + Juego.UNIDAD, 10);
+        inicializarHitbox(x+4, y+ Juego.UNIDAD+1, Juego.UNIDAD-8, 5);
         cargarAnimaciones(ImagenURL.OBJ_MISTERIO, 16, 16);
         this.obj = obj;
+        profundidad = obj.altura + obj.dif + obj.altSalir;
     }
 
     // <editor-fold defaultstate="collapsed" desc="ACTUALIZACIONES DE FRAME">//GEN-BEGIN:initComponents
@@ -72,15 +73,13 @@ public abstract class CajaMisterio extends Entidad{
             estado = ACTIVO;
             accionAnterior = accionActual;
             accionActual = Animaciones.OBJ.MOVIENDOSE_3;
-            obj.hitbox.x = obj.x;
-            obj.hitbox.y = obj.y;
-            obj.estado = Objeto.QUIETO;
+            obj.respawn();
             actAnim = ACTIVO;
         }
     }
 
     protected void desactivar(){
-        estado = NOACTIVO;
+        estado = SACANDO;
         accionAnterior = accionActual;
         accionActual = Animaciones.OBJ.QUIETO;
         actAnim = NOACTIVO;

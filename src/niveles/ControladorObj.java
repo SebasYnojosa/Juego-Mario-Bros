@@ -35,8 +35,8 @@ public class ControladorObj {
     //Dibuja a todos los enemigos
     public void dibujar(Graphics g, int lvlOffset){
         for(CajaMisterio o: listaCaja){
-            o.dibujar(g, lvlOffset);
             o.obj.dibujar(g, lvlOffset);
+            o.dibujar(g, lvlOffset);
             o.mostrarHitbox(g, lvlOffset);
         }
     }

@@ -6,7 +6,6 @@ import main.Juego;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -116,8 +115,9 @@ public class Ayuda {
     //Funcion que devuelve un arrayList con los goombas
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
     //Estos son los valores de verde para cada enemigo
-    static final int HONGO = 100;
-    static final int FLOR = 110;
+    //static final int HONGO = 100;
+    static final int FLOR = 101;
+    static final int UP = 102;
     public static ArrayList<CajaMisterio> getCajas(BufferedImage img){
         ArrayList<CajaMisterio> lista = new ArrayList();
         for (int j = 0; j < img.getHeight(); ++j)
@@ -125,8 +125,9 @@ public class Ayuda {
                 Color color = new Color(img.getRGB(i, j));
                 int valor = color.getGreen();
                 switch(valor){
-                    case HONGO: lista.add(new CajaHongo(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
-                    case FLOR: break;
+                    //case HONGO: break;
+                    case FLOR: lista.add(new CajaMisterio(i*Juego.UNIDAD,j*Juego.UNIDAD, new Flor(i*Juego.UNIDAD, j*Juego.UNIDAD))); break;
+                    case UP: lista.add(new CajaMisterio(i*Juego.UNIDAD,j*Juego.UNIDAD, new Up(i*Juego.UNIDAD, j*Juego.UNIDAD))); break;
                 }
             }
         return lista;

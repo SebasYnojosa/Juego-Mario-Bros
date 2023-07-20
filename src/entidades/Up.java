@@ -2,16 +2,16 @@ package entidades;
 
 import utilidades.Animaciones;
 
-public class Hongo extends Objeto{
-
-    public Hongo(float x, float y) {
-        super(x, y, 0);
+public class Up extends Objeto{
+    public Up(float x, float y) {
+        super(x, y, 3);
         this.accionActual = this.accionAnterior = Animaciones.OBJ.QUIETO;
+        altSalir = 2;
     }
 
     @Override
     public void comportamiento(int[][] infoLvl) {
-        if (estado == MOVIENDOSE){
+        if(estado == MOVIENDOSE){
             caminando(infoLvl);
         }
     }

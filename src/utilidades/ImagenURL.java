@@ -29,6 +29,7 @@ public enum ImagenURL {
     INFO_NIVEL_CASTILLO("niveles/level_castillo_data.png"),
     OBJ_MISTERIO("graficos/objetos/bloqueObjetos.png"),
     OBJ_ITEMS("graficos/objetos/powerups.png"),
+    ENT_FUEGO("graficos/objetos/bolaFuego.png"),
     ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png"),
     ENEMY_KOOPAVERDE("graficos/enemigos/koopaVerdeSprites.png"),
     ENEMY_KOOPAROJO("graficos/enemigos/koopaRojoSprites.png"),

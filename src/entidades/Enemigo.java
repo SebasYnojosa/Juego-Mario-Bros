@@ -16,7 +16,7 @@ public abstract class Enemigo extends Entidad{
     public static final int CAMINAR = 0, MORIR = 1, CAPARAZON = 2, CAPARAZONGIRO = 3, VOLANDO = 4;
     //Respawn
     protected static final int respawnTime = 120 * 3;
-    protected int respawnTick = 0;
+    protected int respawnTick = respawnTime;
     //Hitbox
     protected static int handicap = 4;
     //Animaciones
@@ -71,7 +71,7 @@ public abstract class Enemigo extends Entidad{
 
     // <editor-fold defaultstate="collapsed" desc="COMPORTAMIENTOS GENERALES">//GEN-BEGIN:initComponents
     public void caminandoIntel(int[][] infoLvl){
-        float vel = 0; //Variable de la velocidad con direccion
+        float vel; //Variable de la velocidad con direccion
         if(izq){
             vel = -velx;
         }else{
@@ -93,7 +93,7 @@ public abstract class Enemigo extends Entidad{
     }
 
     public void caminando(int[][] infoLvl){
-        float vel = 0; //Variable de la velocidad con direccion
+        float vel; //Variable de la velocidad con direccion
         if(izq){
             vel = -velx;
         }else{

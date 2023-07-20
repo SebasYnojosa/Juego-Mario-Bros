@@ -98,6 +98,11 @@ public class Juego implements Runnable {
     }
 
     public void cargarProxNivel(){
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
         jugador.respawn();
         manejaNiveles.cargarProxLvl();
     }

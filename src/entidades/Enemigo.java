@@ -211,9 +211,9 @@ public abstract class Enemigo extends Entidad{
     public abstract void comportamiento(int[][] infoLvl);
 
     // <editor-fold defaultstate="collapsed" desc="PISADOBOX">//GEN-BEGIN:initComponents
-    public void mostrarPisadobox(Graphics g) {
+    public void mostrarPisadobox(Graphics g, int lvlOffset) {
         g.setColor(Color.GREEN);
-        g.drawRect((int)pisadoBox.x, (int)pisadoBox.y, (int)pisadoBox.width, (int)pisadoBox.height);
+        g.drawRect((int)pisadoBox.x - lvlOffset, (int)pisadoBox.y, (int)pisadoBox.width, (int)pisadoBox.height);
     }
 
     protected void inicializarPisadobox(float x, float y, float anchura, float altura) {

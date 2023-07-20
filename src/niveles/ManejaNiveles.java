@@ -25,7 +25,7 @@ public class ManejaNiveles {
     }
 
     public void cargarSpritesNivel() {
-        BufferedImage img = cargarImagen(ImagenURL.NIVEL_CASTILLO);
+        BufferedImage img = cargarImagen(ImagenURL.NIVEL_SUPERFICIE);
         nivelSprites = new BufferedImage[16*11];
         for (int j = 0; j < 11; j++) {
             for (int i = 0; i < 16; i++) {
@@ -33,11 +33,14 @@ public class ManejaNiveles {
                 nivelSprites[indice] = img.getSubimage(i * 16, j * 16, 16, 16);
             }
         }
-        fondo = cargarImagen(ImagenURL.FONDO_CASTILLO);
+        fondo = cargarImagen(ImagenURL.FONDO);
     }
 
-    public void render(Graphics g, int lvlOffset) {
+    public void renderFondo(Graphics g, int lvlOffset) {
         g.drawImage(fondo, 0, 0, Juego.ANCHO_VENTANA, Juego.ALTO_VENTANA, null);
+    }
+    public void render(Graphics g, int lvlOffset) {
+
         for (int j = 0; j < Juego.UNIDADES_ALTURA; ++j) {
             for (int i = 0; i < nivel1.getInfoNivel()[0].length; ++i) {
                 int indice = nivel1.getIndice(i, j);

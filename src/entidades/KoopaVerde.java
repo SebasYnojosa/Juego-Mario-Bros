@@ -6,36 +6,10 @@ import utilidades.ImagenURL;
 
 import java.awt.*;
 
-public class KoopaVerde extends Enemigo{
+public class KoopaVerde extends Koopa{
 
-    protected int estadoAnt;
     public KoopaVerde(float x, float y) {
-        super(x+handicap , y+handicap, Juego.UNIDAD-(handicap*2), (Juego.UNIDAD/2)-handicap, ImagenURL.ENEMY_KOOPAVERDE, 22, 28);
-    }
-    @Override
-    public void morir() {
-        if (estadoAnt != CAPARAZON){
-            respawnTick = respawnTime;
-            estado = CAPARAZON;
-            accionActual = Animaciones.Enemigo.CAPARAZON;
-        }else{
-            estado = CAPARAZONGIRO;
-            accionActual = Animaciones.Enemigo.CAPARAZON_GIRO;
-        }
-    }
-
-    @Override
-    public void dibujar(Graphics g, int lvlOffset){
-        if(izq)
-            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-handicap - lvlOffset, (int)getHitbox().y-(handicap+(Juego.UNIDAD/2))-14, Juego.UNIDAD,Juego.UNIDAD+14,null);
-        else
-            g.drawImage(animaciones[estado][aniIndex], (int)getHitbox().x-handicap + Juego.UNIDAD - lvlOffset, (int)getHitbox().y-(handicap+(Juego.UNIDAD/2))-14, -Juego.UNIDAD,Juego.UNIDAD+14,null);
-    }
-
-    @Override
-    public void setEstado(int estado){
-        estadoAnt = this.estado;
-        this.estado = estado;
+        super(x+handicap , y+handicap,ImagenURL.ENEMY_KOOPAVERDE, 22, 28);
     }
 
     @Override

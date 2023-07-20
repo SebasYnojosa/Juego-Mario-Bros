@@ -15,9 +15,9 @@ public abstract class Entidad {
         this.altura = altura;
     }
 
-    public void mostrarHitbox(Graphics g) {
+    public void mostrarHitbox(Graphics g, int lvlOffset) {
         g.setColor(Color.RED);
-        g.drawRect((int)hitbox.x, (int)hitbox.y, (int)hitbox.width, (int)hitbox.height);
+        g.drawRect((int)hitbox.x - lvlOffset, (int)hitbox.y, (int)hitbox.width, (int)hitbox.height);
     }
 
     protected void inicializarHitbox(float x, float y, float anchura, float altura) {

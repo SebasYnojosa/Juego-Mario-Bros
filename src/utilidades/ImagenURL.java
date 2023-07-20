@@ -21,7 +21,9 @@ public enum ImagenURL {
     ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png"),
     ENEMY_KOOPAVERDE("graficos/enemigos/koopaVerdeSprites.png"),
     ENEMY_KOOPAROJO("graficos/enemigos/koopaRojoSprites.png"),
-    ENEMY_SPINY("graficos/enemigos/spinyCavernaSprites.png");
+    ENEMY_SPINY("graficos/enemigos/spinyCavernaSprites.png"),
+    ENEMY_SKURRY("graficos/enemigos/escarabajoBuzzySprites.png"),
+    ENEMY_PIRA("graficos/enemigos/piranhaSprites.png");
 
     final String spriteURL;
 

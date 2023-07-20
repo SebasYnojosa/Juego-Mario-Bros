@@ -13,7 +13,7 @@ import static utilidades.Archivos.cargarImagen;
 
 public class ControladorEnemigos {
     private Juego juego;
-    private BufferedImage[][] goomba;
+    private BufferedImage[][] img;
     private ArrayList<Enemigo> listaEnem = new ArrayList();
 
     public ControladorEnemigos(Juego juego) {
@@ -36,8 +36,8 @@ public class ControladorEnemigos {
     public void dibujar(Graphics g, int lvlOffset){
         for(Enemigo o: listaEnem){
             o.dibujar(g, lvlOffset);
-//            o.mostrarHitbox(g);
-//            o.mostrarPisadobox(g);
+            o.mostrarHitbox(g, lvlOffset);
+            o.mostrarPisadobox(g, lvlOffset);
         }
     }
 
@@ -47,11 +47,11 @@ public class ControladorEnemigos {
         BufferedImage img = cargarImagen(ImagenURL.ENEMY_GOOMBA);
 
         // Son 2 animaciones en total y la que tiene mas frames tiene 2
-        goomba = new BufferedImage[2][2];
+        this.img = new BufferedImage[2][2];
 
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 2; i++) {
-                goomba[j][i] = img.getSubimage(i * 16, j * 16, 16, 16);
+                this.img[j][i] = img.getSubimage(i * 16, j * 16, 16, 16);
             }
         }
     }

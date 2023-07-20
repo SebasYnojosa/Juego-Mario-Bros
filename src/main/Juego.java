@@ -106,9 +106,11 @@ public class Juego implements Runnable {
     }
 
     public void render(Graphics g) {
+        manejaNiveles.renderFondo(g, xLvlOffset);
+        controladorEnemigos.dibujar(g, xLvlOffset);
         manejaNiveles.render(g, xLvlOffset);
         jugador.render(g, xLvlOffset);
-        controladorEnemigos.dibujar(g, xLvlOffset);
+
 
 //        if (cuadriculaActivada)
 //            mostrarCuadricula(g);
@@ -163,12 +165,12 @@ public class Juego implements Runnable {
 
             // Contador de FPS
             // 1 segundo = 1000 milisegundos
-            if (System.currentTimeMillis() - ultimoChequeoFrames >= 1000) {
+            /*if (System.currentTimeMillis() - ultimoChequeoFrames >= 1000) {
                 System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
                 updates = 0;
                 ultimoChequeoFrames = System.currentTimeMillis();
-            }
+            }*/
         }
     }
 

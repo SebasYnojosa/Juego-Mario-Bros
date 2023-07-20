@@ -5,10 +5,16 @@ import main.Juego;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.security.cert.TrustAnchor;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static main.Juego.UNIDAD;
 
 public class Ayuda {
+
+    // Coleccion de bloques transparentes
+
+    public static ArrayList<Integer> transparentes = new ArrayList<>(Arrays.asList(2, 126, 127, 128, 129, 130, 131, 142, 143, 150, 151, 152, 153, 154));
 
     // Metodo que se encarga de verificar si la entidad se puede mover a la posicion indicada
     public static boolean sePuedeMover(float x, float y, float anchura, float altura, int[][] infoNivel) {
@@ -37,7 +43,7 @@ public class Ayuda {
         int valor = infoNivel[(int)yIndice][(int)xIndice];
 
         // valor == 2 es el valor del bloque que es transparente
-        if (valor >= 178 || valor < 0 || valor != 2)
+        if (valor >= 178 || valor < 0 || !transparentes.contains(valor))
             return true;
         else
             return false;

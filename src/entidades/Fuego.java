@@ -21,7 +21,7 @@ public class Fuego extends Entidad{
 
     //Comportamiento
     protected boolean start = true, enAire = false, izq = true;         //Para cuando los update se ejecuten por primera vez
-    private float velocidadAire, gravedad = 0.1f, velx = 2f; //Variables de velocidad y tal
+    private float velocidadAire, gravedad = 0.1f, velx = 3f; //Variables de velocidad y tal
 
     public boolean activo = false;
 
@@ -52,9 +52,7 @@ public class Fuego extends Entidad{
             }
             start = false;
         }
-        if(!enAire){
-            caminando(infoLvl);
-        }else{
+        if(enAire){
             //Caer
             if(Ayuda.sePuedeMover(hitbox.x, hitbox.y+ velocidadAire, hitbox.width, hitbox.height, infoLvl)){
                 hitbox.y += velocidadAire;
@@ -63,6 +61,7 @@ public class Fuego extends Entidad{
                 enAire = false;
             }
         }
+        caminando(infoLvl);
     }
 
     // </editor-fold>//GEN-END:initComponents

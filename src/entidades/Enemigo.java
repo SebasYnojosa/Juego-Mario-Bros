@@ -53,9 +53,7 @@ public abstract class Enemigo extends Entidad{
             }
             start = false;
         }
-        if(!enAire){
-            comportamiento(infoLvl);
-        }else{
+        if(enAire){
             //Caer
             if(Ayuda.sePuedeMover(hitbox.x, hitbox.y+ velocidadAire, hitbox.width, hitbox.height, infoLvl)){
                 hitbox.y += velocidadAire;
@@ -65,6 +63,7 @@ public abstract class Enemigo extends Entidad{
                 enAire = false;
             }
         }
+        comportamiento(infoLvl);
     }
 
     // </editor-fold>//GEN-END:initComponents

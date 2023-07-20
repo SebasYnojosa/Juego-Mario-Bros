@@ -1,10 +1,12 @@
 package main;
 
+import menus.NivelCompletado;
 import niveles.ControladorEnemigos;
 import entidades.Enemigo;
 import entidades.Jugador;
 import niveles.ManejaNiveles;
 import utilidades.Archivos;
+import utilidades.Ayuda;
 import utilidades.ImagenURL;
 import menus.Frame1;
 
@@ -34,9 +36,13 @@ public class Juego implements Runnable {
     private int xLvlOffset;
     private int bordeIzquierdo = (int) (0.4 * Juego.ANCHO_VENTANA);
     private int bordeDerecho = (int) (0.6 * Juego.ANCHO_VENTANA);
-    private int lvlCasillaAncho = Archivos.informacionDelNivel()[0].length;
-    private int maxCasillaOffset = lvlCasillaAncho - Juego.UNIDADES_ANCHO;
-    private int maxLvlOffsetX = maxCasillaOffset * Juego.UNIDAD;
+    private int maxLvlOffsetX;
+
+    // Manejo de multiples niveles
+
+    private boolean nivelCompletado = false;
+
+    // Unidades basicas del juego
 
     public static final int UNIDAD = 32;
     public static final int UNIDADES_ANCHO = 26;
@@ -62,11 +68,37 @@ public class Juego implements Runnable {
 
         panel = new Panel(this);
         ventana = new Ventana(panel, frame);
+        calcularLvlOffset();
+        cargarInicioNivel();
 
         // Funcion que hace que el panel reciba los inputs del teclado o el mouse
         panel.requestFocus();
 
         iniciarCiclo();
+    }
+
+    public void setMaxLvlOffset(int lvlOffset){
+        this.maxLvlOffsetX = lvlOffset;
+    }
+
+    public void setNivelCompletado(boolean nivelCompletado){
+        this.nivelCompletado = nivelCompletado;
+    }
+
+    public ControladorEnemigos getControladorEnemigos(){
+        return controladorEnemigos;
+    }
+
+    public void calcularLvlOffset(){
+        maxLvlOffsetX = manejaNiveles.getNivelActual().getLvlOffset();
+    }
+
+    public void cargarInicioNivel(){
+        controladorEnemigos.cargarEnemigos(manejaNiveles.getNivelActual());
+    }
+
+    public void cargarProxNivel(){
+        manejaNiveles.cargarProxLvl();
     }
 
     private void iniciarCiclo() {

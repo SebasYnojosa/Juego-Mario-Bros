@@ -19,7 +19,6 @@ public class ControladorEnemigos {
     public ControladorEnemigos(Juego juego) {
         this.juego = juego;
         cargarAnimaciones();
-        cargarEnemigos();
     }
 
     //Actaliza el estado de los enemigos
@@ -28,8 +27,8 @@ public class ControladorEnemigos {
             e.update(infoLvl);
     }
 
-    public void cargarEnemigos(){
-        listaEnem = Archivos.getEnemigos();
+    public void cargarEnemigos(Nivel nivel){
+        listaEnem = nivel.getEnemigo();
     }
 
     //Dibuja a todos los enemigos

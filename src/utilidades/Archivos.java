@@ -6,8 +6,11 @@ import entidades.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Archivos {
@@ -29,50 +32,38 @@ public class Archivos {
         return img;
     }
 
-    //Funcion que devuelve un arrayList con los goombas
-    //El nivel de verde en el pixel de bitmap indica que hay un goomba
-    //Estos son los valores de verde para cada enemigo
-    static final int GOOMBA = 5;
-    static final int KOOPA_VERDE = 10;
-    static final int KOOPA_ROJO = 15;
-    static final int SPINY = 20;
-    static final int SCURRY = 25;
-    static final int PIRA = 30;
-    public static ArrayList<Enemigo> getEnemigos(){
-        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_UNO);
-        ArrayList<Enemigo> lista = new ArrayList();
-        for (int j = 0; j < img.getHeight(); ++j)
-            for (int i = 0; i < img.getWidth(); ++i){
-                Color color = new Color(img.getRGB(i, j));
-                int valor = color.getGreen();
-                switch(valor){
-                    case GOOMBA: lista.add(new Goomba(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    case KOOPA_VERDE: lista.add(new KoopaVerde(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    case KOOPA_ROJO: lista.add(new KoopaRojo(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    case SPINY: lista.add(new Spiny(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
-                    case SCURRY: lista.add(new Scurry(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
-                    case PIRA: lista.add(new Pira(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
+
+    public static BufferedImage[] getTodosNiveles(){
+        URL url = ImagenURL.class.getResource("/lvls");
+        File archivo = null;
+
+        try {
+            archivo = new File(url.toURI());
+        } catch (URISyntaxException e){
+            e.printStackTrace();
+        }
+
+        File[] archivos = archivo.listFiles();
+        File[] archivosOrdenados = new File[archivos.length];
+
+        for (int i = 0; i < archivosOrdenados.length; i++){
+            for (int j = 0; j < archivos.length; j++){
+                if (archivos[j].getName().equals((i + 1) + ".png")){
+                    archivosOrdenados[i] = archivos[j];
                 }
             }
-        return lista;
-    }
+        }
 
-    // Funcion que carga la informacion del nivel de un mapa de bits y la devuelve en una matriz para poder dibujarlo en el juego
-    // El valor del color rojo de cada pixel del mapa de bits representa un bloque del nivel
+        BufferedImage[] imgs = new BufferedImage[archivosOrdenados.length];
 
-    public static int[][] informacionDelNivel() {
-        BufferedImage img = cargarImagen(ImagenURL.INFO_NIVEL_UNO);
-        int[][] infoNivel = new int[img.getHeight()][img.getWidth()];
-
-        for (int j = 0; j < img.getHeight(); ++j)
-            for (int i = 0; i < img.getWidth(); ++i){
-                Color color = new Color(img.getRGB(i, j));
-                int valor = color.getRed();
-                if (valor >= 176)
-                    valor = 0;
-                infoNivel[j][i] = valor;
+        for (int i = 0; i < imgs.length; i++){
+            try{
+                imgs[i] = ImageIO.read(archivosOrdenados[i]);
+            } catch (IOException e){
+                e.printStackTrace();
             }
+        }
 
-        return infoNivel;
+        return imgs;
     }
 }

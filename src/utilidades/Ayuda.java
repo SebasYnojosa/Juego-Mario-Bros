@@ -1,9 +1,11 @@
 package utilidades;
 
+import entidades.*;
 import main.Juego;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +51,7 @@ public class Ayuda {
             return false;
     }
 
+
     public static boolean enSuelo(Rectangle2D.Float hitbox, int[][] infoNivel) {
         if (!esSolido(hitbox.x, hitbox.y+ hitbox.height+1, infoNivel))
             if (!esSolido(hitbox.x + hitbox.width, hitbox.y + hitbox.height+1, infoNivel))
@@ -60,5 +63,53 @@ public class Ayuda {
         if(izq)
             return esSolido(hitbox.x + vel, hitbox.y + hitbox.height + 2, infoNivel);
         return esSolido(hitbox.x + vel + Juego.UNIDAD, hitbox.y + hitbox.height + 2, infoNivel);
+    }
+
+
+    // Funcion que carga la informacion del nivel de un mapa de bits y la devuelve en una matriz para poder dibujarlo en el juego
+    // El valor del color rojo de cada pixel del mapa de bits representa un bloque del nivel
+
+    public static int[][] informacionDelNivel(BufferedImage img) {
+
+        int[][] infoNivel = new int[img.getHeight()][img.getWidth()];
+
+        for (int j = 0; j < img.getHeight(); ++j)
+            for (int i = 0; i < img.getWidth(); ++i){
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getRed();
+                if (valor >= 176)
+                    valor = 0;
+                infoNivel[j][i] = valor;
+            }
+
+        return infoNivel;
+    }
+
+    //Funcion que devuelve un arrayList con los goombas
+    //El nivel de verde en el pixel de bitmap indica que hay un goomba
+    //Estos son los valores de verde para cada enemigo
+    static final int GOOMBA = 5;
+    static final int KOOPA_VERDE = 10;
+    static final int KOOPA_ROJO = 15;
+    static final int SPINY = 20;
+    static final int SCURRY = 25;
+    static final int PIRA = 30;
+
+    public static ArrayList<Enemigo> getEnemigos(BufferedImage img){
+        ArrayList<Enemigo> lista = new ArrayList();
+        for (int j = 0; j < img.getHeight(); ++j)
+            for (int i = 0; i < img.getWidth(); ++i){
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getGreen();
+                switch(valor){
+                    case GOOMBA: lista.add(new Goomba(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case KOOPA_VERDE: lista.add(new KoopaVerde(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case KOOPA_ROJO: lista.add(new KoopaRojo(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case SPINY: lista.add(new Spiny(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                    case SCURRY: lista.add(new Scurry(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
+                    case PIRA: lista.add(new Pira(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
+                }
+            }
+        return lista;
     }
 }

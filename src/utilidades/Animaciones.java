@@ -54,4 +54,23 @@ public class Animaciones {
             return ordinal();
         }
     }
+
+    public enum OBJ {
+        QUIETO(1),
+        MOVIENDOSE_2(2),
+        MOVIENDOSE_3(3);
+        final int cantidadDeFrames;
+
+        OBJ(int cantidadDeFrames) {
+            this.cantidadDeFrames = cantidadDeFrames;
+        }
+
+        public int getCantidadDeFrames() {
+            return cantidadDeFrames;
+        }
+
+        public int getPosicion() {
+            return ordinal();
+        }
+    }
 }

@@ -237,6 +237,12 @@ public class Jugador extends Entidad {
             enem.setEstado(Enemigo.MORIR);
         }
     }
+    //Cuando toca un objeto
+    public void bloque(CajaMisterio caja){
+        if(caja.getHitbox().intersects(hitbox) && caja.getEstado() != CajaMisterio.NOACTIVO){
+            caja.desactivar();
+        }
+    }
 
     //Cuando pegan, vuelves al principio y pierdes vida
     public void respawn(){

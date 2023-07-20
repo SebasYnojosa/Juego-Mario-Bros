@@ -112,4 +112,23 @@ public class Ayuda {
             }
         return lista;
     }
+
+    //Funcion que devuelve un arrayList con los goombas
+    //El nivel de verde en el pixel de bitmap indica que hay un goomba
+    //Estos son los valores de verde para cada enemigo
+    static final int HONGO = 100;
+    static final int FLOR = 110;
+    public static ArrayList<CajaMisterio> getCajas(BufferedImage img){
+        ArrayList<CajaMisterio> lista = new ArrayList();
+        for (int j = 0; j < img.getHeight(); ++j)
+            for (int i = 0; i < img.getWidth(); ++i){
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getGreen();
+                switch(valor){
+                    case HONGO: lista.add(new CajaHongo(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
+                    case FLOR: break;
+                }
+            }
+        return lista;
+    }
 }

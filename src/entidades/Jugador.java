@@ -204,7 +204,7 @@ public class Jugador extends Entidad {
         // Son 14 animaciones en total y la que tiene mas frames tiene 4
         animaciones = new BufferedImage[16][4];
 
-        for (int j = 0; j < 14; j++) {
+        for (int j = 0; j < 16; j++) {
             for (int i = 0; i < 4; i++) {
                 animaciones[j][i] = imagenes.getSubimage(i * 20, j * 30, 20, 30);
             }

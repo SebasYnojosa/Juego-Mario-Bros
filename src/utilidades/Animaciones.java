@@ -9,13 +9,7 @@ public class Animaciones {
         FRENANDO(1),
         NADANDO(4),
         SALTANDO(1),
-        SALTANDO_CORRIENDO(1),
-        AGARRANDO_CAMINANDO(2),
-        TUBERIA(1),
-        RESBALANDO(1),
-        AGARRANDO_QUIETO(1),
-        TREPANDO(1),
-        TIRANDO(1);
+        SALTANDO_CORRIENDO(1);
 
         final int cantidadDeFrames;
 

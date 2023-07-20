@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 public class Pira extends Enemigo{
     public static final int IDLE = 0, SALIR = 2, ENTRAR = 3;
     private int salidaTime = 120 * 2, currTime = 0;
-    private int profundidad = 32, currProf = 0, profInterval = 10, currInterval; //Prof interval es la cantidad de frames que va a tomar bajar un pixel, para sacar el tiempo que tardara en salir es (profundidad*profInterval)/fps
+    private int profundidad = 34, currProf = 0, profInterval = 10, currInterval; //Prof interval es la cantidad de frames que va a tomar bajar un pixel, para sacar el tiempo que tardara en salir es (profundidad*profInterval)/fps
     private int estadoAnt = SALIR;
 
     private float inicialY;
@@ -82,7 +82,7 @@ public class Pira extends Enemigo{
         currProf = 0;
         estado = IDLE;
         estadoAnt = ENTRAR;
-        hitbox.y = inicialY - profundidad;
+        hitbox.y = inicialY + profundidad;
     }
 
     @Override

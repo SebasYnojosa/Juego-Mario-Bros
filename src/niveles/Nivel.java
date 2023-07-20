@@ -1,5 +1,6 @@
 package niveles;
 
+import entidades.CajaMisterio;
 import entidades.Enemigo;
 import main.Juego;
 import utilidades.Archivos;
@@ -7,8 +8,7 @@ import utilidades.Archivos;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static utilidades.Ayuda.informacionDelNivel;
-import static utilidades.Ayuda.getEnemigos;
+import static utilidades.Ayuda.*;
 
 public class Nivel {
 
@@ -17,6 +17,7 @@ public class Nivel {
     private int[][] infoNivel;
     private BufferedImage img;
     private ArrayList<Enemigo> enemigos;
+    private ArrayList<CajaMisterio> cajas;
     private int lvlCasillaAncho;
     private int maxCasillaOffset;
     private int maxLvlOffsetX;
@@ -25,6 +26,7 @@ public class Nivel {
         this.img = img;
         crearInfoNivel();
         crearEnemigos();
+        crearCubos();
         calcularOffsetNivel();
     }
 
@@ -36,6 +38,10 @@ public class Nivel {
 
     public void crearEnemigos(){
         enemigos = getEnemigos(img);
+    }
+
+    public void crearCubos(){
+        cajas = getCajas(img);
     }
 
     public void calcularOffsetNivel(){
@@ -58,5 +64,8 @@ public class Nivel {
 
     public ArrayList<Enemigo> getEnemigo(){
         return enemigos;
+    }
+    public ArrayList<CajaMisterio> getListaCajas(){
+        return cajas;
     }
 }

@@ -18,7 +18,6 @@ public class ControladorEnemigos {
 
     public ControladorEnemigos(Juego juego) {
         this.juego = juego;
-        cargarAnimaciones();
     }
 
     //Actaliza el estado de los enemigos
@@ -40,20 +39,6 @@ public class ControladorEnemigos {
         }
     }
 
-
-    //Carga las animaciones de los enemigos
-    private void cargarAnimaciones() {
-        BufferedImage img = cargarImagen(ImagenURL.ENEMY_GOOMBA);
-
-        // Son 2 animaciones en total y la que tiene mas frames tiene 2
-        this.img = new BufferedImage[2][2];
-
-        for (int j = 0; j < 2; j++) {
-            for (int i = 0; i < 2; i++) {
-                this.img[j][i] = img.getSubimage(i * 16, j * 16, 16, 16);
-            }
-        }
-    }
 
     public ArrayList<Enemigo> getEnemigos(){return listaEnem;}
 }

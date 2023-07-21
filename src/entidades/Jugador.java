@@ -44,6 +44,7 @@ public class Jugador extends Entidad {
 
     //Variables para muerte y powerups
     private int vidas = 3, inicX, inicY;
+    private int puntos = 0;
     public final static int NORMAL = 0, FLOR = 1;
     private int power = NORMAL;
     public static final int maxFuego = 2;
@@ -301,6 +302,17 @@ public class Jugador extends Entidad {
                 corriendo = 1;
             }
 
+        }
+    }
+
+    public void moneda(Moneda m){
+        if(m.getHitbox().intersects(hitbox) && m.activo){
+            puntos++;
+            m.activo = false;
+            if(puntos >= 100){
+                puntos = 0;
+                vidas++;
+            }
         }
     }
 

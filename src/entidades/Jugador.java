@@ -107,6 +107,7 @@ public class Jugador extends Entidad {
 
         // Hace que el jugador muera cuando se cae del escenario
         if (hitbox.y > ALTO_VENTANA + altura) {
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_MUERTE.getID());
             respawn();
         }
 
@@ -269,6 +270,7 @@ public class Jugador extends Entidad {
         if(!invencible){
             if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR && enem.getEstado() != Enemigo.CAPARAZON){
                 if(power == NORMAL){
+                    juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_MUERTE.getID());
                     respawn();
                 }else{
                     invencible = true;

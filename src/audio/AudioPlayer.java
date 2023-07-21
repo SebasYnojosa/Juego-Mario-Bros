@@ -32,7 +32,7 @@ public class AudioPlayer {
     }
 
     private void cargarEfectos() {
-        efectos = new Clip[6];
+        efectos = new Clip[7];
 
         efectos[0] = getClip(AudioURL.EFECTO_SALTO);
         efectos[1] = getClip(AudioURL.EFECTO_BOLA_FUEGO);
@@ -40,6 +40,7 @@ public class AudioPlayer {
         efectos[3] = getClip(AudioURL.EFECTO_PISAR);
         efectos[4] = getClip(AudioURL.EFECTO_POWER_UP);
         efectos[5] = getClip(AudioURL.EFECTO_POWER_UP_APARECE);
+        efectos[6] = getClip(AudioURL.EFECTO_MUERTE);
 
         setVolumenEfectos();
     }

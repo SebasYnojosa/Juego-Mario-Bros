@@ -97,6 +97,10 @@ public class Juego implements Runnable {
         return controladorEnemigos;
     }
 
+    public ControladorObj getControladorObj(){
+        return controladorObj;
+    }
+
     public void calcularLvlOffset(){
         maxLvlOffsetX = manejaNiveles.getNivelActual().getLvlOffset();
     }
@@ -115,7 +119,7 @@ public class Juego implements Runnable {
     }
 
     public void ganar(){
-        if ((int) jugador.getHitbox().x == 9453){       // 9453
+        if ((int) jugador.getHitbox().x == 198){       // 9453
             setNivelCompletado(true);
         }
     }

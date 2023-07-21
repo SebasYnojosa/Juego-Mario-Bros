@@ -6,7 +6,6 @@ import menus.Frame1;
 
 public class  Main {
     static Frame1 frame;
-    static boolean resetear;
     public static void main(String[] args) {
         frame = new Frame1();
     }

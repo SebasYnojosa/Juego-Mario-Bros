@@ -14,7 +14,7 @@ public class Ventana extends JFrame {
     public Ventana(Panel panel, Frame1 frame) {
         this.frame = frame;
 
-        setTitle("Juego");
+        setTitle("jMarioBros");
 
         // Esta funcion indica que cuando se cierre la ventana el programa terminara
         setDefaultCloseOperation(abandonoUser());

@@ -2,6 +2,7 @@ package main;
 
 import audio.AudioPlayer;
 import entidades.CajaMisterio;
+import audio.AudioPlayer;
 import menus.NivelCompletado;
 import niveles.ControladorEnemigos;
 import entidades.*;
@@ -33,7 +34,6 @@ public class Juego implements Runnable {
     private ControladorEnemigos controladorEnemigos;
     private ControladorObj controladorObj;
     private AudioPlayer audioPlayer;
-
     private boolean cuadriculaActivada = false;
 
     // Manejo de niveles mas grandes
@@ -60,6 +60,7 @@ public class Juego implements Runnable {
 
     public Juego(String skin, Frame1 frame) {
         this.frame = frame;
+
 
         manejaNiveles = new ManejaNiveles(this);
         controladorEnemigos = new ControladorEnemigos(this);
@@ -155,6 +156,10 @@ public class Juego implements Runnable {
         checkCloseToBorder();
         ganar();
 
+        if (nivelCompletado){
+            cargarProxNivel();
+            nivelCompletado = false;
+        }
     }
 
     public void checkCloseToBorder(){

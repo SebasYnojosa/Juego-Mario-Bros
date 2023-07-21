@@ -113,12 +113,12 @@ public class ManejaNiveles {
         return niveles.get(indexNivel);
     }
 
-    public int getCantidadNiveles(){
-        return niveles.size();
-    }
-
     public int getIndexNivelActual() {
         return indexNivel;
+    }
+
+    public int getCantidadNiveles(){
+        return niveles.size();
     }
 
     public void cargarProxLvl(){

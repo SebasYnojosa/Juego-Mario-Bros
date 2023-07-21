@@ -8,7 +8,6 @@ import static utilidades.Archivos.*;
 import static utilidades.Ayuda.*;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad {
@@ -37,7 +36,7 @@ public class Jugador extends Entidad {
     private float gravedad = 0.1f;
     private float velocidadSalto = -4.5f;
     private float velocidadCaida = 0.5f;
-    private boolean enAire = false ,saltando = false;
+    private boolean enAire = false, saltar = false, saltado = false;
 
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
@@ -105,7 +104,7 @@ public class Jugador extends Entidad {
             respawn();
         }
 
-        if (saltando)
+        if (saltar && !saltado)
             saltar();
 
         float xVelocidad = 0;
@@ -153,8 +152,10 @@ public class Jugador extends Entidad {
                 else
                     velocidadAire = velocidadCaida;
             }
+
         }
         actualizarPosicionX(xVelocidad);
+
         if((izquierda || derecha ) && !(izquierda && derecha))
             moviendose = true;
     }
@@ -164,6 +165,7 @@ public class Jugador extends Entidad {
             return;
         enAire = true;
         velocidadAire = velocidadSalto;
+        saltado = true;
     }
 
     private void detenerEnAire() {
@@ -347,8 +349,12 @@ public class Jugador extends Entidad {
         this.derecha = derecha;
     }
 
-    public void setSaltando(boolean saltando){
-        this.saltando = saltando;
+    public void setSaltar(boolean saltar) {
+        this.saltar = saltar;
+    }
+
+    public void setSaltado(boolean saltado){
+        this.saltado = saltado;
     }
 
     public boolean isEnAire() {

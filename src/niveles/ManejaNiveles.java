@@ -130,6 +130,8 @@ public class ManejaNiveles {
         Nivel nuevoNivel = niveles.get(indexNivel);
         cargarSpritesNivel();
         juego.getControladorEnemigos().cargarEnemigos(nuevoNivel);
+        juego.getControladorObj().cargarMonedas(nuevoNivel);
+        juego.getControladorObj().cargarCajas(nuevoNivel);
         juego.getJugador().cargarInfoNivel(nuevoNivel.getInfoNivel());
         juego.setMaxLvlOffset(nuevoNivel.getLvlOffset());
     }

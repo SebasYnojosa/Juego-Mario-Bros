@@ -28,15 +28,17 @@ public class AudioPlayer {
         musica[1] = getClip(AudioURL.MUSICA_NIVEL_2);
         musica[2] = getClip(AudioURL.MUSICA_NIVEL_3);
         musica[3] = getClip(AudioURL.MUSICA_NIVEL_4);
-        musica[4] = getClip(AudioURL.MUSICA_ENDING);
+//        musica[4] = getClip(AudioURL.MUSICA_ENDING);
     }
 
     private void cargarEfectos() {
-        efectos = new Clip[3];
+        efectos = new Clip[5];
 
         efectos[0] = getClip(AudioURL.EFECTO_SALTO);
         efectos[1] = getClip(AudioURL.EFECTO_BOLA_FUEGO);
         efectos[2] = getClip(AudioURL.EFECTO_AGARRAR_MONEDA);
+        efectos[3] = getClip(AudioURL.EFECTO_PISAR);
+        efectos[4] = getClip(AudioURL.EFECTO_POWER_UP);
 
         setVolumenEfectos();
     }

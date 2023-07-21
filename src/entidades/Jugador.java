@@ -110,8 +110,11 @@ public class Jugador extends Entidad {
             respawn();
         }
 
-        if (saltar && !saltado)
+
+        if (saltar && !saltado) {
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_SALTO.getID());
             saltar();
+        }
 
         float xVelocidad = 0;
 
@@ -172,7 +175,6 @@ public class Jugador extends Entidad {
         enAire = true;
         velocidadAire = velocidadSalto;
         saltado = true;
-        juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_SALTO.getID());
     }
 
     private void detenerEnAire() {
@@ -280,6 +282,7 @@ public class Jugador extends Entidad {
     //Cuando pisa con un emenigo
     public void pisar(Enemigo enem){
         if(enem.getPisadoBox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR){
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_PISAR.getID());
             enAire = false;
             saltar();
             enem.setEstado(Enemigo.MORIR);
@@ -306,6 +309,7 @@ public class Jugador extends Entidad {
             this.vidas++;
             obj.respawn();
         }else if(obj.getHitbox().intersects(hitbox) && obj.tipo == 1){
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_POWER_UP.getID());
             this.power = FLOR;
             obj.respawn();
             if(corriendo > 0){

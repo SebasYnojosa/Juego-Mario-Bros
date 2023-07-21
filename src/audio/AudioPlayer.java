@@ -22,13 +22,13 @@ public class AudioPlayer {
     }
 
     private void cargarMusica() {
-        musica = new Clip[4];
+        musica = new Clip[5];
 
         musica[0] = getClip(AudioURL.MUSICA_NIVEL_1);
         musica[1] = getClip(AudioURL.MUSICA_NIVEL_2);
         musica[2] = getClip(AudioURL.MUSICA_NIVEL_3);
         musica[3] = getClip(AudioURL.MUSICA_NIVEL_4);
-//        musica[4] = getClip(AudioURL.MUSICA_ENDING);
+        musica[4] = getClip(AudioURL.MUSICA_ENDING);
     }
 
     private void cargarEfectos() {

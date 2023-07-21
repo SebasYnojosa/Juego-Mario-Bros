@@ -8,7 +8,7 @@ import main.*;
 public class Frame1 extends JFrame {
     //Atributos
     public static int MENUP = 0, MENUINIC = 1, MENUREG = 2, MENUIP = 3, SELECPJ = 4, STATS = 5, RANKING = 6, AYUDA = 7;
-    static int LV1 = 0, LV2 = 1, LV3 = 2, LV4 = 4;
+    //static int LV1 = 0, LV2 = 1, LV3 = 2, LV4 = 4;
     private JPanel[] menus;
     //private JPanel nivelAct;
     private Usuario usuario;

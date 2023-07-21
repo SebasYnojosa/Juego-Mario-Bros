@@ -26,6 +26,8 @@ public class Stats extends javax.swing.JPanel {
         labelPA = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 150, 102));
+
         labelNombre.setBackground(new java.awt.Color(255, 255, 255));
         labelNombre.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         labelNombre.setText("Usuario 0");
@@ -65,47 +67,59 @@ public class Stats extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(81, 81, 81)
-                                                .addComponent(labelNombre))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(34, 34, 34)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel4)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(labelPA))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jLabel1)
-                                                                        .addComponent(jLabel2)
-                                                                        .addComponent(jLabel3))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(labelPJ)
-                                                                        .addComponent(labelPG, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                        .addComponent(labelPP))))))
-                                .addContainerGap(124, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton1)
                                 .addGap(24, 24, 24))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(labelPA))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(jLabel1)
+                                                                .addComponent(jLabel2)
+                                                                .addComponent(jLabel3))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(labelNombre)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(labelPJ)
+                                                        .addComponent(labelPG, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(labelPP))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(labelNombre)
-                                .addGap(39, 39, 39)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(labelPJ))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2)
-                                        .addComponent(labelPG))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(38, 38, 38)
+                                                                .addComponent(labelNombre))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(labelPJ))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(labelPG)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(52, 52, 52)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel3)
@@ -136,6 +150,35 @@ public class Stats extends javax.swing.JPanel {
     private javax.swing.JLabel labelPG;
     private javax.swing.JLabel labelPJ;
     private javax.swing.JLabel labelPP;
+
+    private javax.swing.JLabel jLabel5 = new javax.swing.JLabel() {
+        java.awt.Image image;
+        {
+            image = new javax.swing.ImageIcon("res/graficos/icons/imglario.png").getImage();
+        }
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        }
+    };
+    private javax.swing.JLabel jLabel6 = new javax.swing.JLabel() {
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+            java.awt.Image image;
+            switch(frame.getUsuario().getAvatar()){
+                case 0: image = new javax.swing.ImageIcon("res/graficos/icons/iconmario.png").getImage(); break;
+                case 1: image = new javax.swing.ImageIcon("res/graficos/icons/iconluigi.jpg").getImage(); break;
+                case 2: image = new javax.swing.ImageIcon("res/graficos/icons/iconpeach.jpg").getImage(); break;
+                case 3: image = new javax.swing.ImageIcon("res/graficos/icons/icontoad.jpg").getImage(); break;
+                default: image = new javax.swing.ImageIcon("res/graficos/icons/imgmario.png").getImage(); break;
+            }
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        }
+    };
     // End of variables declaration
 
     public JLabel getLabelPA() {
@@ -153,4 +196,5 @@ public class Stats extends javax.swing.JPanel {
     public JLabel getLabelNombre() {
         return labelNombre;
     }
+    public JLabel getLabelicon(){return jLabel6;}
 }

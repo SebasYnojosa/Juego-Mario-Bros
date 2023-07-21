@@ -28,26 +28,16 @@ public class SelecPJ extends javax.swing.JPanel {
     private void initComponents() {
 
         labelUser1 = new javax.swing.JLabel();
-        labelUser2 = new javax.swing.JLabel();
-        labelUser3 = new javax.swing.JLabel();
-        labelUser4 = new javax.swing.JLabel();
         butMario = new javax.swing.JToggleButton();
         butLuigi = new javax.swing.JToggleButton();
         butPeach = new javax.swing.JToggleButton();
         butToad = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 150, 102));
+
         labelUser1.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         labelUser1.setText("User01");
-
-        labelUser2.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        labelUser2.setText("User02");
-
-        labelUser3.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        labelUser3.setText("User03");
-
-        labelUser4.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        labelUser4.setText("User04");
 
         butMario.setText("Mario\n");
         butMario.addActionListener(new java.awt.event.ActionListener() {
@@ -89,54 +79,50 @@ public class SelecPJ extends javax.swing.JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
+                                                .addGap(121, 121, 121)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(labelUser1)
-                                                                        .addComponent(labelUser2))
-                                                                .addGap(176, 176, 176)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(butLuigi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(butMario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(labelUser3)
-                                                                        .addComponent(labelUser4))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(butToad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(butPeach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                                .addGap(59, 59, 59))
+                                                        .addComponent(butLuigi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(butMario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(223, 223, 223)
-                                                .addComponent(jButton1)
-                                                .addContainerGap())))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(labelUser1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(butToad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(butPeach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(77, 77, 77))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(278, 278, 278)
+                                .addComponent(jButton1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelUser1)
-                                        .addComponent(butMario))
+                                .addComponent(butMario)
                                 .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelUser2)
-                                        .addComponent(butLuigi))
+                                .addComponent(butLuigi)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(40, 40, 40)
+                                                .addComponent(butPeach))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(26, 26, 26)
+                                                .addComponent(labelUser1)))
                                 .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelUser3)
-                                        .addComponent(butPeach))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelUser4)
-                                        .addComponent(butToad))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addComponent(butToad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                                 .addComponent(jButton1)
                                 .addGap(19, 19, 19))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>
 
@@ -227,6 +213,9 @@ public class SelecPJ extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         if(!localPJ.equals("")){
             frame.cambiarMenuNivel(Frame1.SELECPJ);
+            ArchivoUsuario arch = new ArchivoUsuario();
+            frame.getUsuario().setpJugadas(frame.getUsuario().getpJugadas() + 1);
+            arch.modificarRegistro(frame.getUsuario());
         }
     }
 
@@ -238,25 +227,26 @@ public class SelecPJ extends javax.swing.JPanel {
     private javax.swing.JToggleButton butToad;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelUser1;
-    private javax.swing.JLabel labelUser2;
-    private javax.swing.JLabel labelUser3;
-    private javax.swing.JLabel labelUser4;
+    private javax.swing.JLabel jLabel1 = new javax.swing.JLabel() {
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+            java.awt.Image image;
+            switch(frame.getUsuario().getAvatar()){
+                case 0: image = new javax.swing.ImageIcon("res/graficos/icons/iconmario.png").getImage(); break;
+                case 1: image = new javax.swing.ImageIcon("res/graficos/icons/iconluigi.jpg").getImage(); break;
+                case 2: image = new javax.swing.ImageIcon("res/graficos/icons/iconpeach.jpg").getImage(); break;
+                case 3: image = new javax.swing.ImageIcon("res/graficos/icons/icontoad.jpg").getImage(); break;
+                default: image = new javax.swing.ImageIcon("res/graficos/icons/imgmario.png").getImage(); break;
+            }
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        }
+    };
     // End of variables declaration
 
     public javax.swing.JLabel  getLabelUser1(){
         return labelUser1;
-    }
-
-    public javax.swing.JLabel  getLabelUser2(){
-        return labelUser2;
-    }
-
-    public javax.swing.JLabel  getLabelUser3(){
-        return labelUser3;
-    }
-
-    public javax.swing.JLabel  getLabelUser4(){
-        return labelUser3;
     }
 }
 

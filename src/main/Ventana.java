@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+
+import menus.ArchivoUsuario;
 import menus.Frame1;
 
 // Ventana principal en la cual se mostraran los graficos del juego
@@ -10,10 +12,12 @@ public class Ventana extends JFrame {
     Frame1 frame;
 
     public Ventana(Panel panel, Frame1 frame) {
+        this.frame = frame;
+
         setTitle("Juego");
 
         // Esta funcion indica que cuando se cierre la ventana el programa terminara
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(abandonoUser());
 
         // Esta funcion combina inserta el panel en la ventana para que esta muestre su contenido
         add(panel);
@@ -42,5 +46,12 @@ public class Ventana extends JFrame {
                 panel.getJuego().jugadorSeSalioDeVentana();
             }
         });
+    }
+
+    private int abandonoUser(){
+        frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
+        ArchivoUsuario arch = new ArchivoUsuario();
+        arch.modificarRegistro(frame.getUsuario());
+        return JFrame.EXIT_ON_CLOSE;
     }
 }

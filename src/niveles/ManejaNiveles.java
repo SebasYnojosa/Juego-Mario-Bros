@@ -90,6 +90,10 @@ public class ManejaNiveles {
         return niveles.get(indexNivel);
     }
 
+    public int getIndexNivelActual() {
+        return indexNivel;
+    }
+
     public int getCantidadNiveles(){
         return niveles.size();
     }

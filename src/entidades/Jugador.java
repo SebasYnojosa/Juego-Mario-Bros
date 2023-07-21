@@ -116,7 +116,9 @@ public class Jugador extends Entidad {
             direccionMirada = true;
         }
 
-        if(!izquierda && !derecha){
+        // Si izquierda es igual a derecha significa que o ambas teclas se presionan a la vez o ninguna esta presionada
+        // Por lo tanto el personaje tendra que frenar
+        if(izquierda == derecha){
             if(velocidad > 0)
                 velocidad -= aceleracion;
             else if(velocidad < 0)

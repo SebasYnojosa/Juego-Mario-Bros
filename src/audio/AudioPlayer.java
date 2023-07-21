@@ -28,7 +28,7 @@ public class AudioPlayer {
         musica[1] = getClip(AudioURL.MUSICA_NIVEL_2);
         musica[2] = getClip(AudioURL.MUSICA_NIVEL_3);
         musica[3] = getClip(AudioURL.MUSICA_NIVEL_4);
-        musica[4] = getClip(AudioURL.MUSICA_ENDING);
+       // musica[4] = getClip(AudioURL.MUSICA_ENDING);
     }
 
     private void cargarEfectos() {

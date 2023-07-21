@@ -84,17 +84,17 @@ public class Jugador extends Entidad {
 
         if (saltando)
             saltar();
-        if (!izquierda && !derecha && !enAire) {
-            if (velocidad > 0)
-                velocidad -= aceleracion;
-            else if (velocidad < 0)
-                velocidad += aceleracion;
-
-            if (velocidad > -aceleracion && velocidad < aceleracion)
-                velocidad = 0;
-            actualizarPosicionX(velocidad);
-            return;
-        }
+//        if (!izquierda && !derecha && !enAire) {
+//            if (velocidad > 0)
+//                velocidad -= aceleracion;
+//            else if (velocidad < 0)
+//                velocidad += aceleracion;
+//
+//            if (velocidad > -aceleracion && velocidad < aceleracion)
+//                velocidad = 0;
+//            actualizarPosicionX(velocidad);
+//            return;
+//        }
 
         float xVelocidad = 0;
 
@@ -148,7 +148,7 @@ public class Jugador extends Entidad {
         } else
             actualizarPosicionX(xVelocidad);
 
-        moviendose = true;
+        moviendose = xVelocidad != 0;
     }
 
     private void saltar() {

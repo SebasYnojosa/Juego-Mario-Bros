@@ -31,7 +31,9 @@ public class Animaciones {
         MURIENDO(1),
         CAPARAZON(1),
         CAPARAZON_GIRO(3),
-        VOLANDO(2);
+        VOLANDO(2),
+        QUIETO(1),
+        DISPARO(3);
         final int cantidadDeFrames;
 
         Enemigo(int cantidadDeFrames) {
@@ -52,7 +54,8 @@ public class Animaciones {
     public enum OBJ {
         QUIETO(1),
         MOVIENDOSE_2(2),
-        MOVIENDOSE_3(3);
+        MOVIENDOSE_3(3),
+        MOVIENDOSE_4(4);
         final int cantidadDeFrames;
 
         OBJ(int cantidadDeFrames) {

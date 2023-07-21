@@ -29,7 +29,7 @@ public abstract class Enemigo extends Entidad{
     protected int estado = CAMINAR;               //Variables de control
     protected boolean start = true, enAire = false, izq = true;         //Para cuando los update se ejecuten por primera vez
 
-    private float velocidadAire, gravedad = 0.1f, velx = 1f; //Variables de velocidad y tal
+    protected float velocidadAire, gravedad = 0.1f, velx = 1f; //Variables de velocidad y tal
     protected Rectangle2D.Float pisadoBox;
 
 
@@ -193,9 +193,6 @@ public abstract class Enemigo extends Entidad{
         }
     }
 
-    public int getAniIndex(){
-        return aniIndex;
-    }
     public int getEstado(){
         return estado;
     }

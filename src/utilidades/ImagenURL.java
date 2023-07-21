@@ -30,13 +30,15 @@ public enum ImagenURL {
     UNO("graficos/niveles/cambioNivel/nivel2.png"),
     OBJ_MISTERIO("graficos/objetos/bloqueObjetos.png"),
     OBJ_ITEMS("graficos/objetos/powerups.png"),
+    OBJ_MONEDAS("graficos/objetos/monedas.png"),
     ENT_FUEGO("graficos/objetos/bolaFuego.png"),
     ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png"),
     ENEMY_KOOPAVERDE("graficos/enemigos/koopaVerdeSprites.png"),
     ENEMY_KOOPAROJO("graficos/enemigos/koopaRojoSprites.png"),
     ENEMY_SPINY("graficos/enemigos/spinyCavernaSprites.png"),
     ENEMY_SKURRY("graficos/enemigos/escarabajoBuzzySprites.png"),
-    ENEMY_PIRA("graficos/enemigos/piranhaSprites.png");
+    ENEMY_PIRA("graficos/enemigos/piranhaSprites.png"),
+    BOSS_BOWSER("graficos/jefes/reyBowser.png");
 
     final String spriteURL;
 

@@ -101,6 +101,7 @@ public class Juego implements Runnable {
     public void cargarInicioNivel(){
         controladorEnemigos.cargarEnemigos(manejaNiveles.getNivelActual());
         controladorObj.cargarCajas(manejaNiveles.getNivelActual());
+        controladorObj.cargarMonedas(manejaNiveles.getNivelActual());
     }
 
     public void cargarProxNivel(){
@@ -134,6 +135,10 @@ public class Juego implements Runnable {
         for(CajaMisterio o: controladorObj.getCajas()){
             jugador.bloque(o);
             jugador.powerUp(o.obj);
+        }
+
+        for(Moneda m: controladorObj.getMonedas()){
+            jugador.moneda(m);
         }
 
         manejaNiveles.update();

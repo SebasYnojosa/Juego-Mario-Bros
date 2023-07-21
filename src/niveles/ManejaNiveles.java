@@ -117,10 +117,14 @@ public class ManejaNiveles {
         return niveles.size();
     }
 
+    public int getIndexNivelActual() {
+        return indexNivel;
+    }
+
     public void cargarProxLvl(){
         indexNivel++;
         if (indexNivel >= niveles.size()){
-
+            // Mover a un spritesheet de vacios y de fondo la imagen del fin de juego
         }
 
         Nivel nuevoNivel = niveles.get(indexNivel);

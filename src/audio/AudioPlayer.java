@@ -8,25 +8,17 @@ import java.net.URL;
 
 // Clase para escuchar musica y efectos de sonido en general en el juego
 public class AudioPlayer {
-    public static final int MUSICA_NIVEL1 = 0;
-    public static final int MUSICA_NIVEL2 = 1;
-    public static final int MUSICA_NIVEL3 = 2;
-    public static final int MUSICA_NIVEL4 = 3;
-
-    public static final int MUERTE = 0;
-    public static final int SALTO = 1;
-    public static final int GANAR = 2;
-    public static final int BOLA_DE_FUEGO = 3;
 
     private Clip[] musica, efectos;
     private int musicaActual;
     private float volumen = 0.7f;
     private boolean musicaMuteada, efectosMuteados;
+    private boolean yaPresionado = false;
 
     public AudioPlayer() {
         cargarMusica();
         cargarEfectos();
-        iniciarMusica(MUSICA_NIVEL1);
+        iniciarMusica(AudioURL.MUSICA_NIVEL_1.getID());
     }
 
     private void cargarMusica() {
@@ -39,7 +31,11 @@ public class AudioPlayer {
     }
 
     private void cargarEfectos() {
+        efectos = new Clip[1];
 
+        efectos[0] = getClip(AudioURL.EFECTO_SALTO);
+
+        setVolumenEfectos();
     }
 
     private Clip getClip(AudioURL audioURL) {
@@ -47,6 +43,7 @@ public class AudioPlayer {
         AudioInputStream audio;
 
         try {
+            assert url != null;
             audio = AudioSystem.getAudioInputStream(url);
 
             Clip c = AudioSystem.getClip();
@@ -62,17 +59,22 @@ public class AudioPlayer {
     public void setVolumen(float Volumen) {
         this.volumen = volumen;
         setVolumenMusica();
-
     }
     public void pararMusica() {
         if (musica[musicaActual].isActive())
             musica[musicaActual].stop();
     }
+
     public void setMusicaNivel(int nivel) {
         iniciarMusica(nivel);
     }
     private void nivelCompletado() {
         pararMusica();
+    }
+
+    public void iniciarEfecto(int efectoID) {
+        efectos[efectoID].setMicrosecondPosition(0);
+        efectos[efectoID].start();
     }
 
     public void iniciarMusica(int musicaID) {
@@ -95,7 +97,11 @@ public class AudioPlayer {
     }
 
     public void mutearEfectos() {
-
+        this.efectosMuteados = !efectosMuteados;
+        for (Clip c : efectos) {
+            BooleanControl controlMute = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
+            controlMute.setValue(efectosMuteados);
+        }
     }
 
     private void setVolumenMusica() {
@@ -109,6 +115,20 @@ public class AudioPlayer {
     }
 
     private void setVolumenEfectos() {
+        // Para controlar el volumen de los efectos
+        for (Clip c: efectos){
+            FloatControl controlVolumen = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+            float rango = controlVolumen.getMaximum()-controlVolumen.getMinimum();
+            float control = (rango*volumen) + controlVolumen.getMinimum();
+            controlVolumen.setValue(control);
+        }
+    }
 
+    public boolean isYaPresionado() {
+        return yaPresionado;
+    }
+
+    public void setYaPresionado(boolean yaPresionado) {
+        this.yaPresionado = yaPresionado;
     }
 }

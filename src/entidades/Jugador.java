@@ -1,6 +1,9 @@
 package entidades;
 
+import audio.AudioPlayer;
+import main.Juego;
 import utilidades.Animaciones;
+import utilidades.AudioURL;
 import utilidades.ImagenURL;
 
 import static main.Juego.ALTO_VENTANA;
@@ -53,8 +56,11 @@ public class Jugador extends Entidad {
     private int invenTime = 120 * 3, currTime = 0;
     private boolean invencible = false;
 
-    public Jugador(float x, float y, int anchura, int altura, ImagenURL imagenURL) {
+    private Juego juego;
+
+    public Jugador(float x, float y, int anchura, int altura, ImagenURL imagenURL, Juego juego) {
         super(x, y, anchura, altura);
+        this.juego = juego;
         cargarAnimaciones(imagenURL);
         inicializarHitbox(x, y, anchuraHitbox, alturaHitbox);
         inicX = (int)x;
@@ -166,6 +172,7 @@ public class Jugador extends Entidad {
         enAire = true;
         velocidadAire = velocidadSalto;
         saltado = true;
+        juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_SALTO.getID());
     }
 
     private void detenerEnAire() {

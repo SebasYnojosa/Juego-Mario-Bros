@@ -40,6 +40,13 @@ public class InputsTeclado implements KeyListener {
             case KeyEvent.VK_SPACE:
                 panel.getJuego().getJugador().setSaltar(true);
                 break;
+            case KeyEvent.VK_M:
+                if (!panel.getJuego().getAudioPlayer().isYaPresionado()) {
+                    panel.getJuego().getAudioPlayer().mutearEfectos();
+                    panel.getJuego().getAudioPlayer().mutearMusica();
+                    panel.getJuego().getAudioPlayer().setYaPresionado(true);
+                }
+                break;
         }
 
 //        if (e.getKeyCode() == KeyEvent.VK_O) {
@@ -65,6 +72,9 @@ public class InputsTeclado implements KeyListener {
             case KeyEvent.VK_SPACE:
                 panel.getJuego().getJugador().setSaltar(false);
                 panel.getJuego().getJugador().setSaltado(false);
+                break;
+            case KeyEvent.VK_M:
+                panel.getJuego().getAudioPlayer().setYaPresionado(false);
                 break;
         }
 

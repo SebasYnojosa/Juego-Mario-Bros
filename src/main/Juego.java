@@ -66,10 +66,10 @@ public class Juego implements Runnable {
         controladorEnemigos = new ControladorEnemigos(this);
         controladorObj = new ControladorObj(this);
         switch (skin){
-            case "Mario" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET);
-            case "Luigi" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET);
-            case "Peach" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET);
-            case "Toad"  -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET);
+            case "Mario" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET, this);
+            case "Luigi" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET, this);
+            case "Peach" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET, this);
+            case "Toad"  -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET, this);
             default -> System.out.println("Error");
          }
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
@@ -267,5 +267,8 @@ public class Juego implements Runnable {
 
     public boolean isCuadriculaActivada() {
         return cuadriculaActivada;
+    }
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
     }
 }

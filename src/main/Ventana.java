@@ -48,7 +48,7 @@ public class Ventana extends JFrame {
         });
     }
 
-    private int abandonoUser(){
+    public int abandonoUser(){
         frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
         ArchivoUsuario arch = new ArchivoUsuario();
         arch.modificarRegistro(frame.getUsuario());

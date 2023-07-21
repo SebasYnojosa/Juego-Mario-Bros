@@ -1,6 +1,7 @@
 package main;
 
 import entidades.CajaMisterio;
+import audio.AudioPlayer;
 import menus.NivelCompletado;
 import niveles.ControladorEnemigos;
 import entidades.*;
@@ -30,7 +31,7 @@ public class Juego implements Runnable {
     private ManejaNiveles manejaNiveles;
     private ControladorEnemigos controladorEnemigos;
     private ControladorObj controladorObj;
-
+    private AudioPlayer audioPlayer;
     private boolean cuadriculaActivada = false;
 
     // Manejo de niveles mas grandes
@@ -57,6 +58,7 @@ public class Juego implements Runnable {
     public Juego(String skin, Frame1 frame) {
         this.frame = frame;
 
+
         manejaNiveles = new ManejaNiveles(this);
         controladorEnemigos = new ControladorEnemigos(this);
         controladorObj = new ControladorObj(this);
@@ -73,6 +75,7 @@ public class Juego implements Runnable {
         ventana = new Ventana(panel, frame);
         calcularLvlOffset();
         cargarInicioNivel();
+        audioPlayer = new AudioPlayer();
 
         // Funcion que hace que el panel reciba los inputs del teclado o el mouse
         panel.requestFocus();
@@ -104,6 +107,7 @@ public class Juego implements Runnable {
     public void cargarProxNivel(){
         jugador.respawn();
         manejaNiveles.cargarProxLvl();
+        audioPlayer.iniciarMusica(manejaNiveles.getIndexNivelActual());
     }
 
     public void ganar(){
@@ -139,7 +143,7 @@ public class Juego implements Runnable {
         checkCloseToBorder();
         ganar();
 
-        if (nivelCompletado == true){
+        if (nivelCompletado){
             cargarProxNivel();
             nivelCompletado = false;
         }

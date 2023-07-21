@@ -152,6 +152,7 @@ public class Jugador extends Entidad {
                 else
                     velocidadAire = velocidadCaida;
             }
+
         }
         actualizarPosicionX(xVelocidad);
         if((izquierda || derecha ) && !(izquierda && derecha))

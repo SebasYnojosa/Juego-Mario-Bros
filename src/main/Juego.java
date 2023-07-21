@@ -119,7 +119,7 @@ public class Juego implements Runnable {
     }
 
     public void ganar(){
-        if ((int) jugador.getHitbox().x == 9453){       // 9453
+        if ((int) jugador.getHitbox().x == 9453 || (int) jugador.getHitbox().x == 9454 || (int) jugador.getHitbox().x == 9455 || (int) jugador.getHitbox().x == 9456 || (int) jugador.getHitbox().x == 198){
             setNivelCompletado(true);
         }
     }

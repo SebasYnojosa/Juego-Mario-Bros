@@ -131,6 +131,10 @@ public class Juego implements Runnable {
         frame.setVisible(true);
         ventana.setVisible(false);
         ventana.abandonoUser();
+        if(!audioPlayer.getMusicaMuteada() && !audioPlayer.getEfectosMuteados()){
+            audioPlayer.mutearEfectos();
+            audioPlayer.mutearMusica();
+        }
 
     }
 

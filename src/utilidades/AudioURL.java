@@ -5,6 +5,7 @@ public enum AudioURL {
     MUSICA_NIVEL_2("/audio/musica/nivel2.wav", 1),
     MUSICA_NIVEL_3("/audio/musica/nivel3.wav", 2),
     MUSICA_NIVEL_4("/audio/musica/nivel4.wav", 3),
+    MUSICA_ENDING("/audio/musica/ending.wav", 4),
 //    MUSICA_ENDING("/audio/musica/ending.wav", 4),
     EFECTO_SALTO("/audio/efectos/salto.wav", 0),
     EFECTO_BOLA_FUEGO("/audio/efectos/fuego.wav", 1),

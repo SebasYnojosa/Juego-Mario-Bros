@@ -10,7 +10,8 @@ public enum AudioURL {
     EFECTO_BOLA_FUEGO("/audio/efectos/fuego.wav", 1),
     EFECTO_AGARRAR_MONEDA("/audio/efectos/moneda.wav", 2),
     EFECTO_PISAR("/audio/efectos/pisar.wav", 3),
-    EFECTO_POWER_UP("/audio/efectos/powerUp.wav", 4);
+    EFECTO_POWER_UP("/audio/efectos/powerUp.wav", 4),
+    EFECTO_POWER_UP_APARECE("/audio/efectos/powerUpAparece.wav", 5);
 
     final String audioURL;
     final int ID;

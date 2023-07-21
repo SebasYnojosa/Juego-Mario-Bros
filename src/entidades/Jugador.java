@@ -45,7 +45,7 @@ public class Jugador extends Entidad {
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
     //Variables para muerte y powerups
-    private int vidas = 3, inicX, inicY;
+    private int vidas = 5, inicX, inicY;
     private int puntos = 0;
     public final static int NORMAL = 0, FLOR = 1;
     private int power = NORMAL;
@@ -340,9 +340,7 @@ public class Jugador extends Entidad {
         hitbox.x = inicX;
         hitbox.y = inicY;
         power = NORMAL;
-        if(vidas <= 0){
-            System.out.println("Muelto");
-        }
+        //System.out.println(vidas);
     }
 
     public void setCorriendo(int corriendo) {
@@ -376,4 +374,6 @@ public class Jugador extends Entidad {
     public boolean isEnAire() {
         return enAire;
     }
+    public int getVidas(){return vidas;}
+    public void setVidas(int vidas){this.vidas = vidas;}
  }

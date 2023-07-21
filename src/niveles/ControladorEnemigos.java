@@ -34,8 +34,8 @@ public class ControladorEnemigos {
     public void dibujar(Graphics g, int lvlOffset){
         for(Enemigo o: listaEnem){
             o.dibujar(g, lvlOffset);
-            o.mostrarHitbox(g, lvlOffset);
-            o.mostrarPisadobox(g, lvlOffset);
+            //o.mostrarHitbox(g, lvlOffset);
+            //o.mostrarPisadobox(g, lvlOffset);
         }
     }
 

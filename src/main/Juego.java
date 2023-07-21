@@ -3,6 +3,7 @@ package main;
 import audio.AudioPlayer;
 import entidades.CajaMisterio;
 import audio.AudioPlayer;
+import menus.ArchivoUsuario;
 import menus.NivelCompletado;
 import niveles.ControladorEnemigos;
 import entidades.*;
@@ -66,10 +67,10 @@ public class Juego implements Runnable {
         controladorEnemigos = new ControladorEnemigos(this);
         controladorObj = new ControladorObj(this);
         switch (skin){
-            case "Mario" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET, this);
-            case "Luigi" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET, this);
-            case "Peach" -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET, this);
-            case "Toad"  -> jugador = new Jugador(75, 264, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET, this);
+            case "Mario" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET, this);
+            case "Luigi" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET, this);
+            case "Peach" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET, this);
+            case "Toad"  -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET, this);
             default -> System.out.println("Error");
          }
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
@@ -115,25 +116,41 @@ public class Juego implements Runnable {
     public void cargarProxNivel(){
 
         jugador.respawn();
+        jugador.setVidas(jugador.getVidas()+1);
         manejaNiveles.cargarProxLvl();
         audioPlayer.iniciarMusica(manejaNiveles.getIndexNivelActual());
     }
 
     public void ganar(){
-        if ((int) jugador.getHitbox().x == 9453 || (int) jugador.getHitbox().x == 9454 || (int) jugador.getHitbox().x == 9455 || (int) jugador.getHitbox().x == 9456){
+        if ((int) jugador.getHitbox().x == 9453 || (int) jugador.getHitbox().x == 9454 || (int) jugador.getHitbox().x == 9455 || (int) jugador.getHitbox().x == 9456 || (int) jugador.getHitbox().x == 198 ){
             setNivelCompletado(true);
         }
     }
 
-    public void salir(){
+    public void salir( int op){
         frame.cambiarMenus(Frame1.SELECPJ,Frame1.MENUIP);
         frame.setJuego(null);
         frame.setVisible(true);
         ventana.setVisible(false);
-        ventana.abandonoUser();
+
         if(!audioPlayer.getMusicaMuteada() && !audioPlayer.getEfectosMuteados()){
             audioPlayer.mutearEfectos();
             audioPlayer.mutearMusica();
+        }
+
+        ArchivoUsuario arch = new ArchivoUsuario();
+        if(ventana.isActive()){
+            switch(op){
+                case 0:ventana.abandonoUser(); break;
+                case 1:
+                    frame.getUsuario().setpGanadas(frame.getUsuario().getpGanadas() + 1);
+                    arch.modificarRegistro(frame.getUsuario());
+                    break;
+                case 2:
+                    frame.getUsuario().setpPerdidas(frame.getUsuario().getpPerdidas() + 1);
+                    arch.modificarRegistro(frame.getUsuario());
+                    break;
+            }
         }
 
     }
@@ -172,6 +189,9 @@ public class Juego implements Runnable {
         if (nivelCompletado){
             cargarProxNivel();
             nivelCompletado = false;
+        }
+        if(jugador.getVidas() <= 0 && ventana.isActive()){
+            salir(2);
         }
     }
 

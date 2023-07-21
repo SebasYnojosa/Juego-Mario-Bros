@@ -48,10 +48,16 @@ public class Ventana extends JFrame {
         });
     }
 
+    int i = -1;
     public int abandonoUser(){
-        frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
-        ArchivoUsuario arch = new ArchivoUsuario();
-        arch.modificarRegistro(frame.getUsuario());
+        if(i <= 0) {
+            if(i==0) {
+                frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
+                ArchivoUsuario arch = new ArchivoUsuario();
+                arch.modificarRegistro(frame.getUsuario());
+            }
+            i++;
+        }
         return JFrame.EXIT_ON_CLOSE;
     }
 }

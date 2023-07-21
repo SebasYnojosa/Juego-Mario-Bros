@@ -66,5 +66,6 @@ public class Panel extends JPanel {
     public Juego getJuego() {
         return juego;
     }
+    public void setJuego(Juego juego){ this.juego = juego;}
 
 }

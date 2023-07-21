@@ -24,7 +24,7 @@ public class Ayuda extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jLabel1.setText("AYUDA");
 
-        jLabel2.setText("<html><body>     - Moverse con teclas WASD<br>"
+        jLabel2.setText("<html><body>     - Moverse con teclas WASD, correr con shift<br>"
                 + "     - Llega al final del nivel 4 para ganar<br>"
                 + "     - Los objetos se regeneran con el tiempo<br>"
                 + "     - Diviertanse</body></html>");

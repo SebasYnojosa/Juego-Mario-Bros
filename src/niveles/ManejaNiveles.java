@@ -125,6 +125,9 @@ public class ManejaNiveles {
     public void cargarProxLvl(){
         indexNivel++;
 
+        if (indexNivel >= 4)
+            juego.salir(1);
+
         Nivel nuevoNivel = niveles.get(indexNivel);
         cargarSpritesNivel();
         juego.getControladorEnemigos().cargarEnemigos(nuevoNivel);

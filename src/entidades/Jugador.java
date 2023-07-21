@@ -192,6 +192,7 @@ public class Jugador extends Entidad {
             for(Fuego f: listaFuego){
                 if(f.activo == false){
                     f.spawn(hitbox.x+(anchura/2), hitbox.y+(altura/2), !direccionMirada);
+                    juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_BOLA_FUEGO.getID());
                     return;
                 }
             }
@@ -316,6 +317,7 @@ public class Jugador extends Entidad {
 
     public void moneda(Moneda m){
         if(m.getHitbox().intersects(hitbox) && m.activo){
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_AGARRAR_MONEDA.getID());
             puntos++;
             m.activo = false;
             if(puntos >= 100){

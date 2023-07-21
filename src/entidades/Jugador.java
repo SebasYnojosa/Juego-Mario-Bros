@@ -300,6 +300,7 @@ public class Jugador extends Entidad {
     //Cuando toca un bloque
     public void bloque(CajaMisterio caja){
         if(caja.getHitbox().intersects(hitbox) && caja.getEstado() != CajaMisterio.NOACTIVO){
+            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_POWER_UP_APARECE.getID());
             caja.desactivar();
         }
     }

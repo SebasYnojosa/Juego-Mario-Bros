@@ -125,6 +125,19 @@ public class Juego implements Runnable {
         }
     }
 
+    public void salir(){
+        frame.cambiarMenus(Frame1.SELECPJ,Frame1.MENUIP);
+        frame.setJuego(null);
+        frame.setVisible(true);
+        ventana.setVisible(false);
+        ventana.abandonoUser();
+        if(!audioPlayer.getMusicaMuteada() && !audioPlayer.getEfectosMuteados()){
+            audioPlayer.mutearEfectos();
+            audioPlayer.mutearMusica();
+        }
+
+    }
+
     private void iniciarCiclo() {
         // Creamos un hilo para que el juego se ejecute en paralelo al hilo principal
         hiloJuego = new Thread(this);

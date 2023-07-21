@@ -5,7 +5,8 @@ import menus.Frame1;
 // Main del proyectod
 
 public class  Main {
+    static Frame1 frame;
     public static void main(String[] args) {
-        new Frame1();
+        frame = new Frame1();
     }
 }

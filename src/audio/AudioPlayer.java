@@ -12,7 +12,7 @@ public class AudioPlayer {
     private Clip[] musica, efectos;
     private int musicaActual;
     private float volumen = 0.7f;
-    private boolean musicaMuteada, efectosMuteados;
+    private boolean musicaMuteada = false, efectosMuteados = false;
     private boolean yaPresionado = false;
 
     public AudioPlayer() {
@@ -138,4 +138,6 @@ public class AudioPlayer {
     public void setYaPresionado(boolean yaPresionado) {
         this.yaPresionado = yaPresionado;
     }
+    public boolean getMusicaMuteada(){return musicaMuteada;}
+    public boolean getEfectosMuteados(){return efectosMuteados;}
 }

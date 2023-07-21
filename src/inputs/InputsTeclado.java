@@ -47,6 +47,9 @@ public class InputsTeclado implements KeyListener {
                     panel.getJuego().getAudioPlayer().setYaPresionado(true);
                 }
                 break;
+            case KeyEvent.VK_ESCAPE:
+                panel.getJuego().salir();
+                break;
         }
 
 //        if (e.getKeyCode() == KeyEvent.VK_O) {

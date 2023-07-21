@@ -149,4 +149,7 @@ public class Frame1 extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    public Juego getJuego(){return juego;}
+    public void setJuego(Juego juego){this.juego = juego;}
 }

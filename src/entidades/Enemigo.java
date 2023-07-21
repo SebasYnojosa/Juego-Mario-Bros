@@ -44,6 +44,11 @@ public abstract class Enemigo extends Entidad{
     public void update(int[][] infoLvl){
         movUpdate(infoLvl);
         actualizarAnimacion();
+        if(hitbox.y >= 1000 ){
+            velx = 0;
+            velocidadAire = 0;
+            gravedad = 0;
+        }
     }
 
     public void movUpdate(int[][] infoLvl){

@@ -105,6 +105,10 @@ public class ManejaNiveles {
 
     }
 
+    public void setFondo(String URL){
+        fondo = cargarImagen(ImagenURL.valueOf(URL));
+    }
+
     public Nivel getNivelActual() {
         return niveles.get(indexNivel);
     }
@@ -116,7 +120,7 @@ public class ManejaNiveles {
     public void cargarProxLvl(){
         indexNivel++;
         if (indexNivel >= niveles.size()){
-            // MOSTRAR PANTALLA DE FIN DE JUEGO
+
         }
 
         Nivel nuevoNivel = niveles.get(indexNivel);

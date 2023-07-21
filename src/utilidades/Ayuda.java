@@ -84,7 +84,7 @@ public class Ayuda {
         return infoNivel;
     }
 
-    //Funcion que devuelve un arrayList con los goombas
+    //Funcion que devuelve un arrayList con los enemigos
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
     //Estos son los valores de verde para cada enemigo
     static final int GOOMBA = 5;
@@ -93,6 +93,7 @@ public class Ayuda {
     static final int SPINY = 20;
     static final int SCURRY = 25;
     static final int PIRA = 30;
+    static final int BOWSER = 35;
 
     public static ArrayList<Enemigo> getEnemigos(BufferedImage img){
         ArrayList<Enemigo> lista = new ArrayList();
@@ -107,12 +108,30 @@ public class Ayuda {
                     case SPINY: lista.add(new Spiny(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
                     case SCURRY: lista.add(new Scurry(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
                     case PIRA: lista.add(new Pira(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
+                    case BOWSER: lista.add(new Bowser(i*Juego.UNIDAD,j*Juego.UNIDAD)); break;
                 }
             }
         return lista;
     }
 
-    //Funcion que devuelve un arrayList con los goombas
+    //Funcion que devuelve un arrayList con las moendas
+    //El nivel de verde en el pixel de bitmap indica si hay
+    //Valor de la moneda
+    static final int MONEDA = 50;
+    public static ArrayList<Moneda> getMonedas(BufferedImage img){
+        ArrayList<Moneda> lista = new ArrayList();
+        for (int j = 0; j < img.getHeight(); ++j)
+            for (int i = 0; i < img.getWidth(); ++i){
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getGreen();
+                switch(valor){
+                    case MONEDA: lista.add(new Moneda(i*Juego.UNIDAD,j*Juego.UNIDAD));break;
+                }
+            }
+        return lista;
+    }
+
+    //Funcion que devuelve un arrayList con los objetos
     //El nivel de verde en el pixel de bitmap indica que hay un goomba
     //Estos son los valores de verde para cada enemigo
     //static final int HONGO = 100;

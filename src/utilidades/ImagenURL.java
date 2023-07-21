@@ -6,7 +6,7 @@ public enum ImagenURL {
     LUIGI_SPRITESHEET("graficos/players/luigiSprites.png"),
     PEACH_SPRITESHEET("graficos/players/peachSprites.png"),
     TOAD_SPRITESHEET("graficos/players/toadSprites.png"),
-    CAMBIO_NIVEL_UNO("graficos/niveles/cambioNivel/nivel1.png"),
+    CAMBIO_NIVEL_UNO("graficos/niveles/cambioNivel/nivel2.png"),
     FONDO_UNO("graficos/fondo/fondo.png"),
     FONDO_DOS("graficos/fondo/fondoCaverna.png"),
     FONDO_TRES("graficos/fondo/fondoHielo.png"),
@@ -27,15 +27,18 @@ public enum ImagenURL {
     INFO_NIVEL_CAVERNA("niveles/level_caverna_data.png"),
     INFO_NIVEL_HIELO("niveles/level_hielo_data.png"),
     INFO_NIVEL_CASTILLO("niveles/level_castillo_data.png"),
+    UNO("graficos/niveles/cambioNivel/nivel2.png"),
     OBJ_MISTERIO("graficos/objetos/bloqueObjetos.png"),
     OBJ_ITEMS("graficos/objetos/powerups.png"),
+    OBJ_MONEDAS("graficos/objetos/monedas.png"),
     ENT_FUEGO("graficos/objetos/bolaFuego.png"),
     ENEMY_GOOMBA("graficos/enemigos/goombaSprites.png"),
     ENEMY_KOOPAVERDE("graficos/enemigos/koopaVerdeSprites.png"),
     ENEMY_KOOPAROJO("graficos/enemigos/koopaRojoSprites.png"),
     ENEMY_SPINY("graficos/enemigos/spinyCavernaSprites.png"),
     ENEMY_SKURRY("graficos/enemigos/escarabajoBuzzySprites.png"),
-    ENEMY_PIRA("graficos/enemigos/piranhaSprites.png");
+    ENEMY_PIRA("graficos/enemigos/piranhaSprites.png"),
+    BOSS_BOWSER("graficos/jefes/reyBowser.png");
 
     final String spriteURL;
 

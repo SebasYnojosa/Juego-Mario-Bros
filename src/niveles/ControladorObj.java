@@ -18,6 +18,7 @@ public class ControladorObj {
     private Juego juego;
     private BufferedImage[][] img;
     private ArrayList<CajaMisterio> listaCaja = new ArrayList();
+    private ArrayList<Moneda> listaMoneda = new ArrayList();
 
     public ControladorObj(Juego juego) {
         this.juego = juego;
@@ -27,9 +28,14 @@ public class ControladorObj {
     public void update(int[][] infoLvl){
         for(CajaMisterio o: listaCaja)
             o.update(infoLvl);
+        for(Moneda m: listaMoneda)
+            m.update();
     }
     public void cargarCajas(Nivel nivel){
         listaCaja = nivel.getListaCajas();
+    }
+    public void cargarMonedas(Nivel nivel){
+        listaMoneda = nivel.getListaMonedas();
     }
 
     //Dibuja a todos los enemigos
@@ -37,11 +43,15 @@ public class ControladorObj {
         for(CajaMisterio o: listaCaja){
             o.obj.dibujar(g, lvlOffset);
             o.dibujar(g, lvlOffset);
-            o.mostrarHitbox(g, lvlOffset);
+            //o.mostrarHitbox(g, lvlOffset);
+        }
+        for(Moneda m: listaMoneda){
+            m.dibujar(g,lvlOffset);
         }
     }
 
 
 
     public ArrayList<CajaMisterio> getCajas(){return listaCaja;}
+    public ArrayList<Moneda> getMonedas(){return listaMoneda;}
 }

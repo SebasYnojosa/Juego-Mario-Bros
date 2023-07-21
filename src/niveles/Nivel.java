@@ -2,6 +2,7 @@ package niveles;
 
 import entidades.CajaMisterio;
 import entidades.Enemigo;
+import entidades.Moneda;
 import main.Juego;
 import utilidades.Archivos;
 
@@ -18,6 +19,7 @@ public class Nivel {
     private BufferedImage img;
     private ArrayList<Enemigo> enemigos;
     private ArrayList<CajaMisterio> cajas;
+    private ArrayList<Moneda> monedas;
     private int lvlCasillaAncho;
     private int maxCasillaOffset;
     private int maxLvlOffsetX;
@@ -27,6 +29,7 @@ public class Nivel {
         crearInfoNivel();
         crearEnemigos();
         crearCubos();
+        crearMonedas();
         calcularOffsetNivel();
     }
 
@@ -43,6 +46,8 @@ public class Nivel {
     public void crearCubos(){
         cajas = getCajas(img);
     }
+
+    public void crearMonedas(){monedas = getMonedas(img);}
 
     public void calcularOffsetNivel(){
         lvlCasillaAncho = img.getWidth();
@@ -68,4 +73,5 @@ public class Nivel {
     public ArrayList<CajaMisterio> getListaCajas(){
         return cajas;
     }
+    public ArrayList<Moneda> getListaMonedas(){return monedas;}
 }

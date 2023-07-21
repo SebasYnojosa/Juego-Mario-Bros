@@ -8,7 +8,6 @@ import static utilidades.Archivos.*;
 import static utilidades.Ayuda.*;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad {
@@ -37,13 +36,14 @@ public class Jugador extends Entidad {
     private float gravedad = 0.1f;
     private float velocidadSalto = -4.5f;
     private float velocidadCaida = 0.5f;
-    private boolean enAire = false ,saltando = false;
+    private boolean enAire = false, saltar = false, saltado = false;
 
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
     //Variables para muerte y powerups
     private int vidas = 3, inicX, inicY;
+    private int puntos = 0;
     public final static int NORMAL = 0, FLOR = 1;
     private int power = NORMAL;
     public static final int maxFuego = 2;
@@ -104,7 +104,7 @@ public class Jugador extends Entidad {
             respawn();
         }
 
-        if (saltando)
+        if (saltar && !saltado)
             saltar();
 
         float xVelocidad = 0;
@@ -155,6 +155,7 @@ public class Jugador extends Entidad {
 
         }
         actualizarPosicionX(xVelocidad);
+
         if((izquierda || derecha ) && !(izquierda && derecha))
             moviendose = true;
     }
@@ -164,6 +165,7 @@ public class Jugador extends Entidad {
             return;
         enAire = true;
         velocidadAire = velocidadSalto;
+        saltado = true;
     }
 
     private void detenerEnAire() {
@@ -205,7 +207,7 @@ public class Jugador extends Entidad {
         // Son 14 animaciones en total y la que tiene mas frames tiene 4
         animaciones = new BufferedImage[16][4];
 
-        for (int j = 0; j < 14; j++) {
+        for (int j = 0; j < 16; j++) {
             for (int i = 0; i < 4; i++) {
                 animaciones[j][i] = imagenes.getSubimage(i * 20, j * 30, 20, 30);
             }
@@ -305,6 +307,17 @@ public class Jugador extends Entidad {
         }
     }
 
+    public void moneda(Moneda m){
+        if(m.getHitbox().intersects(hitbox) && m.activo){
+            puntos++;
+            m.activo = false;
+            if(puntos >= 100){
+                puntos = 0;
+                vidas++;
+            }
+        }
+    }
+
     //Cuando pegan, vuelves al principio y pierdes vida
     public void respawn(){
         vidas--;
@@ -336,8 +349,12 @@ public class Jugador extends Entidad {
         this.derecha = derecha;
     }
 
-    public void setSaltando(boolean saltando){
-        this.saltando = saltando;
+    public void setSaltar(boolean saltar) {
+        this.saltar = saltar;
+    }
+
+    public void setSaltado(boolean saltado){
+        this.saltado = saltado;
     }
 
     public boolean isEnAire() {

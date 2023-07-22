@@ -44,6 +44,10 @@ public class Jugador extends Entidad {
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
+    //Variables para el coyote time
+    private boolean coyoteTime = false;
+    private float coyoteTimeMax = 120 * 0.2f, currCoyoteTime = 0;
+
     //Variables para muerte y powerups
     private int vidas = 5, inicX, inicY;
     private int puntos = 0;
@@ -66,7 +70,7 @@ public class Jugador extends Entidad {
         inicX = (int)x;
         inicY = (int)y;
         for(int i = 0; i<listaFuego.length; i++){
-            listaFuego[i] = new Fuego(-10, -10);
+            listaFuego[i] = new Fuego(-30, -30);
         }
 
     }
@@ -112,7 +116,7 @@ public class Jugador extends Entidad {
         }
 
 
-        if (saltar && !saltado) {
+        if (saltar && (!saltado)) {
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_SALTO.getID());
             saltar();
         }
@@ -152,6 +156,14 @@ public class Jugador extends Entidad {
                 enAire = true;
         }
 
+        if(!enSuelo(hitbox, infoNivel) && coyoteTime){
+            currCoyoteTime++;
+            if(currCoyoteTime >= coyoteTimeMax){
+                coyoteTime = false;
+                currCoyoteTime = 0;
+            }
+        }
+
         if (enAire) {
             if (sePuedeMover(hitbox.x, hitbox.y + velocidadAire, hitbox.width, hitbox.height, infoNivel)){
                 hitbox.y += velocidadAire;
@@ -171,15 +183,17 @@ public class Jugador extends Entidad {
     }
 
     private void saltar() {
-        if (enAire)
+        if (enAire && !coyoteTime)
             return;
         enAire = true;
+        coyoteTime = false;
         velocidadAire = velocidadSalto;
         saltado = true;
     }
 
     private void detenerEnAire() {
         enAire = false;
+        coyoteTime = true;
         velocidadAire = 0;
     }
 
@@ -266,12 +280,13 @@ public class Jugador extends Entidad {
     }
 
     //Cuando choca con un emenigo
-    public void golpeado(Enemigo enem){
+    public boolean golpeado(Enemigo enem){
         if(!invencible){
             if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR && enem.getEstado() != Enemigo.CAPARAZON){
                 if(power == NORMAL){
                     juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_MUERTE.getID());
                     respawn();
+                    return true;
                 }else{
                     invencible = true;
                     power = NORMAL;
@@ -280,6 +295,7 @@ public class Jugador extends Entidad {
                 enem.setEstado(Enemigo.MORIR);
             }
         }
+        return false;
     }
     //Cuando pisa con un emenigo
     public void pisar(Enemigo enem){
@@ -322,7 +338,7 @@ public class Jugador extends Entidad {
         }
     }
 
-    public void moneda(Moneda m){
+    public boolean moneda(Moneda m){
         if(m.getHitbox().intersects(hitbox) && m.activo){
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_AGARRAR_MONEDA.getID());
             puntos++;
@@ -331,7 +347,9 @@ public class Jugador extends Entidad {
                 puntos = 0;
                 vidas++;
             }
+            return true;
         }
+        return false;
     }
 
     //Cuando pegan, vuelves al principio y pierdes vida
@@ -340,7 +358,6 @@ public class Jugador extends Entidad {
         hitbox.x = inicX;
         hitbox.y = inicY;
         power = NORMAL;
-        //System.out.println(vidas);
     }
 
     public void setCorriendo(int corriendo) {
@@ -376,4 +393,5 @@ public class Jugador extends Entidad {
     }
     public int getVidas(){return vidas;}
     public void setVidas(int vidas){this.vidas = vidas;}
+    public int getPuntos(){return puntos;}
  }

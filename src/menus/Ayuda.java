@@ -26,6 +26,7 @@ public class Ayuda extends javax.swing.JPanel {
 
         jLabel2.setText("<html><body>     - Moverse con teclas WASD, correr con shift<br>"
                 + "     - Llega al final del nivel 4 para ganar<br>"
+                + "     - Presionar M para desactivar sonidos y escape para volver al menu<br>"
                 + "     - Los objetos se regeneran con el tiempo<br>"
                 + "     - Diviertanse</body></html>");
 

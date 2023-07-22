@@ -11,7 +11,6 @@ public class MenuReg extends javax.swing.JPanel {
         this.frame = frame;
         errNombre.setVisible(false);
         errConf.setVisible(false);
-        errRelleno.setVisible(false);
         
         radioLuigi.setActionCommand("Luigi");
         radioMario.setActionCommand("Mario");
@@ -83,7 +82,7 @@ public class MenuReg extends javax.swing.JPanel {
 
         errConf.setText("No coinciden");
 
-        errRelleno.setText("Rellenar todo");
+        errRelleno.setText("");
 
         labelMario.setToolTipText("");
 
@@ -209,7 +208,7 @@ public class MenuReg extends javax.swing.JPanel {
         frame.cambiarMenus(Frame1.MENUREG, Frame1.MENUINIC);
         errNombre.setVisible(false);
         errConf.setVisible(false);
-        errRelleno.setVisible(false);
+        errRelleno.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -217,7 +216,7 @@ public class MenuReg extends javax.swing.JPanel {
         if (buttonGroup.getSelection() == null){
             errNombre.setVisible(false);
             errConf.setVisible(false);
-            errRelleno.setVisible(true);
+            errRelleno.setText("Rellenar todo");
             return;
         }else{
             switch (buttonGroup.getSelection().getActionCommand()) {
@@ -230,18 +229,18 @@ public class MenuReg extends javax.swing.JPanel {
         if("".equals(user.getNombre()) || "".equals(user.getCorreo()) || "".equals(user.getUsuario()) || "".equals(user.getContra()) || "".equals(txtConfContra.getText())){
             errNombre.setVisible(false);
             errConf.setVisible(false);
-            errRelleno.setVisible(true);
+            errRelleno.setText("");
         }else{
             arch.abrirArchivoLectura();
             if(arch.buscarRegistro(user.getUsuario()) != null){
                 errNombre.setVisible(true);
                 errConf.setVisible(false);
-                errRelleno.setVisible(false);
+                errRelleno.setText("");
                 return;
             }else if(!user.getContra().equals(txtConfContra.getText())){
                 errNombre.setVisible(false);
                 errConf.setVisible(true);
-                errRelleno.setVisible(false);
+                errRelleno.setText("");
                 return;
             }
 
@@ -252,6 +251,7 @@ public class MenuReg extends javax.swing.JPanel {
             txtCorr.setText("");
             txtContra.setText("");
             txtConfContra.setText("");
+            errRelleno.setText("Registrado exitosamente");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

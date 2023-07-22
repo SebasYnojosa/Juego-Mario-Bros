@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
@@ -16,8 +17,14 @@ public class Ventana extends JFrame {
 
         setTitle("jMarioBros");
 
-        // Esta funcion indica que cuando se cierre la ventana el programa terminara
-        setDefaultCloseOperation(abandonoUser());
+        // Esta funcion se ejecuta cuando se cierra el frame
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                abandonoUser();
+                System.exit(0);
+            }
+        });
 
         // Esta funcion combina inserta el panel en la ventana para que esta muestre su contenido
         add(panel);
@@ -48,16 +55,10 @@ public class Ventana extends JFrame {
         });
     }
 
-    int i = -1;
-    public int abandonoUser(){
-        if(i <= 0) {
-            if(i==0) {
-                frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
-                ArchivoUsuario arch = new ArchivoUsuario();
-                arch.modificarRegistro(frame.getUsuario());
-            }
-            i++;
-        }
-        return JFrame.EXIT_ON_CLOSE;
+
+    public void abandonoUser(){
+        frame.getUsuario().setpAbandonadas(frame.getUsuario().getpAbandonadas() + 1);
+        ArchivoUsuario arch = new ArchivoUsuario();
+        arch.modificarRegistro(frame.getUsuario());
     }
 }

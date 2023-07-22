@@ -72,9 +72,10 @@ public class Frame1 extends JFrame {
         menus[act].setVisible(false);
         //this.remove(menus[act]);
         this.setVisible(false);
-
-        juego = new Juego(((SelecPJ)(menus[act])).getLocalPJ(), this);
-
+        if (juego == null)
+            juego = new Juego(((SelecPJ)(menus[act])).getLocalPJ(), this);
+        else
+            juego.reset(((SelecPJ)(menus[act])).getLocalPJ());
         //this.add(nivelAct,BorderLayout.CENTER);
         //nivelAct.setVisible(true);
     }

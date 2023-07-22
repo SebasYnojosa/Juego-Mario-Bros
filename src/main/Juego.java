@@ -57,7 +57,10 @@ public class Juego implements Runnable {
     public static final int ALTO_VENTANA = UNIDADES_ALTURA * UNIDAD;
     public static final int ALTURA_JUGADOR = 2 * UNIDAD;
     public static final int ANCHURA_JUGADOR = UNIDAD + UNIDAD/4;
-    public final int maxTime = 120 * 6000;
+
+    //UI
+    private javax.swing.JLabel labelMonedas;
+    private javax.swing.JLabel labelVidas;
 
     public Juego(String skin, Frame1 frame) {
         this.frame = frame;
@@ -76,15 +79,57 @@ public class Juego implements Runnable {
         jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
 
         panel = new Panel(this);
+        panel.setLayout(null);
         ventana = new Ventana(panel, frame);
         calcularLvlOffset();
         cargarInicioNivel();
         audioPlayer = new AudioPlayer();
 
+        //UI
+        labelVidas   = new javax.swing.JLabel();
+        labelMonedas = new javax.swing.JLabel();
+        panel.add(labelVidas);
+        panel.add(labelMonedas);
+        labelVidas.setLocation(32,32);
+        labelVidas.setSize(200,32);
+        labelVidas.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        labelVidas.setText("Vidas: x5");
+        labelMonedas.setLocation(600,32);
+        labelMonedas.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        labelMonedas.setText("Monedas: x0");
+        labelMonedas.setSize(200,32);
+
         // Funcion que hace que el panel reciba los inputs del teclado o el mouse
         panel.requestFocus();
 
         iniciarCiclo();
+    }
+
+    public void reset(String skin){
+
+        ventana.setVisible(true);
+
+        switch (skin){
+            case "Mario" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.MARIO_SPRITESHEET, this);
+            case "Luigi" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.LUIGI_SPRITESHEET, this);
+            case "Peach" -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.PEACH_SPRITESHEET, this);
+            case "Toad"  -> jugador = new Jugador(75, 168, ANCHURA_JUGADOR, ALTURA_JUGADOR, ImagenURL.TOAD_SPRITESHEET, this);
+            default -> System.out.println("Error");
+        }
+        jugador.cargarInfoNivel(manejaNiveles.getNivelActual().getInfoNivel());
+
+        calcularLvlOffset();
+        cargarInicioNivel();
+        audioPlayer = new AudioPlayer();
+
+        //UI
+        labelVidas.setText("Vidas: x5");
+        labelMonedas.setText("Monedas: x0");
+
+        // Funcion que hace que el panel reciba los inputs del teclado o el mouse
+        panel.requestFocus();
+
+        hiloJuego.interrupt();
     }
 
     public void setMaxLvlOffset(int lvlOffset){
@@ -152,7 +197,7 @@ public class Juego implements Runnable {
                     break;
             }
         }
-
+        hiloJuego.interrupt();
     }
 
     private void iniciarCiclo() {
@@ -166,7 +211,8 @@ public class Juego implements Runnable {
         jugador.update();
 //        System.out.println("JugadorPos(" + jugador.getHitbox().x + "," + jugador.getHitbox().y + ")");
         for(Enemigo e: controladorEnemigos.getEnemigos()){
-            jugador.golpeado(e);
+            if(jugador.golpeado(e))
+                labelVidas.setText("Vidas: x" + jugador.getVidas());
             jugador.pisar(e);
             jugador.quemar(e);
         }
@@ -177,7 +223,8 @@ public class Juego implements Runnable {
         }
 
         for(Moneda m: controladorObj.getMonedas()){
-            jugador.moneda(m);
+            if(jugador.moneda(m))
+                labelMonedas.setText("Monedas x" + jugador.getPuntos());
         }
 
         manejaNiveles.update();
@@ -255,7 +302,7 @@ public class Juego implements Runnable {
         double deltaFrame = 0; // Tiempo que paso desde el ultimo update
 
         // Ciclo del juego que se ejecuta mientras el juego esta abierto
-        while(true) {
+        while(!hiloJuego.isInterrupted()) {
             // Si el tiempo que paso desde el ultimo frame es mayor al tiempo que tiene que pasar para que se ejecute un frame
             long tiempoActual = System.nanoTime();
 

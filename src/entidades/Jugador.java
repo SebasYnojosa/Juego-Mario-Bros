@@ -12,8 +12,9 @@ import static utilidades.Ayuda.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-public class Jugador extends Entidad {
+public class Jugador extends Entidad implements Observer {
 
     private BufferedImage imagenes;
     private BufferedImage[][] animaciones;
@@ -31,7 +32,8 @@ public class Jugador extends Entidad {
     private float velocidadCorriendo = 3.5f;
     private float velocidadCaminando = 2.5f;
     private float aceleracion = 0.1f;
-    // Atributo que le pasa la informacion del nivel al jugador para que pueda moverse por el con la hitbox
+    // Atributo que le pasa la informacion del nivel al jugador para que pueda
+    // moverse por el con la hitbox
     private int[][] infoNivel;
 
     // Variables para el salto y movimiento aereo
@@ -44,11 +46,11 @@ public class Jugador extends Entidad {
     private float diferenciaHitboxX = 6, diferenciaHitboxY = 9;
     private float alturaHitbox = 55, anchuraHitbox = 25;
 
-    //Variables para el coyote time
+    // Variables para el coyote time
     private boolean coyoteTime = false;
     private float coyoteTimeMax = 120 * 0.2f, currCoyoteTime = 0;
 
-    //Variables para muerte y powerups
+    // Variables para muerte y powerups
     private int vidas = 5, inicX, inicY;
     private int puntos = 0;
     public final static int NORMAL = 0, FLOR = 1;
@@ -56,7 +58,7 @@ public class Jugador extends Entidad {
     public static final int maxFuego = 2;
     private Fuego[] listaFuego = new Fuego[maxFuego];
 
-    //Frames de invencibilidad
+    // Frames de invencibilidad
     private int invenTime = 120 * 3, currTime = 0;
     private boolean invencible = false;
 
@@ -67,9 +69,9 @@ public class Jugador extends Entidad {
         this.juego = juego;
         cargarAnimaciones(imagenURL);
         inicializarHitbox(x, y, anchuraHitbox, alturaHitbox);
-        inicX = (int)x;
-        inicY = (int)y;
-        for(int i = 0; i<listaFuego.length; i++){
+        inicX = (int) x;
+        inicY = (int) y;
+        for (int i = 0; i < listaFuego.length; i++) {
             listaFuego[i] = new Fuego(-30, -30);
         }
 
@@ -85,23 +87,25 @@ public class Jugador extends Entidad {
         actualizarAnimacion();
         dispararFuego();
         invenUpdate();
-        for(Fuego f: listaFuego){
+        for (Fuego f : listaFuego) {
             f.update(infoNivel);
         }
     }
 
     public void render(Graphics g, int lvlOffset) {
-//        mostrarHitbox(g);
+        // mostrarHitbox(g);
         float x = hitbox.x - diferenciaHitboxX;
         float y = hitbox.y - diferenciaHitboxY;
 
-        if(!invencible || ((int)(currTime/10))%2 == 0) {
+        if (!invencible || ((int) (currTime / 10)) % 2 == 0) {
             if (!direccionMirada)
-                g.drawImage(animaciones[(power * 8) + accionActual.getPosicion()][indice], (int) (x + anchura) - lvlOffset, (int) y, -anchura, altura, null);
+                g.drawImage(animaciones[(power * 8) + accionActual.getPosicion()][indice],
+                        (int) (x + anchura) - lvlOffset, (int) y, -anchura, altura, null);
             else
-                g.drawImage(animaciones[(power * 8) + accionActual.getPosicion()][indice], (int) x - lvlOffset, (int) y, anchura, altura, null);
+                g.drawImage(animaciones[(power * 8) + accionActual.getPosicion()][indice], (int) x - lvlOffset, (int) y,
+                        anchura, altura, null);
         }
-        for(Fuego f: listaFuego){
+        for (Fuego f : listaFuego) {
             f.dibujar(g, lvlOffset);
         }
     }
@@ -115,7 +119,6 @@ public class Jugador extends Entidad {
             respawn();
         }
 
-
         if (saltar && (!saltado)) {
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_SALTO.getID());
             saltar();
@@ -123,9 +126,10 @@ public class Jugador extends Entidad {
 
         float xVelocidad = 0;
 
-        // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda a la vez
+        // Esto es para que el jugador no se pueda mover si presiona derecha e izquierda
+        // a la vez
         if (izquierda) {
-            if (velocidad > -(corriendo>0 ? velocidadCorriendo : velocidadCaminando))
+            if (velocidad > -(corriendo > 0 ? velocidadCorriendo : velocidadCaminando))
                 velocidad -= aceleracion;
             if (!sePuedeMover(hitbox.x + velocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel))
                 velocidad = 0;
@@ -133,7 +137,7 @@ public class Jugador extends Entidad {
             direccionMirada = false;
         }
         if (derecha) {
-            if (velocidad < (corriendo>0 ? velocidadCorriendo : velocidadCaminando))
+            if (velocidad < (corriendo > 0 ? velocidadCorriendo : velocidadCaminando))
                 velocidad += aceleracion;
             if (!sePuedeMover(hitbox.x + velocidad, hitbox.y, hitbox.width, hitbox.height, infoNivel))
                 velocidad = 0;
@@ -141,12 +145,12 @@ public class Jugador extends Entidad {
             direccionMirada = true;
         }
 
-        if((!izquierda && !derecha) || (izquierda && derecha)){
-            if(velocidad > 0)
+        if ((!izquierda && !derecha) || (izquierda && derecha)) {
+            if (velocidad > 0)
                 velocidad -= aceleracion;
-            else if(velocidad < 0)
+            else if (velocidad < 0)
                 velocidad += aceleracion;
-            if(velocidad > -aceleracion  && velocidad < aceleracion)
+            if (velocidad > -aceleracion && velocidad < aceleracion)
                 velocidad = 0;
             xVelocidad = velocidad;
         }
@@ -156,16 +160,16 @@ public class Jugador extends Entidad {
                 enAire = true;
         }
 
-        if(!enSuelo(hitbox, infoNivel) && coyoteTime){
+        if (!enSuelo(hitbox, infoNivel) && coyoteTime) {
             currCoyoteTime++;
-            if(currCoyoteTime >= coyoteTimeMax){
+            if (currCoyoteTime >= coyoteTimeMax) {
                 coyoteTime = false;
                 currCoyoteTime = 0;
             }
         }
 
         if (enAire) {
-            if (sePuedeMover(hitbox.x, hitbox.y + velocidadAire, hitbox.width, hitbox.height, infoNivel)){
+            if (sePuedeMover(hitbox.x, hitbox.y + velocidadAire, hitbox.width, hitbox.height, infoNivel)) {
                 hitbox.y += velocidadAire;
                 velocidadAire += gravedad;
             } else {
@@ -178,7 +182,7 @@ public class Jugador extends Entidad {
         }
         actualizarPosicionX(xVelocidad);
 
-        if((izquierda || derecha ) && !(izquierda && derecha))
+        if ((izquierda || derecha) && !(izquierda && derecha))
             moviendose = true;
     }
 
@@ -203,12 +207,12 @@ public class Jugador extends Entidad {
         }
     }
 
-    private void dispararFuego(){
-        if(corriendo > 1 && power == FLOR){
+    private void dispararFuego() {
+        if (corriendo > 1 && power == FLOR) {
             corriendo--;
-            for(Fuego f: listaFuego){
-                if(f.activo == false){
-                    f.spawn(hitbox.x+(anchura/2), hitbox.y+(altura/2), !direccionMirada);
+            for (Fuego f : listaFuego) {
+                if (f.activo == false) {
+                    f.spawn(hitbox.x + (anchura / 2), hitbox.y + (altura / 2), !direccionMirada);
                     juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_BOLA_FUEGO.getID());
                     return;
                 }
@@ -216,10 +220,10 @@ public class Jugador extends Entidad {
         }
     }
 
-    private void invenUpdate(){
-        if(invencible){
+    private void invenUpdate() {
+        if (invencible) {
             currTime++;
-            if(currTime >= invenTime){
+            if (currTime >= invenTime) {
                 currTime = 0;
                 invencible = false;
             }
@@ -240,16 +244,16 @@ public class Jugador extends Entidad {
     }
 
     private void cambiarAccion() {
-        if (moviendose && corriendo>0 && !enAire)
+        if (moviendose && corriendo > 0 && !enAire)
             accionActual = Animaciones.Jugador.CORRIENDO;
-        else if (moviendose && !(corriendo>0) && !enAire)
+        else if (moviendose && !(corriendo > 0) && !enAire)
             accionActual = Animaciones.Jugador.CAMINANDO;
         else
             accionActual = Animaciones.Jugador.QUIETO;
 
-        if (enAire && !(corriendo>0))
+        if (enAire && !(corriendo > 0))
             accionActual = Animaciones.Jugador.SALTANDO;
-        else if (enAire && corriendo>0)
+        else if (enAire && corriendo > 0)
             accionActual = Animaciones.Jugador.SALTANDO_CORRIENDO;
     }
 
@@ -279,71 +283,94 @@ public class Jugador extends Entidad {
         corriendo = 0;
     }
 
-    //Cuando choca con un emenigo
-    public boolean golpeado(Enemigo enem){
-        if(!invencible){
-            if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR && enem.getEstado() != Enemigo.CAPARAZON){
-                if(power == NORMAL){
-                    juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_MUERTE.getID());
-                    respawn();
-                    return true;
-                }else{
-                    invencible = true;
-                    power = NORMAL;
-                }
-            }else if(enem.getHitbox().intersects(hitbox) && enem.getEstado() == Enemigo.CAPARAZON){
-                enem.setEstado(Enemigo.MORIR);
-            }
-        }
-        return false;
-    }
-    //Cuando pisa con un emenigo
-    public void pisar(Enemigo enem){
-        if(enem.getPisadoBox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR){
-            juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_PISAR.getID());
-            enAire = false;
-            saltar();
-            enem.setEstado(Enemigo.MORIR);
+    private ArrayList<Observer> observers = new ArrayList<>();
+
+    public void golpeado(Enemigo enemigo) {
+        for (Observer observer : observers) {
+            observer.update1(this, enemigo);
         }
     }
-    //Cuando una bola de fuego toca un enemigo
-    public void quemar(Enemigo enem){
-        for(Fuego f: listaFuego){
-            if(enem.getHitbox().intersects(f.hitbox) && enem.getEstado() != Enemigo.MORIR && enem.getEstado() != Enemigo.CAPARAZON){
-                enem.setEstado(Enemigo.MORIR);
-                f.respawn();
-            }
-        }
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
-    //Cuando toca un bloque
-    public void bloque(CajaMisterio caja){
-        if(caja.getHitbox().intersects(hitbox) && caja.getEstado() != CajaMisterio.NOACTIVO){
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    // Cuando choca con un emenigo
+    /*
+     * public boolean golpeado(Enemigo enem){
+     * if(!invencible){
+     * if(enem.getHitbox().intersects(hitbox) && enem.getEstado() != Enemigo.MORIR
+     * && enem.getEstado() != Enemigo.CAPARAZON){
+     * if(power == NORMAL){
+     * juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_MUERTE.getID());
+     * respawn();
+     * return true;
+     * }else{
+     * invencible = true;
+     * power = NORMAL;
+     * }
+     * }else if(enem.getHitbox().intersects(hitbox) && enem.getEstado() ==
+     * Enemigo.CAPARAZON){
+     * enem.setEstado(Enemigo.MORIR);
+     * }
+     * }
+     * return false;
+     * }
+     * //Cuando pisa con un emenigo
+     * public void pisar(Enemigo enem){
+     * if(enem.getPisadoBox().intersects(hitbox) && enem.getEstado() !=
+     * Enemigo.MORIR){
+     * juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_PISAR.getID());
+     * enAire = false;
+     * saltar();
+     * enem.setEstado(Enemigo.MORIR);
+     * }
+     * }
+     * //Cuando una bola de fuego toca un enemigo
+     * public void quemar(Enemigo enem){
+     * for(Fuego f: listaFuego){
+     * if(enem.getHitbox().intersects(f.hitbox) && enem.getEstado() != Enemigo.MORIR
+     * && enem.getEstado() != Enemigo.CAPARAZON){
+     * enem.setEstado(Enemigo.MORIR);
+     * f.respawn();
+     * }
+     * }
+     * }
+     */
+    // Cuando toca un bloque
+    public void bloque(CajaMisterio caja) {
+        if (caja.getHitbox().intersects(hitbox) && caja.getEstado() != CajaMisterio.NOACTIVO) {
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_POWER_UP_APARECE.getID());
             caja.desactivar();
         }
     }
-    //Cuando toca un powerUp
-    public void powerUp(Objeto obj){
-        if(obj.getHitbox().intersects(hitbox) && obj.tipo == 3){
+
+    // Cuando toca un powerUp
+    public void powerUp(Objeto obj) {
+        if (obj.getHitbox().intersects(hitbox) && obj.tipo == 3) {
             this.vidas++;
             obj.respawn();
-        }else if(obj.getHitbox().intersects(hitbox) && obj.tipo == 1){
+        } else if (obj.getHitbox().intersects(hitbox) && obj.tipo == 1) {
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_POWER_UP.getID());
             this.power = FLOR;
             obj.respawn();
-            if(corriendo > 0){
+            if (corriendo > 0) {
                 corriendo = 1;
             }
 
         }
     }
 
-    public boolean moneda(Moneda m){
-        if(m.getHitbox().intersects(hitbox) && m.activo){
+    public boolean moneda(Moneda m) {
+        if (m.getHitbox().intersects(hitbox) && m.activo) {
             juego.getAudioPlayer().iniciarEfecto(AudioURL.EFECTO_AGARRAR_MONEDA.getID());
             puntos++;
             m.activo = false;
-            if(puntos >= 100){
+            if (puntos >= 100) {
                 puntos = 0;
                 vidas++;
             }
@@ -352,8 +379,8 @@ public class Jugador extends Entidad {
         return false;
     }
 
-    //Cuando pegan, vuelves al principio y pierdes vida
-    public void respawn(){
+    // Cuando pegan, vuelves al principio y pierdes vida
+    public void respawn() {
         vidas--;
         hitbox.x = inicX;
         hitbox.y = inicY;
@@ -384,14 +411,23 @@ public class Jugador extends Entidad {
         this.saltar = saltar;
     }
 
-    public void setSaltado(boolean saltado){
+    public void setSaltado(boolean saltado) {
         this.saltado = saltado;
     }
 
     public boolean isEnAire() {
         return enAire;
     }
-    public int getVidas(){return vidas;}
-    public void setVidas(int vidas){this.vidas = vidas;}
-    public int getPuntos(){return puntos;}
- }
+
+    public int getVidas() {
+        return vidas;
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+}
